@@ -1,432 +1,1669 @@
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="PeptideNourish">
+<meta name="theme-color" content="#1a3a2a">
+<meta name="description" content="Personalized peptide nutrition & supplement recommendations — created by a Registered Dietitian">
+<link rel="manifest" href="data:application/json,{%22name%22:%22PeptideNourish%22,%22short_name%22:%22PeptideNourish%22,%22description%22:%22Personalized%20peptide%20nutrition%20by%20a%20Registered%20Dietitian%22,%22start_url%22:%22/%22,%22display%22:%22standalone%22,%22background_color%22:%22%231a3a2a%22,%22theme_color%22:%22%231a3a2a%22,%22orientation%22:%22portrait-primary%22,%22icons%22:[{%22src%22:%22icon-192.png%22,%22sizes%22:%22192x192%22,%22type%22:%22image/png%22},{%22src%22:%22icon-512.png%22,%22sizes%22:%22512x512%22,%22type%22:%22image/png%22}],%22categories%22:[%22health%22,%22fitness%22]}">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>PeptideNourish — by a Registered Dietitian</title>
 <style>
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{min-height:100vh;background:linear-gradient(145deg,#0a1a0f 0%,#0d2218 50%,#0a1a10 100%);font-family:'DM Sans','Segoe UI',sans-serif;color:#d4edd9;padding:1.5rem 1rem 3rem}
-  body::before{content:'';position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(ellipse at 15% 15%,rgba(78,203,113,0.07) 0%,transparent 55%),radial-gradient(ellipse at 85% 85%,rgba(60,150,100,0.05) 0%,transparent 55%);z-index:0}
-  .wrap{max-width:480px;margin:0 auto;position:relative;z-index:1}
-  .logo-area{text-align:center;margin-bottom:1.8rem}
-  .logo-badge{display:inline-block;background:rgba(78,203,113,0.1);border:1px solid rgba(78,203,113,0.22);border-radius:2rem;padding:.28rem 1rem;font-size:.68rem;letter-spacing:.13em;text-transform:uppercase;color:#7ee8a2;margin-bottom:.8rem}
-  .logo-title{font-family:'Playfair Display',Georgia,serif;font-size:clamp(1.8rem,5vw,2.4rem);font-weight:700;background:linear-gradient(135deg,#c8f0d8 0%,#7ee8a2 60%,#4ecb71 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.15;margin-bottom:.3rem}
-  .logo-sub{color:#6a9a7a;font-size:.85rem}
-  .card{background:rgba(255,255,255,0.03);border:1px solid rgba(100,200,130,0.16);border-radius:1.4rem;padding:1.8rem;backdrop-filter:blur(12px);box-shadow:0 8px 40px rgba(0,0,0,0.3)}
-  .btn-primary{width:100%;padding:.9rem 1rem;background:linear-gradient(135deg,#2d8a4e 0%,#4ecb71 100%);border:none;border-radius:.9rem;color:#0a1a0f;font-size:1rem;font-weight:700;cursor:pointer;letter-spacing:.04em;font-family:'Playfair Display',Georgia,serif;box-shadow:0 4px 24px rgba(78,203,113,0.3);transition:all .2s}
-  .btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 28px rgba(78,203,113,0.4)}
-  .btn-primary:disabled{background:rgba(78,203,113,0.1);color:#3a5a4a;cursor:not-allowed;box-shadow:none;transform:none}
-  .btn-ghost{background:none;border:1px solid rgba(100,200,130,0.25);border-radius:.7rem;color:#7ee8a2;font-size:.85rem;padding:.55rem 1rem;cursor:pointer;transition:all .2s}
-  .btn-ghost:hover{background:rgba(78,203,113,0.08);border-color:rgba(78,203,113,0.4)}
-  .lbl{font-size:.72rem;color:#5a8a6a;display:block;margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.09em;font-weight:600}
-  .inp{width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(100,200,130,0.2);border-radius:.65rem;padding:.75rem 1rem;color:#d4edd9;font-size:1rem;outline:none;transition:border-color .2s;font-family:inherit}
-  .inp:focus{border-color:rgba(78,203,113,.5)}
-  .inp::placeholder{color:#3a5a4a}
-  input[type=number]::-webkit-inner-spin-button{opacity:.3}
-  .dots{display:flex;justify-content:center;gap:.5rem;margin-bottom:1.4rem}
-  .dot{height:8px;border-radius:4px;transition:all .3s ease}
-  .tabs{display:flex;gap:.4rem;margin-bottom:1.5rem;background:rgba(0,0,0,0.2);border-radius:.9rem;padding:.3rem}
-  .tab{flex:1;padding:.55rem .5rem;background:none;border:none;color:#6a9a7a;font-size:.8rem;font-weight:600;cursor:pointer;border-radius:.65rem;transition:all .2s;font-family:inherit}
-  .tab.active{background:rgba(78,203,113,0.15);color:#7ee8a2;border:1px solid rgba(78,203,113,0.3)}
-  .points-badge{display:flex;align-items:center;gap:.5rem;background:rgba(255,200,50,0.1);border:1px solid rgba(255,200,50,0.3);border-radius:2rem;padding:.35rem .9rem;font-size:.82rem;font-weight:700;color:#ffd54f}
-  .log-item{background:rgba(255,255,255,0.04);border:1px solid rgba(100,200,130,0.12);border-radius:.9rem;padding:1rem 1.1rem;display:flex;align-items:center;gap:.9rem;cursor:pointer;transition:all .2s;margin-bottom:.7rem}
-  .log-item:hover{background:rgba(78,203,113,0.06);border-color:rgba(78,203,113,0.25)}
-  .log-item.logged{background:rgba(78,203,113,0.1);border-color:rgba(78,203,113,0.4)}
-  .log-check{width:36px;height:36px;border-radius:50%;border:2px solid rgba(100,200,130,0.3);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;transition:all .2s;background:rgba(0,0,0,0.2)}
-  .log-item.logged .log-check{background:linear-gradient(135deg,#2d8a4e,#4ecb71);border-color:#4ecb71}
-  .log-info{flex:1}
-  .log-title{font-size:.95rem;font-weight:600;color:#c8f0d8}
-  .log-sub{font-size:.75rem;color:#6a9a7a;margin-top:.15rem}
-  .pts-chip{background:rgba(255,200,50,0.15);border:1px solid rgba(255,200,50,0.3);border-radius:1rem;padding:.15rem .55rem;font-size:.72rem;font-weight:700;color:#ffd54f;flex-shrink:0}
-  .streak-bar{height:6px;background:rgba(100,200,130,0.12);border-radius:3px;overflow:hidden;margin-top:.5rem}
-  .streak-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,#2d8a4e,#4ecb71);transition:width .6s ease}
-  .meal-card{background:rgba(255,255,255,0.04);border:1px solid rgba(100,200,130,0.12);border-radius:.9rem;padding:.9rem 1rem;margin-bottom:.7rem;animation:fadeIn .3s ease}
-  .meal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.4rem}
-  .meal-time{font-size:.67rem;color:#4a7a5a;text-transform:uppercase;letter-spacing:.09em;font-weight:600}
-  .meal-name{font-size:.95rem;font-weight:600;color:#c8f0d8;flex:1;margin:0 .6rem}
-  .heart-btn{background:none;border:none;font-size:1.2rem;cursor:pointer;padding:.1rem;transition:transform .15s;line-height:1}
-  .heart-btn:hover{transform:scale(1.2)}
-  .meal-macros{display:flex;gap:.7rem;font-size:.75rem;color:#7a9a8a;flex-wrap:wrap}
-  .macro{background:rgba(0,0,0,0.2);border-radius:.4rem;padding:.1rem .45rem}
-  .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:100;display:flex;align-items:flex-end;justify-content:center;animation:fadeIn .2s ease}
-  .modal{background:#0d2218;border:1px solid rgba(100,200,130,0.2);border-radius:1.4rem 1.4rem 0 0;padding:1.8rem;width:100%;max-width:480px;max-height:80vh;overflow-y:auto;animation:slideUp .3s ease}
-  .recipe-card{background:rgba(255,255,255,0.04);border:1px solid rgba(100,200,130,0.12);border-radius:.9rem;padding:1rem;margin-bottom:.8rem}
-  .recipe-title{font-size:1rem;font-weight:700;color:#c8f0d8;margin-bottom:.4rem}
-  .recipe-meta{font-size:.75rem;color:#6a9a7a;margin-bottom:.6rem}
-  .recipe-steps{font-size:.82rem;color:#9abaa8;line-height:1.6}
-  .toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#2d8a4e,#4ecb71);color:#0a1a0f;font-weight:700;padding:.55rem 1.2rem;border-radius:2rem;font-size:.9rem;z-index:200;animation:toastAnim .3s ease;white-space:nowrap;box-shadow:0 4px 20px rgba(78,203,113,0.4)}
-  .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:.8rem}
-  .stat-card{background:rgba(255,255,255,0.04);border-radius:.65rem;padding:.75rem 1rem}
-  .stat-label{font-size:.67rem;color:#4a7a5a;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.15rem}
-  .stat-val{font-size:1.1rem;font-weight:700;font-family:monospace}
-  .stat-sub{font-size:.7rem;color:#6a8a7a;margin-top:.1rem}
-  @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-  @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
-  @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
-  @keyframes toastAnim{from{opacity:0;transform:translateX(-50%) translateY(-8px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
-  @keyframes popIn{0%{transform:scale(1)}50%{transform:scale(1.35)}100%{transform:scale(1)}}
-  .pop{animation:popIn .25s ease}
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --g1:#1a3a2a;--g2:#2d5a3d;--g3:#4a8c5c;--g4:#6db87a;--g6:#d4f0d8;--g7:#f0faf2;
+  --gold:#c9a84c;--gold-l:#f0d78a;
+  --text:#1a2e1f;--text2:#3d5a45;--text3:#6b8f72;
+  --bg:#f5faf6;--card:#ffffff;--border:#c8e6cc;
+  --shadow:0 2px 12px rgba(26,58,42,0.08);--shadow-lg:0 8px 32px rgba(26,58,42,0.14);
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.6;min-height:100vh}
+h1,h2,h3,h4{font-family:'Playfair Display',serif}
+/* ── SIGN-IN ── */
+.signin-page{display:none;min-height:100vh;background:var(--g1);align-items:center;justify-content:center;padding:24px;flex-direction:column}
+.signin-page.active{display:flex}
+.signin-leaf-bg{position:fixed;inset:0;background:var(--g1);overflow:hidden;pointer-events:none}
+.signin-leaf-bg::before{content:'🌿';position:absolute;font-size:260px;right:-40px;bottom:-40px;opacity:.06;line-height:1}
+.signin-leaf-bg::after{content:'🌿';position:absolute;font-size:180px;left:-30px;top:-20px;opacity:.04;line-height:1;transform:rotate(180deg)}
+.signin-card{background:#fff;border-radius:24px;padding:36px 32px;width:100%;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,.25);position:relative;z-index:1}
+.signin-logo{text-align:center;margin-bottom:28px}
+.signin-logo-icon{font-size:44px;margin-bottom:8px}
+.signin-logo-name{font-family:'Playfair Display',serif;font-size:28px;color:var(--g1);font-weight:700;margin-bottom:4px}
+.signin-logo-rd{font-size:12px;color:var(--text3);letter-spacing:.4px;font-style:italic}
+.signin-step{display:none}
+.signin-step.active{display:block}
+.signin-heading{font-family:'Playfair Display',serif;font-size:20px;color:var(--g1);margin-bottom:6px;font-weight:600}
+.signin-sub{font-size:13px;color:var(--text3);margin-bottom:24px;line-height:1.5}
+.phone-input-wrap{display:flex;gap:10px;margin-bottom:16px}
+.phone-flag{display:flex;align-items:center;gap:6px;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:15px;background:#fff;cursor:pointer;font-weight:500;color:var(--text2);white-space:nowrap}
+.phone-number{flex:1;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:18px;color:var(--text);background:#fff;outline:none;letter-spacing:.5px;transition:border .2s}
+.phone-number:focus{border-color:var(--g3)}
+.passcode-wrap{display:flex;gap:10px;justify-content:center;margin-bottom:20px}
+.passcode-digit{width:54px;height:62px;border:2px solid var(--border);border-radius:12px;font-size:28px;font-weight:700;text-align:center;font-family:'DM Sans',sans-serif;color:var(--g1);outline:none;background:#fff;transition:all .2s;caret-color:transparent}
+.passcode-digit:focus{border-color:var(--g3);background:var(--g7)}
+.passcode-digit.filled{border-color:var(--g2);background:var(--g7)}
+.signin-btn{width:100%;padding:14px;background:var(--g2);color:#fff;border:none;border-radius:12px;font-family:'DM Sans',sans-serif;font-size:16px;font-weight:600;cursor:pointer;transition:all .2s;margin-bottom:12px}
+.signin-btn:hover{background:var(--g1)}
+.signin-btn:disabled{background:var(--border);color:var(--text3);cursor:not-allowed}
+.signin-link{text-align:center;font-size:13px;color:var(--text3)}
+.signin-link button{background:none;border:none;color:var(--g3);cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;text-decoration:underline}
+.signin-link button:hover{color:var(--g2)}
+.signin-demo{background:var(--g7);border:1px solid var(--border);border-radius:10px;padding:12px 14px;font-size:12px;color:var(--text2);margin-bottom:16px;line-height:1.5}
+.signin-demo strong{color:var(--g2)}
+.signin-error{background:#fff5f5;border:1px solid #f9a8a8;border-radius:8px;padding:10px 12px;font-size:13px;color:#c53030;margin-bottom:14px;display:none}
+.signin-success{background:var(--g6);border:1px solid var(--g4);border-radius:8px;padding:10px 12px;font-size:13px;color:var(--g2);margin-bottom:14px;display:none}
+.phone-sent-display{font-size:15px;font-weight:600;color:var(--g1);text-align:center;margin-bottom:6px}
+.resend-timer{font-size:13px;color:var(--text3);text-align:center;margin-bottom:20px}
+/* ── SIGN-IN COMPLETE, show main app ── */
+.nav{background:var(--g1);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:60px;position:sticky;top:0;z-index:100}
+.nav-logo{color:#fff;font-family:'Playfair Display',serif;font-size:20px;font-weight:700;display:flex;align-items:center;gap:10px}
+.nav-tabs{display:flex;gap:4px}
+.nav-tab{background:transparent;border:none;color:rgba(255,255,255,0.6);padding:8px 14px;border-radius:8px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;transition:all .2s}
+.nav-tab:hover{color:#fff;background:rgba(255,255,255,0.1)}
+.nav-tab.active{color:#fff;background:rgba(255,255,255,0.18)}
+.nav-points{color:var(--gold-l);font-size:13px;font-weight:500;display:flex;align-items:center;gap:6px;cursor:pointer}
+.page{display:none;max-width:900px;margin:0 auto;padding:28px 20px 60px}
+.page.active{display:block}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px;margin-bottom:20px;box-shadow:var(--shadow)}
+.card-title{font-size:17px;color:var(--g1);margin-bottom:14px;display:flex;align-items:center;gap:8px;font-weight:600;font-family:'Playfair Display',serif}
+.field-label{font-size:13px;font-weight:500;color:var(--text2);margin-bottom:6px;display:block}
+.field-input{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:15px;color:var(--text);background:#fff;outline:none;transition:border .2s}
+.field-input:focus{border-color:var(--g3)}
+.field-group{margin-bottom:16px}
+.btn-primary{padding:12px 28px;background:var(--g2);color:#fff;border:none;border-radius:12px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:all .2s}
+.btn-primary:hover{background:var(--g1);transform:translateY(-1px)}
+.btn-outline{padding:10px 20px;background:transparent;color:var(--g2);border:1.5px solid var(--g3);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:all .2s}
+.btn-outline:hover{background:var(--g7)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.ht-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.profile-steps{display:flex;gap:4px;margin-bottom:10px}
+.pstep{flex:1;height:5px;border-radius:3px;background:var(--border);transition:background .3s}
+.pstep.active{background:var(--g4)}.pstep.done{background:var(--g2)}
+.step-labels{display:flex;margin-bottom:24px}
+.step-label{font-size:11px;color:var(--text3);font-weight:500;flex:1;text-align:center}
+.step-label.active{color:var(--g2);font-weight:600}
+/* Stats — now 5 cols */
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stats-grid-5{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:10px}
+.stat-box{background:var(--g7);border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center}
+.stat-label{font-size:10px;color:var(--text3);font-weight:500;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.stat-value{font-size:20px;font-weight:700;color:var(--g2);font-family:'Playfair Display',serif}
+.stat-unit{font-size:10px;color:var(--text3)}
+.stat-box.highlight{border-color:var(--g3);background:linear-gradient(135deg,var(--g7),#e6f5e9)}
+/* Avatar */
+.avatar-section{display:flex;gap:24px;align-items:flex-start}
+.avatar-wrap{flex-shrink:0;text-align:center;width:140px}
+.avatar-svg-wrap{width:120px;height:160px;margin:0 auto 8px}
+.avatar-level{font-size:12px;color:var(--text3);margin-bottom:3px}
+.avatar-pts{font-size:14px;font-weight:600;color:var(--gold);display:flex;align-items:center;gap:4px;justify-content:center}
+.avatar-progress{width:110px;margin:6px auto 0;height:6px;background:var(--g6);border-radius:6px;overflow:hidden}
+.avatar-progress-fill{height:100%;background:linear-gradient(90deg,var(--g3),var(--gold));border-radius:6px;transition:width .4s}
+.avatar-info{flex:1}
+/* Dash hero */
+.dash-hero{background:linear-gradient(135deg,var(--g1) 0%,#244d35 50%,var(--g2) 100%);border-radius:20px;padding:24px;margin-bottom:20px;color:#fff;display:flex;gap:20px;align-items:flex-start;position:relative;overflow:hidden}
+.dash-hero::before{content:'🌿';position:absolute;right:16px;bottom:8px;font-size:72px;opacity:.08;line-height:1}
+.dash-hero-avatar{flex-shrink:0;text-align:center;width:110px}
+.dash-hero-svg{width:100px;height:130px;margin:0 auto 6px;background:rgba(255,255,255,0.07);border-radius:14px;padding:6px}
+.dash-hero-avname{font-size:13px;font-weight:700;color:rgba(255,255,255,.95);margin-bottom:2px}
+.dash-hero-level{font-size:11px;color:rgba(255,255,255,.6)}
+.dash-hero-bar{width:90px;margin:5px auto 0;height:5px;background:rgba(255,255,255,.2);border-radius:5px;overflow:hidden}
+.dash-hero-bar-fill{height:100%;background:var(--gold-l);border-radius:5px;transition:width .4s}
+.dash-hero-right{flex:1;min-width:0}
+.dash-hero-greeting{font-family:'Playfair Display',serif;font-size:22px;color:#fff;margin-bottom:2px;line-height:1.2}
+.dash-hero-date{font-size:12px;color:rgba(255,255,255,.55);margin-bottom:14px}
+.nudge-list{display:flex;flex-direction:column;gap:7px}
+.nudge{display:flex;align-items:flex-start;gap:8px;background:rgba(255,255,255,0.10);border:1px solid rgba(255,255,255,.14);border-radius:10px;padding:8px 11px;font-size:13px;line-height:1.4}
+.nudge-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.nudge.good{background:rgba(109,184,122,0.20);border-color:rgba(109,184,122,.3)}
+.nudge.warn{background:rgba(240,192,64,0.18);border-color:rgba(240,192,64,.3)}
+.nudge.alert{background:rgba(229,115,115,0.20);border-color:rgba(229,115,115,.3)}
+.nudge.tip{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,.12)}
+.dash-hero-pts{margin-top:12px;font-size:12px;color:var(--gold-l);font-weight:600;display:flex;align-items:center;gap:5px}
+/* Gender */
+.gender-row{display:flex;gap:10px}
+.gender-btn{flex:1;padding:10px;border:1.5px solid var(--border);border-radius:10px;background:#fff;cursor:pointer;font-size:16px;transition:all .2s;font-family:'DM Sans',sans-serif;font-weight:500;color:var(--text2)}
+.gender-btn.sel{border-color:var(--g3);background:var(--g7);color:var(--g2)}
+/* Goals */
+.goals-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.goal-btn{padding:14px 8px;border:1.5px solid var(--border);border-radius:12px;background:#fff;cursor:pointer;font-size:13px;font-weight:500;color:var(--text2);transition:all .2s;text-align:center;font-family:'DM Sans',sans-serif}
+.goal-btn .goal-icon{font-size:24px;display:block;margin-bottom:5px}
+.goal-btn:hover{border-color:var(--g4);background:var(--g7)}
+.goal-btn.sel{border-color:var(--g2);background:var(--g7);color:var(--g2);font-weight:600}
+/* Peptides */
+.pep-category{margin-bottom:10px;border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.pep-cat-header{padding:13px 16px;background:var(--g7);cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-weight:600;color:var(--g1);font-size:14px;user-select:none}
+.pep-cat-header:hover{background:var(--g6)}
+.pep-list{padding:12px 16px;display:none;flex-wrap:wrap;gap:8px}
+.pep-list.open{display:flex}
+.pep-tag{padding:7px 14px;border:1.5px solid var(--border);border-radius:20px;background:#fff;cursor:pointer;font-size:13px;font-weight:500;color:var(--text2);transition:all .2s;font-family:'DM Sans',sans-serif}
+.pep-tag:hover{border-color:var(--g3);background:var(--g7)}
+.pep-tag.sel{border-color:var(--g2);background:var(--g2);color:#fff}
+.sel-peps-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.sel-pep-chip{background:var(--g2);color:#fff;border-radius:20px;padding:4px 13px;font-size:12px;font-weight:500}
+/* Dashboard logs */
+.dash-peps{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px}
+.pep-chip{background:var(--g7);border:1px solid var(--border);border-radius:20px;padding:7px 14px;font-size:13px;font-weight:500;color:var(--g2);display:flex;align-items:center;gap:8px}
+.pep-log-btn{padding:3px 10px;background:var(--g2);color:#fff;border:none;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s}
+.pep-log-btn:hover{background:var(--g1)}.pep-log-btn.logged{background:var(--g4)}
+.glp-note{background:#fff8e7;border:1px solid var(--gold-l);border-radius:12px;padding:14px;margin-top:12px}
+.glp-note-title{font-size:14px;font-weight:600;color:#7a5c00;margin-bottom:6px}
+.glp-note-tip{font-size:12px;color:#8a6800;line-height:1.6;margin-top:8px;padding-top:8px;border-top:1px solid var(--gold-l)}
+.dose-row{display:flex;align-items:center;gap:12px;margin-top:10px;flex-wrap:wrap}
+.dose-input{width:80px;padding:7px 10px;border:1.5px solid var(--gold-l);border-radius:8px;font-size:14px;text-align:center;font-family:'DM Sans',sans-serif;background:#fff}
+.log-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.log-row label{font-size:13px;color:var(--text3);min-width:120px}
+.log-input{width:80px;padding:8px 10px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:'DM Sans',sans-serif;text-align:center;outline:none;transition:border .2s}
+.log-input:focus{border-color:var(--g3)}
+.log-bar-wrap{flex:1;min-width:120px}
+.log-bar{height:8px;background:var(--g6);border-radius:8px;overflow:hidden}
+.log-bar-fill{height:100%;background:linear-gradient(90deg,var(--g3),var(--g4));border-radius:8px;transition:width .3s}
+.log-meta{font-size:12px;color:var(--text3);margin-top:3px;display:flex;justify-content:space-between}
+.history-btn{padding:6px 14px;background:transparent;border:1px solid var(--border);border-radius:8px;font-size:12px;color:var(--text3);cursor:pointer;display:inline-flex;align-items:center;gap:5px;margin-top:10px;font-family:'DM Sans',sans-serif;transition:all .2s}
+.history-btn:hover{background:var(--g7);color:var(--text2);border-color:var(--g4)}
+.history-panel{background:var(--g7);border:1px solid var(--border);border-radius:10px;padding:12px;margin-top:10px;display:none}
+.history-panel.open{display:block}
+.history-item{font-size:13px;color:var(--text2);padding:6px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between}
+.history-item:last-child{border-bottom:none}
+/* Timing */
+.timing-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--text3);margin-bottom:6px}
+.timing-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.timing-row label{font-size:12px;color:var(--text3);width:40px;flex-shrink:0}
+.timing-row input[type=range]{flex:1;accent-color:var(--g3)}
+.timing-row .t-val{font-size:13px;font-weight:600;color:var(--g2);min-width:64px;text-align:right}
+.window-badge{display:inline-block;background:var(--g7);border:1.5px solid var(--border);border-radius:20px;padding:7px 20px;font-size:14px;color:var(--g2);font-weight:600;margin-top:8px}
+/* Check-in */
+.checkin-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.checkin-item{background:var(--g7);border:1px solid var(--border);border-radius:12px;padding:14px}
+.checkin-cat{font-size:12px;color:var(--text2);font-weight:600;text-transform:uppercase;letter-spacing:.4px;margin-bottom:10px}
+.emoji-scale{display:flex;justify-content:space-between;align-items:center;gap:4px}
+.emoji-btn{font-size:20px;background:#fff;border:1.5px solid var(--border);border-radius:10px;width:44px;height:44px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;line-height:1;flex-shrink:0}
+.emoji-btn:hover{transform:scale(1.15);border-color:var(--g3)}
+.emoji-btn.sel{border-color:var(--g2);background:var(--g6);transform:scale(1.1)}
+.emoji-btn.sel-neg{border-color:#f9a8a8;background:#fff5f5}
+.emoji-scale-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--text3);margin-top:5px;padding:0 2px}
+/* Vibe card */
+.vibe-card{border-radius:16px;padding:20px;margin-bottom:20px;position:relative;overflow:hidden}
+.vibe-card.encourage{background:linear-gradient(135deg,#e8f5e9,#f0faf2);border:1px solid var(--border)}
+.vibe-card.mindful{background:linear-gradient(135deg,#e3f2fd,#f0f8ff);border:1px solid #b3d9f7}
+.vibe-card.joke{background:linear-gradient(135deg,#fff8e7,#fffdf0);border:1px solid var(--gold-l)}
+.vibe-card.rebel{background:linear-gradient(135deg,#f3e8ff,#fdf5ff);border:1px solid #d4b0f0}
+.vibe-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;display:flex;align-items:center;gap:5px}
+.vibe-card.encourage .vibe-tag{color:var(--g3)}
+.vibe-card.mindful .vibe-tag{color:#1565c0}
+.vibe-card.joke .vibe-tag{color:#7a5c00}
+.vibe-card.rebel .vibe-tag{color:#6a1b9a}
+.vibe-text{font-size:14px;color:var(--text);line-height:1.65}
+.vibe-dismiss{position:absolute;top:10px;right:12px;background:none;border:none;cursor:pointer;font-size:16px;color:var(--text3)}
+/* Meal plan */
+.meal-hero{background:linear-gradient(135deg,var(--g1) 0%,var(--g2) 60%,var(--g3) 100%);border-radius:20px;padding:28px;margin-bottom:20px;color:#fff;position:relative;overflow:hidden}
+.meal-hero::before{content:'🌿';position:absolute;right:20px;top:16px;font-size:64px;opacity:.12}
+.meal-hero h3{font-size:24px;margin-bottom:6px}
+.meal-hero p{opacity:.8;font-size:14px;margin-bottom:14px}
+.macro-chips{display:flex;flex-wrap:wrap;gap:8px}
+.macro-chip{background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:5px 13px;font-size:13px}
+.meal-type-header{font-size:11px;font-weight:700;color:var(--g3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.meal-type-header::after{content:'';flex:1;height:1px;background:var(--border)}
+.meal-item{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:12px;background:#fff;margin-bottom:8px;transition:border-color .2s}
+.meal-item:hover{border-color:var(--g4)}
+.meal-item-body{flex:1}
+.meal-item-name{font-weight:600;font-size:14px;color:var(--text);margin-bottom:2px}
+.meal-item-macros{font-size:12px;color:var(--text3);margin-bottom:4px}
+.recipe-link{font-size:12px;color:var(--g3);cursor:pointer;font-weight:500;display:inline-flex;align-items:center;gap:3px;background:none;border:none;font-family:'DM Sans',sans-serif;padding:0}
+.recipe-link:hover{color:var(--g2);text-decoration:underline}
+.heart-btn{background:none;border:none;cursor:pointer;font-size:22px;transition:transform .2s;line-height:1;padding:0;flex-shrink:0}
+.heart-btn:hover{transform:scale(1.2)}
+/* Recipe card in popup */
+.recipe-popup-card{background:var(--g7);border-radius:12px;padding:14px;margin-bottom:12px;text-align:left}
+.recipe-section-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--g3);margin-bottom:6px}
+.recipe-ingredients{font-size:13px;color:var(--text);line-height:1.7}
+.recipe-steps{font-size:13px;color:var(--text);line-height:1.7;margin-top:10px}
+/* All recipes / week section */
+.recipes-week-card{border:2px solid var(--g3);border-radius:18px;padding:0;margin-bottom:20px;overflow:hidden}
+.recipes-week-header{background:var(--g2);color:#fff;padding:18px 22px;display:flex;align-items:center;justify-content:space-between}
+.recipes-week-header h3{font-size:19px;font-family:'Playfair Display',serif}
+.recipe-week-btns{display:flex;gap:8px}
+.recipe-dl-btn{padding:8px 16px;border:1.5px solid rgba(255,255,255,.5);border-radius:10px;background:transparent;color:#fff;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px}
+.recipe-dl-btn:hover{background:rgba(255,255,255,.15)}
+.recipe-week-body{padding:20px 22px}
+.recipe-full{margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+.recipe-full:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.recipe-full-name{font-size:16px;font-weight:700;color:var(--g1);margin-bottom:2px;font-family:'Playfair Display',serif}
+.recipe-full-macros{font-size:12px;color:var(--text3);margin-bottom:10px}
+.recipe-full-cols{display:grid;grid-template-columns:1fr 1.4fr;gap:16px}
+.recipe-col-head{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g3);margin-bottom:6px}
+.recipe-ing-list{list-style:none;font-size:13px;color:var(--text2);line-height:1.8}
+.recipe-ing-list li::before{content:'•  ';color:var(--g3)}
+.recipe-steps-list{list-style:none;font-size:13px;color:var(--text2);line-height:1.7;counter-reset:steps}
+.recipe-steps-list li{counter-increment:steps;padding-left:20px;position:relative;margin-bottom:4px}
+.recipe-steps-list li::before{content:counter(steps)'.';position:absolute;left:0;color:var(--g3);font-weight:600}
+.recipe-note{font-size:12px;color:var(--g3);font-style:italic;margin-top:8px}
+/* ebook btn */
+.ebook-btn{width:100%;padding:16px;background:linear-gradient(135deg,#b8891e,var(--gold));color:#fff;border:none;border-radius:14px;font-family:'Playfair Display',serif;font-size:17px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;margin-top:20px;transition:all .2s;box-shadow:0 4px 16px rgba(201,168,76,0.3)}
+.ebook-btn:hover{transform:translateY(-2px);box-shadow:0 6px 22px rgba(201,168,76,0.4)}
+/* Popup */
+.popup-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px}
+.popup-box{background:#fff;border-radius:20px;padding:28px 24px;max-width:500px;width:100%;position:relative;box-shadow:var(--shadow-lg);animation:popIn .2s ease;max-height:85vh;overflow-y:auto}
+@keyframes popIn{from{transform:scale(.92);opacity:0}to{transform:scale(1);opacity:1}}
+.popup-close{position:absolute;top:12px;right:14px;background:var(--g6);border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:14px;color:var(--g2);font-weight:600;display:flex;align-items:center;justify-content:center}
+.popup-icon{font-size:38px;text-align:center;margin-bottom:10px}
+.popup-title{font-family:'Playfair Display',serif;font-size:19px;color:var(--g1);text-align:center;margin-bottom:8px}
+.popup-text{font-size:14px;color:var(--text2);text-align:center;line-height:1.65}
+.pts-toast{position:fixed;top:68px;right:16px;background:var(--g1);color:#fff;padding:10px 16px;border-radius:12px;font-size:13px;font-weight:500;z-index:300;display:flex;align-items:center;gap:8px;animation:slideIn .3s ease;pointer-events:none}
+@keyframes slideIn{from{transform:translateX(80px);opacity:0}to{transform:translateX(0);opacity:1}}
+.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600}
+.badge-green{background:var(--g6);color:var(--g1)}
+/* FUN RECIPES */
+.fun-recipes-section{background:linear-gradient(135deg,#fff8e7,#fffdf5);border:1.5px solid var(--gold-l);border-radius:16px;padding:22px;margin-bottom:20px}
+.fun-recipe-card{border:1px solid #e8d9a0;border-radius:12px;margin-bottom:10px;overflow:hidden;background:#fff}
+.fun-recipe-card:last-child{margin-bottom:0}
+.fun-recipe-header{padding:14px 16px;cursor:pointer;display:flex;align-items:flex-start;transition:background .15s}
+.fun-recipe-header:hover{background:#fffbf0}
+.fun-recipe-tag{font-size:11px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}
+.fun-recipe-name{font-size:15px;font-weight:600;color:var(--g1);margin-bottom:2px}
+.fun-recipe-tagline{font-size:12px;color:var(--text3);font-style:italic}
+.fun-recipe-body{padding:16px;background:var(--g7);border-top:1px solid #e8d9a0}
+/* GROCERY BUTTONS */
+.grocery-btn{padding:11px 20px;background:var(--g2);color:#fff;border:none;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px}
+.grocery-btn:hover{background:var(--g1);transform:translateY(-1px)}
+.grocery-btn-sec{background:transparent;color:var(--g2);border:1.5px solid var(--g3)}
+.grocery-btn-sec:hover{background:var(--g7);transform:translateY(-1px)}
+/* NOTIFICATION BELL */
+.nav-bell{position:relative;cursor:pointer;display:flex;align-items:center;margin-right:4px}
+.nav-bell-icon{font-size:20px;color:rgba(255,255,255,.7);transition:color .2s}
+.nav-bell:hover .nav-bell-icon{color:#fff}
+.nav-bell-badge{position:absolute;top:-3px;right:-4px;background:#e53e3e;color:#fff;font-size:9px;font-weight:700;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--g1);display:none}
+.nav-bell-badge.show{display:flex}
+/* NOTIFICATION PANEL */
+.notif-overlay{position:fixed;inset:0;z-index:150;background:transparent}
+.notif-panel{position:fixed;top:66px;right:16px;width:340px;max-height:480px;background:#fff;border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow-lg);z-index:160;overflow:hidden;animation:slideDown .2s ease;display:none}
+.notif-panel.open{display:block}
+@keyframes slideDown{from{transform:translateY(-10px);opacity:0}to{transform:translateY(0);opacity:1}}
+.notif-header{padding:14px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.notif-header-title{font-family:'Playfair Display',serif;font-size:15px;color:var(--g1);font-weight:600}
+.notif-mark-read{font-size:12px;color:var(--g3);background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500}
+.notif-mark-read:hover{color:var(--g2)}
+.notif-list{overflow-y:auto;max-height:380px}
+.notif-item{display:flex;gap:12px;padding:12px 16px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .15s;position:relative}
+.notif-item:hover{background:var(--g7)}
+.notif-item.unread{background:#f8fcf9}
+.notif-item.unread::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--g3);border-radius:0 2px 2px 0}
+.notif-dot{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;background:var(--g7)}
+.notif-dot.urgent{background:#fff5f5}
+.notif-dot.good{background:var(--g6)}
+.notif-dot.tip{background:#fff8e7}
+.notif-body{flex:1;min-width:0}
+.notif-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px;line-height:1.3}
+.notif-msg{font-size:12px;color:var(--text3);line-height:1.45}
+.notif-time{font-size:10px;color:var(--text3);margin-top:3px}
+.notif-empty{padding:32px;text-align:center;color:var(--text3);font-size:13px}
+/* GROCERY POPUP */
+.grocery-section{margin-bottom:16px}
+.grocery-cat{font-size:11px;font-weight:700;color:var(--g2);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.grocery-cat::after{content:'';flex:1;height:1px;background:var(--border)}
+.grocery-items{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.grocery-item{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text2);padding:5px 0}
+.grocery-check{width:16px;height:16px;border:1.5px solid var(--border);border-radius:4px;flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.grocery-check.checked{background:var(--g3);border-color:var(--g3);color:#fff;font-size:10px}
+.grocery-item-text{cursor:pointer;transition:color .15s}
+.grocery-item-text.checked{text-decoration:line-through;color:var(--text3)}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="logo-area">
-    <div class="logo-badge">Created by Registered Dietitian</div>
-    <div class="logo-title">PeptideRx Nutrition</div>
-    <p class="logo-sub">Personalized peptide protocols powered by clinical expertise</p>
+
+<!-- ════════════════ SIGN-IN PAGE ════════════════ -->
+<div class="signin-page active" id="signinPage">
+  <div class="signin-leaf-bg"></div>
+  <div class="signin-card">
+    <div class="signin-logo">
+      <div class="signin-logo-icon">🌿</div>
+      <div class="signin-logo-name">PeptideNourish</div>
+      <div class="signin-logo-rd">✦ Created by a Registered Dietitian ✦</div>
+    </div>
+
+    <!-- STEP 1: Phone entry -->
+    <div class="signin-step active" id="siStep1">
+      <div class="signin-heading">Welcome</div>
+      <div class="signin-sub">Enter your phone number and we'll text you a one-time passcode to sign in.</div>
+      <div class="phone-input-wrap">
+        <div class="phone-flag">🇺🇸 +1</div>
+        <input class="phone-number" id="phoneInput" type="tel" inputmode="numeric" maxlength="14"
+          placeholder="(555) 000-0000" oninput="formatPhone(this)" onkeydown="phoneKeydown(event)">
+      </div>
+      <div class="signin-error" id="phoneError">Please enter a valid 10-digit phone number.</div>
+      <button class="signin-btn" id="sendCodeBtn" onclick="sendCode()">Send passcode →</button>
+      <div class="signin-demo">
+        <strong>Demo mode:</strong> Any valid phone format works. Use passcode <strong>1 2 3 4 5 6</strong> to sign in. In production, a real SMS would be sent via Twilio.
+      </div>
+    </div>
+
+    <!-- STEP 2: Passcode entry -->
+    <div class="signin-step" id="siStep2">
+      <div class="signin-heading">Check your texts 📱</div>
+      <div class="phone-sent-display" id="phoneSentTo"></div>
+      <div class="signin-sub" style="text-align:center;margin-top:4px">Enter the 6-digit code we sent you.</div>
+      <div class="passcode-wrap">
+        <input class="passcode-digit" maxlength="1" inputmode="numeric" id="pc0" oninput="pcInput(0)" onkeydown="pcKey(event,0)">
+        <input class="passcode-digit" maxlength="1" inputmode="numeric" id="pc1" oninput="pcInput(1)" onkeydown="pcKey(event,1)">
+        <input class="passcode-digit" maxlength="1" inputmode="numeric" id="pc2" oninput="pcInput(2)" onkeydown="pcKey(event,2)">
+        <input class="passcode-digit" maxlength="1" inputmode="numeric" id="pc3" oninput="pcInput(3)" onkeydown="pcKey(event,3)">
+        <input class="passcode-digit" maxlength="1" inputmode="numeric" id="pc4" oninput="pcInput(4)" onkeydown="pcKey(event,4)">
+        <input class="passcode-digit" maxlength="1" inputmode="numeric" id="pc5" oninput="pcInput(5)" onkeydown="pcKey(event,5)">
+      </div>
+      <div class="signin-error" id="codeError">Incorrect passcode. Check and try again.</div>
+      <div class="signin-success" id="codeSuccess">✓ Signing you in…</div>
+      <button class="signin-btn" id="verifyBtn" onclick="verifyCode()" disabled>Verify passcode →</button>
+      <div class="resend-timer">
+        <span id="resendTimerSpan">Resend code in <strong id="resendCount">30</strong>s</span>
+        <button id="resendBtn" style="display:none;background:none;border:none;color:var(--g3);cursor:pointer;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;text-decoration:underline" onclick="resendCode()">Resend code</button>
+      </div>
+      <div class="signin-link" style="margin-top:8px"><button onclick="goSignInBack()">← Different number</button></div>
+    </div>
   </div>
-  <div id="app"></div>
+</div>
+
+<!-- ════════════════ MAIN APP ════════════════ -->
+<div id="mainApp" style="display:none">
+
+<nav class="nav">
+  <div class="nav-logo"><span>🌿</span> PeptideNourish</div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" id="tab-profile" onclick="goPage('profile')">Profile</button>
+    <button class="nav-tab" id="tab-dashboard" onclick="goPage('dashboard')">Dashboard</button>
+    <button class="nav-tab" id="tab-meals" onclick="goPage('meals')">Meal Plan</button>
+  </div>
+  <div style="display:flex;align-items:center;gap:10px">
+    <button onclick="signOut()" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);font-family:'DM Sans',sans-serif;font-size:12px;padding:5px 10px;border-radius:7px;cursor:pointer;transition:all .2s" onmouseover="this.style.background='rgba(255,255,255,.2)'" onmouseout="this.style.background='rgba(255,255,255,.1)'">Sign out</button>
+    <div class="nav-bell" onclick="toggleNotifPanel(event)" title="Notifications">
+      <span class="nav-bell-icon">🔔</span>
+      <div class="nav-bell-badge" id="bellBadge">0</div>
+    </div>
+    <div class="nav-points" onclick="showVibePopup()">⭐ <span id="totalPts">0</span> pts</div>
+  </div>
+</nav>
+
+<!-- NOTIFICATION PANEL -->
+<div class="notif-panel" id="notifPanel">
+  <div class="notif-header">
+    <span class="notif-header-title">🔔 Notifications</span>
+    <button class="notif-mark-read" onclick="markAllRead()">Mark all read</button>
+  </div>
+  <div class="notif-list" id="notifList">
+    <div class="notif-empty">No notifications yet — complete your profile to get started!</div>
+  </div>
+</div>
+
+<!-- ═══ PROFILE ═══ -->
+<div class="page active" id="page-profile">
+  <div style="margin-bottom:24px"><h2 style="font-size:28px;color:var(--g1);margin-bottom:4px">Your Profile</h2><p style="color:var(--text3);font-size:14px">Build your personalized peptide nutrition plan</p></div>
+  <div class="profile-steps"><div class="pstep active" id="ps1"></div><div class="pstep" id="ps2"></div><div class="pstep" id="ps3"></div></div>
+  <div class="step-labels"><span class="step-label active" id="sl1">You &amp; your stats</span><span class="step-label" id="sl2">Peptide stack</span><span class="step-label" id="sl3">Your goals</span></div>
+
+  <div id="profStep1">
+    <div class="card">
+      <div class="card-title">👤 About You</div>
+      <div class="row2">
+        <div class="field-group"><label class="field-label">Your first name</label><input class="field-input" id="pName" placeholder="Your name" oninput="updateAvatarName()"></div>
+        <div class="field-group"><label class="field-label">Age</label><input class="field-input" id="pAge" type="number" placeholder="32" oninput="calcStats()"></div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Gender</label>
+        <div class="gender-row"><button class="gender-btn sel" id="gMale" onclick="setGender('M')">♂ Male</button><button class="gender-btn" id="gFemale" onclick="setGender('F')">♀ Female</button></div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Height</label>
+        <div class="ht-row">
+          <div><input class="field-input" id="pFt" type="number" placeholder="5" min="3" max="7" oninput="calcStats()"><div style="font-size:11px;color:var(--text3);margin-top:4px;text-align:center">feet</div></div>
+          <div><input class="field-input" id="pIn" type="number" placeholder="9" min="0" max="11" oninput="calcStats()"><div style="font-size:11px;color:var(--text3);margin-top:4px;text-align:center">inches</div></div>
+        </div>
+      </div>
+      <div class="row2">
+        <div class="field-group"><label class="field-label">Current weight (lbs)</label><input class="field-input" id="pWt" type="number" placeholder="180" oninput="calcStats()"></div>
+        <div class="field-group"><label class="field-label">Target weight (lbs)</label><input class="field-input" id="pTWt" type="number" placeholder="160" oninput="calcStats()"></div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Activity level</label>
+        <select class="field-input" id="pActivity" onchange="calcStats()">
+          <option value="1.2">Sedentary</option>
+          <option value="1.375">Light (1–3x/week)</option>
+          <option value="1.55" selected>Moderate (3–5x/week)</option>
+          <option value="1.725">Active (6–7x/week)</option>
+          <option value="1.9">Very active (2x/day)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">⭐ Meet Your Avatar</div>
+      <div class="avatar-section">
+        <div class="avatar-wrap">
+          <div class="avatar-svg-wrap" id="avatarWrap"></div>
+          <div class="avatar-level" id="avatarLevel">Level 1 — Seed 🌱</div>
+          <div class="avatar-pts">⭐ <span id="avatarPtsNum">0</span> pts</div>
+          <div class="avatar-progress"><div class="avatar-progress-fill" id="avatarBar" style="width:0%"></div></div>
+        </div>
+        <div class="avatar-info">
+          <p style="font-size:13px;color:var(--text2);margin-bottom:14px;line-height:1.7">Name your avatar — this is the version of you that gets stronger every time you log. Watch them level up as you earn points!</p>
+          <div class="field-group">
+            <label class="field-label">Give your avatar a name</label>
+            <input class="field-input" id="avatarName" placeholder="e.g. Apex, Nova, Titan, Sage…" oninput="updateAvatarName()" style="font-size:16px;font-weight:500">
+            <div style="font-size:11px;color:var(--text3);margin-top:5px" id="avatarNameHint">Your avatar's name will appear on your dashboard every day 👆</div>
+          </div>
+          <!-- 5-stat row: BMI, BMR, To Goal, Protein Goal, Calorie Goal -->
+          <div class="stats-grid">
+            <div class="stat-box"><div class="stat-label">BMI</div><div class="stat-value" id="sBMI">—</div></div>
+            <div class="stat-box"><div class="stat-label">BMR</div><div class="stat-value" id="sBMR">—</div><div class="stat-unit">kcal/day</div></div>
+            <div class="stat-box"><div class="stat-label">To goal</div><div class="stat-value" id="sGoal">—</div><div class="stat-unit">lbs</div></div>
+          </div>
+          <div class="stats-grid" style="margin-top:10px">
+            <div class="stat-box highlight"><div class="stat-label">Daily protein goal</div><div class="stat-value" id="sProtGoal">—</div><div class="stat-unit">grams/day</div></div>
+            <div class="stat-box highlight" style="grid-column:span 2"><div class="stat-label">Daily calorie target (fat loss)</div><div class="stat-value" id="sTDEE">—</div><div class="stat-unit">kcal/day · 500 kcal deficit from TDEE</div></div>
+          </div>
+          <div id="protGoalNote" style="display:none;margin-top:10px;font-size:12px;color:var(--g3);background:var(--g7);border-radius:10px;padding:10px 12px;line-height:1.6">
+            📌 Protein goal is set at <strong>1.5g per kg of your target body weight</strong> — this level supports muscle preservation and satiety while on your peptide protocol.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:flex-end"><button class="btn-primary" onclick="goStep(2)">Next: Choose Peptides →</button></div>
+  </div>
+
+  <div id="profStep2" style="display:none">
+    <div class="card">
+      <div class="card-title">💊 Your Peptide Stack</div>
+      <p style="font-size:13px;color:var(--text3);margin-bottom:18px">Select all peptides you are currently taking. They will appear on your dashboard for daily logging.</p>
+      <div id="pepCategories"></div>
+      <div id="selPepsWrap" style="display:none;margin-top:16px;padding-top:14px;border-top:1px solid var(--border)">
+        <span class="badge badge-green">Your current stack</span>
+        <div class="sel-peps-list" id="selPepsList"></div>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:space-between"><button class="btn-outline" onclick="goStep(1)">← Back</button><button class="btn-primary" onclick="goStep(3)">Next: Set Goals →</button></div>
+  </div>
+
+  <div id="profStep3" style="display:none">
+    <div class="card">
+      <div class="card-title">🎯 Your Goals</div>
+      <p style="font-size:13px;color:var(--text3);margin-bottom:18px">Select everything you're working toward — your meal plan and recommendations will be tailored to these.</p>
+      <div class="goals-grid" id="goalsGrid"></div>
+    </div>
+    <div style="display:flex;justify-content:space-between"><button class="btn-outline" onclick="goStep(2)">← Back</button><button class="btn-primary" onclick="finishProfile()">Save &amp; Go to Dashboard →</button></div>
+  </div>
+</div>
+
+<!-- ═══ DASHBOARD ═══ -->
+<div class="page" id="page-dashboard">
+  <div class="dash-hero">
+    <div class="dash-hero-avatar">
+      <div class="dash-hero-svg" id="dashAvatarSvg"></div>
+      <div class="dash-hero-avname" id="dashAvatarName">Your Avatar</div>
+      <div class="dash-hero-level" id="dashAvatarLevel">Level 1 — Seed 🌱</div>
+      <div class="dash-hero-bar"><div class="dash-hero-bar-fill" id="dashAvatarBar" style="width:0%"></div></div>
+    </div>
+    <div class="dash-hero-right">
+      <div class="dash-hero-greeting" id="dashGreeting">Good morning! 🌿</div>
+      <div class="dash-hero-date" id="dashDate"></div>
+      <div class="nudge-list" id="nudgeList">
+        <div class="nudge tip"><span class="nudge-icon">💡</span><span>Complete your profile to see your personalized daily nudges here.</span></div>
+      </div>
+      <div class="dash-hero-pts">⭐ <span id="dashPtsLabel">0 pts</span> &nbsp;·&nbsp; <span id="dashLevelLabel">Level 1</span></div>
+    </div>
+  </div>
+
+  <div style="display:flex;justify-content:flex-end;margin-top:-10px;margin-bottom:16px">
+    <button class="btn-outline" style="font-size:12px;padding:7px 14px" onclick="goPage('profile')">← Edit Profile</button>
+  </div>
+
+  <div id="vibeZone"></div>
+
+  <div class="card">
+    <div class="card-title">💊 Today's Peptide Log</div>
+    <div class="dash-peps" id="dashPeps"><p style="font-size:13px;color:var(--text3)">Complete your profile to see your stack here.</p></div>
+    <div id="glpNoteWrap" style="display:none"></div>
+    <button class="history-btn" onclick="toggleHistory('pepHistory')">📋 View peptide log history</button>
+    <div class="history-panel" id="pepHistory">
+      <div class="history-item"><span>Yesterday</span><span>Semaglutide 0.5mg ✓ · BPC-157 ✓</span></div>
+      <div class="history-item"><span>2 days ago</span><span>Semaglutide 0.5mg ✓ · BPC-157 ✓</span></div>
+      <div class="history-item"><span>3 days ago</span><span>BPC-157 ✓</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🥩 Protein Log</div>
+    <div class="log-row">
+      <label>Grams today</label>
+      <input class="log-input" type="number" id="protInput" placeholder="0" min="0" oninput="updateProtBar()">
+      <div class="log-bar-wrap">
+        <div class="log-bar"><div class="log-bar-fill" id="protBar" style="width:0%"></div></div>
+        <div class="log-meta"><span id="protTotal">0g logged</span><span id="protGoalLbl">Goal: 109g</span></div>
+      </div>
+    </div>
+    <button class="history-btn" onclick="toggleHistory('protHistory');saveProtLog()">📋 Log &amp; view protein history</button>
+    <div class="history-panel" id="protHistory">
+      <div class="history-item"><span>Yesterday</span><span>142g ✓</span></div>
+      <div class="history-item"><span>2 days ago</span><span>158g ✓</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🏃 Exercise Log</div>
+    <div class="log-row" style="margin-bottom:14px"><label>Cardio (minutes)</label><input class="log-input" type="number" id="cardioInput" placeholder="0" min="0" oninput="updateNudges()"></div>
+    <div class="log-row"><label>Lifting sessions this week</label><input class="log-input" type="number" id="liftInput" placeholder="0" min="0" style="width:60px" oninput="updateNudges()"><span style="font-size:12px;color:var(--text3)">sessions</span></div>
+    <button class="history-btn" onclick="toggleHistory('exHistory');logExercise()">📋 Log &amp; view exercise history</button>
+    <div class="history-panel" id="exHistory">
+      <div class="history-item"><span>Yesterday</span><span>30 min cardio · 1 session</span></div>
+      <div class="history-item"><span>2 days ago</span><span>45 min cardio</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🕐 Meal Timing — Eating Window</div>
+    <div class="timing-row"><label>Start</label><input type="range" min="4" max="14" value="8" step="0.5" id="winStart" oninput="updateWindow()"><span class="t-val" id="wsLabel">8:00 AM</span></div>
+    <div class="timing-row"><label>End</label><input type="range" min="10" max="24" value="18" step="0.5" id="winEnd" oninput="updateWindow()"><span class="t-val" id="weLabel">6:00 PM</span></div>
+    <div style="text-align:center;margin-top:8px">
+      <div style="font-size:12px;color:var(--text3);margin-bottom:4px">Your eating window today</div>
+      <div class="window-badge" id="windowBadge">10 hrs · 8:00 AM – 6:00 PM</div>
+    </div>
+    <button class="history-btn" onclick="toggleHistory('timingHistory');logPoints(10,'Meal timing logged! +10 pts')">📋 Log &amp; view timing history</button>
+    <div class="history-panel" id="timingHistory">
+      <div class="history-item"><span>Yesterday</span><span>10 hr window · 8 AM – 6 PM</span></div>
+      <div class="history-item"><span>2 days ago</span><span>8 hr window · 10 AM – 6 PM</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">💚 Daily Check-In</div>
+    <p style="font-size:13px;color:var(--text3);margin-bottom:16px">Rate how you're feeling today — tap the emoji that fits best</p>
+    <div class="checkin-grid" id="checkinGrid"></div>
+  </div>
+</div>
+
+<!-- ═══ MEAL PLAN ═══ -->
+<div class="page" id="page-meals">
+  <div class="meal-hero">
+    <h3>Today's Meal Plan</h3>
+    <p>Optimized for your peptide stack · fat loss · muscle support</p>
+    <div class="macro-chips" id="macroBadges">
+      <div class="macro-chip">🥩 109g protein</div>
+      <div class="macro-chip">🌾 175g carbs</div>
+      <div class="macro-chip">🥑 62g fat</div>
+      <div class="macro-chip">🔥 1,900 kcal</div>
+      <div class="macro-chip">⏱ 10 hr window</div>
+    </div>
+  </div>
+
+  <div id="mealPlanContent"></div>
+
+  <!-- All Recipes for the Week -->
+  <div class="recipes-week-card">
+    <div class="recipes-week-header">
+      <h3>📚 All Recipes for the Week</h3>
+      <div class="recipe-week-btns">
+        <button class="recipe-dl-btn" onclick="printRecipes()">🖨️ Print</button>
+        <button class="recipe-dl-btn" onclick="downloadRecipes()">⬇️ Download</button>
+      </div>
+    </div>
+    <div class="recipe-week-body" id="allRecipesBody"></div>
+    <div style="padding:16px 16px 4px;border-top:1px solid var(--border);display:flex;gap:10px;flex-wrap:wrap">
+      <button class="grocery-btn" onclick="showGroceryList()">🛒 Groceries for the Week</button>
+      <button class="grocery-btn grocery-btn-sec" onclick="printGroceryList()">🖨️ Print Grocery List</button>
+    </div>
+  </div>
+
+  <button class="ebook-btn" onclick="showEbookPopup()">📚 Create &amp; Download My Personalized eBook</button>
+
+  <!-- FUN RECIPES SECTION -->
+  <div class="fun-recipes-section" style="margin-top:28px">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+      <span style="font-size:24px">✨</span>
+      <div>
+        <div style="font-family:'Playfair Display',serif;font-size:18px;color:var(--g1);font-weight:600">Protein Lab</div>
+        <div style="font-size:13px;color:var(--text3)">High-protein recipes that actually make you excited to hit your macros</div>
+      </div>
+    </div>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:16px;line-height:1.6">These are the viral, TikTok-famous, "wait, this is healthy?" recipes. Cottage cheese brownies. Cloud eggs. No-bake cheesecake cups. All dietitian-approved, all high-protein, all genuinely delicious. Tap to expand.</p>
+    <div id="funRecipesBody"></div>
+  </div>
+</div>
+
+</div><!-- end #mainApp -->
+
+<!-- POPUP (outside mainApp so it works on sign-in too) -->
+<div class="popup-overlay" id="popupOverlay" style="display:none" onclick="maybeClose(event)">
+  <div class="popup-box">
+    <button class="popup-close" onclick="closePopup()">✕</button>
+    <div class="popup-icon" id="popIcon"></div>
+    <div class="popup-title" id="popTitle"></div>
+    <div class="popup-text" id="popText"></div>
+  </div>
 </div>
 
 <script>
-const MOCK_CODE = "123456";
-const state = {
-  screen: "phone",
-  userName: "",
-  profile: null,
-  points: 0,
-  todayLogs: { peptide: false, protein: false, exercise: false, eatWindow: false },
-  favorites: new Set(),
-  dashTab: "log",
-  mealPlan: null,
-  toastTimer: null,
+var S={gender:'M',points:0,name:'',avatarName:'',peptides:[],goals:[],profileDone:false,favorites:{},protGoal:109,shownVibes:[],
+  logs:{protYest:142,protGoalYest:109,cardioYest:0,liftWeek:1,pepLoggedYest:true,windowHrsYest:10,sleepCheckIn:3,energyCheckIn:2}};
+
+var pepData={
+  '⚖️ GLP-1 / Weight Loss':['Semaglutide','Tirzepatide','Retatrutide','Liraglutide','CJC-1295'],
+  '💪 Growth Hormone':['GHRP-2','GHRP-6','MK-677','Sermorelin','Tesamorelin','Ipamorelin'],
+  '🩹 Tissue Repair & Recovery':['BPC-157','TB-500','KPV','GHK-Cu','AOD-9604'],
+  '🧠 Cognitive & Focus':['Dihexa','Semax','Selank','Cerebrolysin','NA-1'],
+  '🌿 Longevity & Anti-Aging':['Epithalon','Thymosin Alpha-1','LL-37','MOTS-C','Humanin'],
+  '🔥 Libido & Hormones':['PT-141','Kisspeptin','MT-2','Gonadorelin']
+};
+var glpPeps=['Semaglutide','Tirzepatide','Retatrutide','Liraglutide'];
+var goalsData=[
+  {id:'fatLoss',icon:'🔥',label:'Fat Loss'},{id:'muscle',icon:'💪',label:'Muscle Gain'},
+  {id:'energy',icon:'⚡',label:'Energy'},{id:'focus',icon:'🧠',label:'Focus'},
+  {id:'sleep',icon:'🌙',label:'Better Sleep'},{id:'recovery',icon:'🩹',label:'Recovery'},
+  {id:'longevity',icon:'🌿',label:'Longevity'},{id:'performance',icon:'🏃',label:'Performance'},
+  {id:'hormones',icon:'⚖️',label:'Hormones'}
+];
+var checkInData=[
+  {cat:'Nausea',emojis:['🤢','😖','😐','🙂','😊'],
+   tips:{0:'Ginger tea works wonders — steep fresh ginger 10 min and sip slowly. Try eating smaller meals every 2–3 hrs. Zinc carnosine 75mg before injection may be a game-changer.',
+         1:'Peppermint oil on your wrists can help within minutes. Bland foods like plain rice or toast are your friend today.',
+         2:'Mild queasiness is common early on. Staying hydrated and eating slowly usually does the trick. Fennel seed tea is gentle and effective.',3:'',4:''}},
+  {cat:'Energy',emojis:['😴','🥱','😐','⚡','🚀'],
+   tips:{0:'Deep fatigue may mean electrolytes need attention — try sodium, potassium, and magnesium. B12 and iron are worth checking too. Ashwagandha and rhodiola are excellent natural supports.',
+         1:'A short walk outside can reset your energy more than you\'d expect. Your body may need more carbs — especially on active days.',
+         2:'Moderate energy is fine! Make sure you\'re getting 7–9 hrs sleep and drinking enough water.',3:'',4:''}},
+  {cat:'Sleep',emojis:['😩','😪','😐','😴','🌙'],
+   tips:{0:'Magnesium glycinate 300–400mg at bedtime is one of the best natural sleep aids available. Keep your room cool and dark. BPC-157 can cause vivid dreams early on — totally normal.',
+         1:'Try a consistent wind-down routine 1 hr before bed. No screens, low light, and chamomile tea can signal your brain it\'s time to rest.',
+         2:'Not bad! L-theanine (100–200mg) pairs nicely with magnesium for deeper sleep without grogginess.',3:'',4:''}},
+  {cat:'Focus',emojis:['😵','🌀','😐','🎯','🔥'],
+   tips:{0:'Brain fog often means blood sugar swings or dehydration. Eat balanced meals with protein + fat + complex carbs. Lion\'s mane mushroom (500–1000mg) is a powerful natural cognitive booster.',
+         1:'Try 10 slow deep breaths before your next task — it literally increases blood flow to your prefrontal cortex. Omega-3s (EPA/DHA 2–3g/day) are foundational for focus.',
+         2:'Decent focus today! A short break every 50 minutes keeps your brain sharper than powering through.',3:'',4:''}}
+];
+
+// VIBES — jokes from day 1, rebel content unlocks at 100pts
+var vibes={
+  encourage:[
+    {icon:'💪',title:'You showed up today.',text:'That is literally all it takes. Most people never start. You did. Every log, every choice, every rep — it compounds. Keep going.'},
+    {icon:'🌱',title:'Progress isn\'t always visible.',text:'Some days the scale doesn\'t move. Your cells are still repairing. Your hormones are still optimizing. Trust the process.'},
+    {icon:'🔥',title:'Consistency beats perfection.',text:'An 80% day every day beats a 100% day once a week. You don\'t have to be perfect. You just have to keep showing up.'},
+    {icon:'🌿',title:'You\'re doing something rare.',text:'Most people wait for someone to tell them what to do with their own body. You\'re taking ownership. That takes courage.'},
+    {icon:'⭐',title:'Every log is a vote.',text:'Every time you log your food, your peptides, your sleep — you\'re casting a vote for the person you\'re becoming. Keep voting.'},
+    {icon:'🧬',title:'Your body wants to heal.',text:'It really does. Given the right inputs, the human body is remarkably good at doing exactly what you\'re asking it to do. You\'re giving it the right inputs.'}
+  ],
+  mindful:[
+    {icon:'🌬️',title:'Take a breath right now.',text:'Breathe in for 4 counts. Hold for 4. Out for 6. Your nervous system just shifted. Stress spikes cortisol, which undermines almost everything you\'re working on. That breath was medicine.'},
+    {icon:'🧘',title:'Notice without judgment.',text:'How does your body feel right now — not good or bad, just... what sensations are present? This kind of awareness is how you catch problems early and appreciate wins you\'d otherwise miss.'},
+    {icon:'🌊',title:'Water is the simplest intervention.',text:'Before anything else today, drink a full glass of water. Dehydration mimics fatigue, hunger, brain fog, and even anxiety. Most of us are slightly dehydrated all day.'},
+    {icon:'🌅',title:'Your morning sets your metabolism.',text:'The first two hours after waking shape your cortisol curve, hunger signals, and mental clarity for the whole day. Sunlight, movement, and protein in the morning are high-leverage habits.'},
+    {icon:'🤲',title:'Rest is part of the protocol.',text:'Recovery isn\'t laziness. Muscle is built during rest. Peptides do their repair work while you sleep. Pushing harder when depleted is like driving on a flat tire and calling it determination.'},
+    {icon:'💭',title:'Check in with your hunger.',text:'On GLP-1 protocols especially — are you actually getting enough? Sometimes reduced appetite is a gift. Sometimes it\'s your body asking for more fuel. Pause and tune in.'}
+  ],
+  joke:[
+    {icon:'😄',title:'The peptide learning curve',text:'Week 1: "What\'s a peptide?" Week 2: explaining half-lives to relatives at Thanksgiving. Week 4: You ARE the Thanksgiving relative nobody can stop.'},
+    {icon:'😂',title:'A friendly observation...',text:'I asked my gym buddy what his secret was. He said, "Discipline, consistency, and a peptide stack I can\'t pronounce." Honestly, same.'},
+    {icon:'🙃',title:'The grocery store problem',text:'Nothing prepares you for standing in the protein powder aisle for 45 minutes reading amino acid profiles like you\'re defusing a bomb.'},
+    {icon:'😅',title:'Nate Bargatze moment',text:'I went to the gym for the first time in a month. The guy at the front desk said "haven\'t seen you in a while." I said "I\'ve been healing." That\'s what BPC-157 is for, right?'},
+    {icon:'😁',title:'Progress report',text:'My before photo looks like a completely different person. My after photo looks like someone who now owns a food scale and has opinions about leucine timing. Growth comes in many forms.'},
+    {icon:'🤣',title:'Gym math',text:'According to my fitness tracker, I burned 400 calories. According to my appetite, I burned 4,000. My GLP-1 disagrees with both of us.'},
+    {icon:'😎',title:'The protocol life',text:'Normal people: "What do you want for dinner?" Me: "Well, it\'s my eating window, I\'m post-workout, I\'m on BPC-157, so ideally something with collagen and leucine and maybe zinc and—" My wife has left the room.'},
+    {icon:'🥲',title:'Relatable content',text:'I now spend more time reading supplement labels than I spent studying for any exam in my life. And I\'m absolutely fine with that.'}
+  ],
+  rebel:[
+    {icon:'🏴',title:'Fun fact they didn\'t teach you',text:'The FDA took 20+ years to acknowledge dietary fat wasn\'t the enemy. An entire generation ate low-fat cookies and got sicker. You\'re right to ask questions.'},
+    {icon:'💊',title:'The business model problem',text:'A patient cured is a customer lost. That\'s not a conspiracy — it\'s basic economics. Which is why taking ownership of your health is genuinely radical.'},
+    {icon:'🔬',title:'Science moves faster than approvals',text:'By the time a compound clears clinical trials, patent, and formulary approval, it\'s 10–15 years old. The cutting edge is always ahead of the permission slip.'},
+    {icon:'🧑‍⚕️',title:'Your doctor has 7 minutes.',text:'That\'s the average patient visit. They\'re not ignoring you — they\'re structurally prevented from going deep. You spending 30 minutes researching your protocol isn\'t "too much." It\'s exactly right.'},
+    {icon:'📋',title:'Standard of care ≠ optimal care',text:'"Standard of care" means what most doctors do for most people. It\'s designed for the middle of the bell curve. You\'re optimizing for you. Those are very different goals.'},
+    {icon:'🐍',title:'A brief history of "fringe" medicine',text:'Hand-washing was fringe. Ulcers from bacteria was fringe. Low-carb for diabetes was fringe. Being skeptical of consensus has a pretty good track record in medicine.'}
+  ]
 };
 
-const ALL_MEALS = {
-  breakfast: [
-    { id:"b1", name:"Greek Yogurt Protein Bowl", protein:38, carbs:22, fat:8, cal:320, recipe:"r1" },
-    { id:"b2", name:"Scrambled Egg & Avocado Toast", protein:28, carbs:26, fat:18, cal:380, recipe:"r2" },
-    { id:"b3", name:"Cottage Cheese & Berries", protein:34, carbs:18, fat:5, cal:270, recipe:"r3" },
-    { id:"b4", name:"Protein Smoothie Bowl", protein:42, carbs:30, fat:9, cal:360, recipe:"r4" },
-  ],
-  lunch: [
-    { id:"l1", name:"Grilled Chicken & Quinoa Bowl", protein:52, carbs:38, fat:12, cal:470, recipe:"r5" },
-    { id:"l2", name:"Salmon & Roasted Veggies", protein:48, carbs:20, fat:22, cal:460, recipe:"r6" },
-    { id:"l3", name:"Turkey & Avocado Wrap (lettuce)", protein:44, carbs:12, fat:15, cal:360, recipe:"r7" },
-    { id:"l4", name:"Shrimp & Zucchini Stir-Fry", protein:40, carbs:14, fat:10, cal:320, recipe:"r8" },
-  ],
-  dinner: [
-    { id:"d1", name:"Baked Cod & Sweet Potato", protein:46, carbs:32, fat:8, cal:390, recipe:"r9" },
-    { id:"d2", name:"Lean Ground Turkey Bowl", protein:50, carbs:28, fat:14, cal:430, recipe:"r10" },
-    { id:"d3", name:"Chicken Breast & Asparagus", protein:55, carbs:10, fat:9, cal:340, recipe:"r11" },
-    { id:"d4", name:"Tofu & Bok Choy Stir-Fry", protein:32, carbs:18, fat:12, cal:310, recipe:"r12" },
-  ],
-  snack: [
-    { id:"s1", name:"Hard-Boiled Eggs + Hummus", protein:18, carbs:8, fat:10, cal:200, recipe:"r13" },
-    { id:"s2", name:"Edamame & Sea Salt", protein:16, carbs:12, fat:6, cal:175, recipe:"r14" },
-    { id:"s3", name:"Protein Shake + Almonds", protein:28, carbs:6, fat:9, cal:220, recipe:"r15" },
-  ],
-};
+// MEAL PLAN DATA — no two "bowl" recipes in same day
+var mealPlan=[
+  {type:'Breakfast',icon:'🌅',items:[
+    {name:'Scrambled Eggs with Spinach & Turmeric',macros:'34g protein · 4g carbs · 16g fat · 298 kcal',
+     ingredients:['3 whole large eggs','2 large egg whites (or ¼ cup carton)','1½ cups (45g) baby spinach','¼ tsp ground turmeric','1 pinch black pepper (boosts turmeric absorption)','1 tsp olive oil or avocado oil','Salt to taste','Optional: 1 oz crumbled feta'],
+     steps:['Whisk eggs and egg whites together. Season with turmeric, black pepper, and salt.','Heat oil in a nonstick pan over medium-low heat.','Add spinach and sauté 30 seconds until wilted.','Pour egg mixture over spinach. Fold gently every 20–30 sec until just set — remove while still slightly glossy.','Top with feta if using.'],
+     note:'Turmeric synergizes with BPC-157\'s anti-inflammatory effects. Eggs provide the full amino acid spectrum including leucine for muscle protein synthesis.'}
+  ]},
+  {type:'Mid-Morning Snack',icon:'☀️',items:[
+    {name:'Collagen + Whey Protein Shake',macros:'28g protein · 6g carbs · 3g fat · 163 kcal',
+     ingredients:['1 scoop (20g) collagen peptide powder','½ scoop (15g) whey protein isolate','1 cup (240ml) unsweetened almond milk','¼ tsp cinnamon','½ cup ice','Optional: 1 tsp MCT oil'],
+     steps:['Add all ingredients to a blender.','Blend on high 30–45 seconds until smooth and frothy.','Drink within 30 minutes of light exercise for best results.'],
+     note:'Collagen peptides provide glycine and proline — the exact building blocks that synergize with BPC-157 and GHK-Cu for tissue repair.'}
+  ]},
+  {type:'Lunch',icon:'🌿',items:[
+    {name:'Wild-Caught Salmon Plate with Roasted Broccoli',macros:'46g protein · 28g carbs · 22g fat · 494 kcal',
+     ingredients:['6oz (170g) wild-caught salmon fillet','2 cups (180g) broccoli florets','¾ cup (100g) cooked quinoa','1 tbsp olive oil (divided)','2 garlic cloves, minced','Juice of ½ lemon','½ tsp smoked paprika','Salt, pepper, red pepper flakes to taste'],
+     steps:['Preheat oven to 425°F. Toss broccoli with ½ tbsp olive oil, garlic, salt, and red pepper flakes. Roast 18–20 min until crispy-edged.','Season salmon with paprika, salt, and pepper. Heat ½ tbsp oil in a skillet over medium-high. Cook salmon skin-side down 4 min, flip, cook 2–3 min more until flaky.','Plate: quinoa base, salmon alongside, broccoli on the side. Squeeze lemon over everything.'],
+     note:'Omega-3s in wild salmon reduce systemic inflammation and enhance peptide efficacy. Broccoli\'s sulforaphane activates NRF2 — ideal for longevity stacks.'}
+  ]},
+  {type:'Afternoon Snack',icon:'🌤️',items:[
+    {name:'Cottage Cheese + Walnuts + Apple',macros:'18g protein · 18g carbs · 12g fat · 252 kcal',
+     ingredients:['¾ cup (170g) low-fat (2%) cottage cheese','¼ cup (28g) raw walnuts, roughly chopped','1 medium apple, sliced','Optional: pinch of cinnamon, drizzle of almond butter'],
+     steps:['Scoop cottage cheese into a bowl.','Slice apple and arrange alongside.','Top with walnuts and cinnamon if using.','Eat slowly — designed to carry you to dinner without cravings.'],
+     note:'Slow-digesting casein is ideal for satiety on GLP-1. Walnuts provide ALA omega-3s and minerals that support cognitive function.'}
+  ]},
+  {type:'Dinner',icon:'🌙',items:[
+    {name:'Pasture-Raised Ground Turkey Skillet',macros:'45g protein · 26g carbs · 14g fat · 410 kcal',
+     ingredients:['6oz (170g) pasture-raised ground turkey (93% lean)','1 medium zucchini, sliced','1 cup (150g) cherry tomatoes, halved','½ cup (85g) canned white beans, drained','1 tbsp olive oil','3 garlic cloves, minced','½ tsp smoked paprika','½ tsp dried oregano','Pinch of red pepper flakes','Salt and pepper to taste','Fresh basil or parsley to finish'],
+     steps:['Heat olive oil in a large skillet over medium-high. Add garlic and sauté 30 seconds.','Add ground turkey, breaking into crumbles. Season with paprika, oregano, salt, pepper, and red pepper flakes. Cook 7–9 min until browned through.','Add zucchini, tomatoes, and white beans. Stir and cook 4–5 more min until zucchini is tender and tomatoes have softened.','Finish with fresh herbs and serve directly from the skillet.'],
+     note:'High in leucine for muscle protein synthesis — critical on GLP-1 and GH peptide protocols. White beans add fiber for gut health and slow carbs for steady energy.'},
+    {name:'Arugula, Avocado & Pumpkin Seed Salad',macros:'5g protein · 10g carbs · 14g fat · 178 kcal',
+     ingredients:['2 cups (40g) fresh arugula','½ ripe avocado, sliced','2 tbsp pumpkin seeds (pepitas)','Juice of ½ lemon','1 tsp extra-virgin olive oil','Pinch of sea salt and cracked pepper'],
+     steps:['Place arugula in a bowl.','Top with sliced avocado and pumpkin seeds.','Drizzle with lemon juice and olive oil.','Season with salt and pepper. Toss gently and serve immediately.'],
+     note:'Rich in magnesium (pumpkin seeds) and potassium (avocado) — minerals commonly depleted on peptide protocols.'}
+  ]}
+];
 
-const RECIPES = {
-  r1:{ title:"Greek Yogurt Protein Bowl", time:"5 min", serves:1, steps:"Scoop 1.5 cups non-fat Greek yogurt into a bowl. Top with ½ cup mixed berries, 2 tbsp honey, 2 tbsp hemp seeds, and 1 tbsp chia seeds. Drizzle with 1 tbsp almond butter. Stir gently and enjoy cold." },
-  r2:{ title:"Scrambled Egg & Avocado Toast", time:"10 min", serves:1, steps:"Whisk 3 large eggs with a pinch of salt. Cook over medium-low heat with a light spray of olive oil, stirring slowly until just set. Toast 1 slice Ezekiel bread. Spread ½ mashed avocado on toast, top with eggs. Season with everything bagel seasoning." },
-  r3:{ title:"Cottage Cheese & Berries", time:"3 min", serves:1, steps:"Spoon 1 cup low-fat cottage cheese into a bowl. Add ¾ cup mixed strawberries and blueberries. Sprinkle with 1 tsp vanilla extract and a drizzle of honey. Optional: 1 tbsp crushed walnuts for crunch." },
-  r4:{ title:"Protein Smoothie Bowl", time:"7 min", serves:1, steps:"Blend 1 scoop vanilla protein powder, ½ frozen banana, ½ cup frozen cauliflower rice, ½ cup almond milk, 1 tsp almond butter until thick. Pour into bowl. Top with sliced banana, granola (2 tbsp), and bee pollen." },
-  r5:{ title:"Grilled Chicken & Quinoa Bowl", time:"25 min", serves:1, steps:"Season 6 oz chicken breast with garlic, cumin, salt. Grill 6 min per side. Rest 5 min, slice. Cook ¾ cup quinoa per package. Layer quinoa, chicken, ½ cup roasted cherry tomatoes, cucumber, fresh parsley. Drizzle with lemon-tahini dressing (1 tbsp tahini + lemon juice + water)." },
-  r6:{ title:"Salmon & Roasted Veggies", time:"22 min", serves:1, steps:"Preheat oven 425°F. Toss 1 cup broccoli, ½ cup bell pepper with 1 tsp olive oil, salt, pepper. Roast 18 min. Season 6 oz salmon with lemon zest, dill, salt. Pan-sear in oven-safe skillet 4 min skin-side down, flip, finish in oven 6 min. Serve with veggies." },
-  r7:{ title:"Turkey Lettuce Wrap", time:"10 min", serves:1, steps:"In a skillet, brown 5 oz ground turkey with garlic powder, onion, cumin, and a splash of coconut aminos. Wash and dry 4 butter lettuce leaves. Fill each with turkey, sliced avocado, diced tomato, and a squeeze of lime. Top with cilantro." },
-  r8:{ title:"Shrimp & Zucchini Stir-Fry", time:"15 min", serves:1, steps:"Heat 1 tsp sesame oil in a wok. Add 6 oz peeled shrimp, cook 2 min per side. Remove. Add 1 spiralized zucchini, 1 cup snap peas, minced ginger, garlic. Stir-fry 3 min. Return shrimp. Add 1 tbsp coconut aminos, ½ tsp sriracha. Toss and serve." },
-  r9:{ title:"Baked Cod & Sweet Potato", time:"30 min", serves:1, steps:"Preheat oven to 400°F. Cube 1 medium sweet potato, toss with ½ tsp olive oil, cinnamon, salt. Roast 20 min. Season 6 oz cod with paprika, garlic, lemon zest. Place on parchment, bake 15 min. Serve cod over sweet potato with steamed greens." },
-  r10:{ title:"Lean Ground Turkey Bowl", time:"20 min", serves:1, steps:"Brown 6 oz 93% lean ground turkey with diced onion, bell pepper, cumin, chili powder. Add ½ cup black beans, ½ cup salsa. Simmer 5 min. Serve over 1 cup cauliflower rice. Top with 2 tbsp non-fat Greek yogurt and fresh cilantro." },
-  r11:{ title:"Chicken Breast & Asparagus", time:"20 min", serves:1, steps:"Pound 7 oz chicken breast to even thickness. Season with Italian herbs, garlic, lemon. Pan-sear in oven-safe pan 3 min per side, then roast at 400°F for 10 min. Blanch 1 bunch asparagus 3 min in boiling salted water. Plate together with lemon wedge." },
-  r12:{ title:"Tofu & Bok Choy Stir-Fry", time:"18 min", serves:1, steps:"Press and cube 7 oz extra-firm tofu. Pan-fry in 1 tsp sesame oil until golden, 8 min total. Remove. Stir-fry 2 heads baby bok choy, minced garlic, grated ginger 3 min. Add tofu back. Sauce: 1 tbsp low-sodium soy sauce, 1 tsp rice vinegar, ½ tsp chili flakes. Serve over 1 cup brown rice." },
-  r13:{ title:"Hard-Boiled Eggs + Hummus", time:"12 min", serves:1, steps:"Place 2 eggs in cold water, bring to boil, cover and remove from heat, wait 10 min. Transfer to ice bath, peel when cool. Slice eggs. Serve alongside ¼ cup store-bought or homemade hummus with sliced cucumber and bell pepper strips for dipping." },
-  r14:{ title:"Edamame & Sea Salt", time:"5 min", serves:1, steps:"Place 1.5 cups frozen shelled edamame in a microwave-safe bowl with 2 tbsp water. Microwave 2–3 min until heated through. Drain. Toss with a pinch of flaky sea salt and optional sesame oil. Eat immediately as a warm snack or chill for a cold option." },
-  r15:{ title:"Protein Shake + Almonds", time:"3 min", serves:1, steps:"Blend 1 scoop your preferred protein powder with 1 cup unsweetened almond milk, a handful of ice, and optional ½ tsp vanilla. Shake or blend until smooth. Pair with exactly 1 oz (about 23) raw almonds for healthy fats and satiety without excess calories." },
-};
-
-function calcBMI(lbs,ht){ return ((lbs/(ht*ht))*703).toFixed(1); }
-function bmiCat(b){ return b<18.5?"Underweight":b<25?"Normal weight":b<30?"Overweight":"Obese"; }
-function bmiColor(b){ return b<18.5?"#80d4f0":b<25?"#7ee8a2":b<30?"#f0c080":"#f08080"; }
-function calcBMR(lbs,ht,age,sex){
-  const kg=lbs*0.453592,cm=ht*2.54;
-  return sex==="male"?Math.round(10*kg+6.25*cm-5*age+5):Math.round(10*kg+6.25*cm-5*age-161);
-}
-function formatPhone(v){
-  const d=v.replace(/\D/g,"").slice(0,10);
-  if(d.length<4)return d;
-  if(d.length<7)return`(${d.slice(0,3)}) ${d.slice(3)}`;
-  return`(${d.slice(0,3)}) ${d.slice(3,6)}-${d.slice(6)}`;
-}
-function proteinTarget(targetWeightLbs){
-  const kg=targetWeightLbs*0.453592;
-  return { lo:Math.round(kg*1.5), hi:Math.round(kg*2.0) };
-}
-function generateMealPlan(favs){
-  const pick=(arr)=>{
-    const weighted=[];
-    arr.forEach(m=>{ const times=favs.has(m.id)?3:1; for(let i=0;i<times;i++)weighted.push(m); });
-    return weighted[Math.floor(Math.random()*weighted.length)];
-  };
-  return { breakfast:pick(ALL_MEALS.breakfast), lunch:pick(ALL_MEALS.lunch), dinner:pick(ALL_MEALS.dinner), snack:pick(ALL_MEALS.snack) };
-}
-
-function render(){
-  document.getElementById("app").innerHTML=buildApp();
-  attachEvents();
-}
-
-function showToast(msg){
-  if(state.toastTimer)clearTimeout(state.toastTimer);
-  let t=document.getElementById("global-toast");
-  if(!t){ t=document.createElement("div"); t.id="global-toast"; t.className="toast"; document.body.appendChild(t); }
-  t.textContent=msg; t.style.display="block"; t.style.animation="none";
-  requestAnimationFrame(()=>{ t.style.animation="toastAnim .3s ease"; });
-  state.toastTimer=setTimeout(()=>{ t.style.display="none"; },2200);
-}
-
-function buildApp(){
-  const dotsScreens=["phone","name","profile"];
-  const dotsIdx=dotsScreens.indexOf(state.screen);
-  let dots="";
-  if(dotsIdx>=0){
-    dots=`<div class="dots">`+dotsScreens.map((_,i)=>`<div class="dot" style="width:${i===dotsIdx?24:8}px;background:${i<dotsIdx?"#4ecb71":i===dotsIdx?"#7ee8a2":"rgba(100,200,130,0.2)"}"></div>`).join("")+`</div>`;
+// FUN / VIRAL HIGH-PROTEIN RECIPES
+var funRecipes=[
+  {
+    name:'Viral Cottage Cheese Brownies',
+    tag:'🤩 TikTok Famous',
+    tagline:'Yes, really. 15g protein per brownie. You\'re welcome.',
+    macros:'15g protein · 18g carbs · 7g fat · 195 kcal per brownie',
+    serves:'9 brownies', prepTime:'35 min',
+    ingredients:['1 cup (230g) full-fat cottage cheese','2 large eggs','½ cup (50g) cocoa powder','½ cup (100g) coconut sugar or monkfruit sweetener','¼ cup (64g) almond butter or peanut butter','1 tsp vanilla extract','½ tsp baking powder','¼ tsp salt','Optional: ¼ cup dark chocolate chips on top'],
+    steps:['Preheat oven to 350°F (175°C). Grease an 8x8 baking dish.','Blend cottage cheese in a blender or food processor until completely smooth — no lumps.','Add eggs, nut butter, vanilla, coconut sugar, and blend again until combined.','Add cocoa powder, baking powder, and salt. Blend until smooth.','Pour batter into prepared pan. Top with chocolate chips if using.','Bake 22–25 min until the center is just set. It will look underdone — that\'s perfect. Let cool 10 min before cutting.','Cut into 9 squares. Store in the fridge up to 5 days.'],
+    note:'The blended cottage cheese is completely undetectable in the final brownie — it just creates an incredibly fudgy texture. GLP-1 users: these freeze beautifully, so you can have a high-protein dessert even on low-appetite days.'
+  },
+  {
+    name:'High-Protein Greek Yogurt "Cheesecake" Cups',
+    tag:'🍰 No-Bake Magic',
+    tagline:'All the flavor of cheesecake, basically none of the guilt.',
+    macros:'22g protein · 14g carbs · 5g fat · 187 kcal per cup',
+    serves:'4 cups', prepTime:'10 min + 1 hr chill',
+    ingredients:['2 cups (454g) full-fat Greek yogurt','4 oz (113g) cream cheese, softened','2 tbsp raw honey or maple syrup','1 tsp vanilla extract','Zest of 1 lemon','For topping: ½ cup mixed berries, 1 tbsp crushed graham crackers per cup'],
+    steps:['Beat softened cream cheese until smooth.','Fold in Greek yogurt, honey, vanilla, and lemon zest. Mix until completely combined.','Spoon into 4 small cups or mason jars.','Top with berries and a sprinkle of crushed graham crackers.','Refrigerate at least 1 hour before serving (overnight is even better).'],
+    note:'Swap cream cheese for ½ scoop vanilla whey protein + a splash of milk to boost protein further. Great high-protein dessert for GLP-1 days when you need something satisfying without volume.'
+  },
+  {
+    name:'Protein-Packed Cloud Eggs',
+    tag:'⛅ TikTok Trend',
+    tagline:'Looks fancy. Takes 12 minutes. Impossible to mess up.',
+    macros:'24g protein · 2g carbs · 10g fat · 198 kcal',
+    serves:'2 servings', prepTime:'12 min',
+    ingredients:['4 large eggs, separated','¼ cup (25g) shredded parmesan','2 tbsp (16g) crumbled turkey bacon or prosciutto (optional)','1 tsp fresh chives or herbs','Salt and pepper to taste'],
+    steps:['Preheat oven to 450°F. Line a baking sheet with parchment.','Separate eggs into two bowls — whites in a large bowl, yolks each kept separate in a small bowl.','Beat egg whites with a pinch of salt until stiff peaks form (about 2–3 min with a hand mixer).','Fold in parmesan and bacon/prosciutto gently.','Spoon 4 mounds of white mixture onto parchment. Make a well in the center of each.','Bake 3 min. Carefully slide one yolk into each well. Bake 3 more min.','Top with herbs, salt, and pepper. Serve immediately.'],
+    note:'The airy texture of cloud eggs makes them surprisingly satisfying even on low-appetite GLP-1 days. Parmesan adds extra casein protein and calcium.'
+  },
+  {
+    name:'Cinnamon Roll Protein Overnight Oats',
+    tag:'🌀 Meal Prep Hero',
+    tagline:'Takes 5 minutes the night before. Tastes like cheating.',
+    macros:'38g protein · 52g carbs · 10g fat · 450 kcal',
+    serves:'1 jar', prepTime:'5 min + overnight',
+    ingredients:['½ cup (45g) rolled oats','1 scoop (30g) vanilla or cinnamon whey protein powder','¾ cup (180ml) unsweetened almond milk','½ cup (115g) Greek yogurt','1 tbsp chia seeds','1 tsp cinnamon','1 tsp vanilla extract','1 tbsp maple syrup or honey','Topping: 1 tbsp almond butter, swirled on top'],
+    steps:['Add oats, chia seeds, cinnamon, and vanilla to a mason jar or container. Stir.','Add Greek yogurt, protein powder, and almond milk. Stir vigorously until protein powder is fully dissolved.','Drizzle in maple syrup and stir.','Seal and refrigerate overnight (minimum 6 hours).','In the morning: swirl almond butter on top. Add a dusting of cinnamon. Eat cold or warm 60 seconds in the microwave.'],
+    note:'38g protein before you even start your day. On high training days or when GLP-1 is suppressing your appetite, this hits your protein goal early so you don\'t have to worry the rest of the day.'
+  },
+  {
+    name:'Crispy Parmesan Salmon Bites',
+    tag:'🐟 Air Fryer Win',
+    tagline:'Turns plain salmon into something you\'d actually crave.',
+    macros:'42g protein · 4g carbs · 18g fat · 342 kcal',
+    serves:'2 servings', prepTime:'15 min',
+    ingredients:['12 oz (340g) wild-caught salmon, cut into 1.5" cubes','¼ cup (25g) grated parmesan','2 tbsp (14g) almond flour or panko','½ tsp garlic powder','½ tsp smoked paprika','¼ tsp black pepper','1 tbsp olive oil','Dipping sauce: 2 tbsp Greek yogurt + 1 tsp lemon juice + 1 tsp dill'],
+    steps:['Mix parmesan, almond flour, garlic powder, paprika, and pepper in a shallow bowl.','Brush salmon cubes lightly with olive oil.','Press each cube into the parmesan mixture to coat on all sides.','Air fry at 400°F for 8–9 min, flipping halfway, until golden and crispy. (Or oven-bake at 425°F for 12–14 min.)','Mix Greek yogurt, lemon juice, and dill for dipping sauce.','Serve hot with dipping sauce and any veggie side.'],
+    note:'These are batch-prep friendly — make double and reheat in the air fryer for 3 min. Great high-protein finger food for the days when a full plate feels like too much.'
   }
-  let body="";
-  if(state.screen==="phone") body=buildPhone();
-  else if(state.screen==="name") body=buildName();
-  else if(state.screen==="profile") body=buildProfile();
-  else if(state.screen==="dashboard") body=buildDashboard();
-  return dots+body;
-}
+];
 
-function buildPhone(){
-  return `<div class="card" style="animation:fadeIn .35s ease">
-    <div style="text-align:center;margin-bottom:1.6rem">
-      <div style="font-size:2.8rem;margin-bottom:.5rem">📱</div>
-      <h2 style="font-family:'Playfair Display',Georgia,serif;font-size:1.3rem;color:#c8f0d8;margin:0 0 .4rem">Sign in with your phone</h2>
-      <p style="font-size:.85rem;color:#6a9a7a;margin:0">No password needed — we'll text you a code</p>
-    </div>
-    <label class="lbl">Mobile Number</label>
-    <div style="position:relative;margin-bottom:1.2rem">
-      <span style="position:absolute;left:1rem;top:50%;transform:translateY(-50%);color:#4a7a5a;font-size:.95rem;pointer-events:none">🇺🇸 +1</span>
-      <input class="inp" id="ph-input" type="tel" placeholder="(555) 000-0000" style="padding-left:4.2rem;font-size:1.05rem;letter-spacing:.04em"/>
-    </div>
-    <button class="btn-primary" id="ph-send" disabled>Send Code →</button>
-    <p style="text-align:center;font-size:.72rem;color:#3a5a4a;margin-top:1rem">By continuing you agree to receive a one-time SMS.</p>
-  </div>`;
-}
+// ─── GROCERY LIST ─────────────────────────────────────
+var groceryChecked={};
+var groceryData={
+  'Proteins & Dairy':[
+    'Wild-caught salmon (12–18 oz total)','Pasture-raised ground turkey, 93% lean (12–18 oz)','Full-fat Greek yogurt (32 oz tub)','Low-fat cottage cheese (16 oz tub)','Eggs, large (1 dozen)','Whey protein isolate (check your supply)','Collagen peptide powder (check your supply)','Cream cheese, 4 oz (for cheesecake cups)'
+  ],
+  'Produce':[
+    'Baby spinach (5 oz bag)','Broccoli, 1 large head','Zucchini (2 medium)','Cherry tomatoes (1 pint)','Arugula (5 oz bag)','Avocados (2–3 ripe)','Apples (4–5 medium)','Lemons (4–5)','Mixed berries, fresh or frozen (2 cups)','Garlic (1 head)','Fresh parsley and/or basil'
+  ],
+  'Pantry & Grains':[
+    'Brown rice or quinoa (1 bag)','Rolled oats (1 canister)','Canned white beans (1 can)','Pumpkin seeds / pepitas (small bag)','Raw walnuts (small bag)','Hemp seeds (small bag)','Chia seeds (small bag)','Almond butter or peanut butter','Raw honey or maple syrup','Almond flour (small bag)','Panko breadcrumbs (optional)'
+  ],
+  'Oils, Spices & Pantry':[
+    'Extra-virgin olive oil','Smoked paprika','Dried oregano','Ground turmeric','Cinnamon','Garlic powder','Red pepper flakes','Sea salt & black pepper','Vanilla extract','Baking powder','Cocoa powder (for brownies)','Coconut sugar or monkfruit sweetener (for brownies)'
+  ],
+  'Refrigerated / Other':[
+    'Unsweetened almond milk (½ gallon)','Parmesan cheese, grated (small container)','Sesame oil & low-sodium soy sauce or tamari','Sesame-ginger dressing (bottled, or make your own)','Graham crackers (optional, for cheesecake cups)','Dark chocolate chips (optional, for brownies)'
+  ]
+};
 
-function buildName(){
-  return `<div class="card" style="animation:fadeIn .35s ease">
-    <div style="text-align:center;margin-bottom:1.6rem">
-      <div style="font-size:2.4rem;margin-bottom:.5rem">👋</div>
-      <h2 style="font-family:'Playfair Display',Georgia,serif;font-size:1.3rem;color:#c8f0d8;margin:0 0 .4rem">What should we call you?</h2>
-      <p style="font-size:.85rem;color:#6a9a7a;margin:0">We'll personalize everything to you</p>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:1rem">
-      <div><label class="lbl">First Name</label><input class="inp" id="nm-first" type="text" placeholder="e.g. Sarah"/></div>
-      <div><label class="lbl">Last Name <span style="color:#3a5a4a;font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label><input class="inp" id="nm-last" type="text" placeholder="e.g. Johnson"/></div>
-    </div>
-    <button class="btn-primary" id="nm-next" style="margin-top:1.5rem" disabled>Enter your first name to continue</button>
-  </div>`;
-}
-
-function buildProfile(){
-  const p=state._profileDraft||{age:"",sex:"",heightFt:"",heightIn:"",weight:"",targetWeight:""};
-  const totalIn=(parseInt(p.heightFt||0)*12)+(parseInt(p.heightIn||0));
-  const bmi=p.weight&&totalIn>0?parseFloat(calcBMI(parseFloat(p.weight),totalIn)):null;
-  const bmr=p.weight&&totalIn>0&&p.age&&p.sex?calcBMR(parseFloat(p.weight),totalIn,parseInt(p.age),p.sex):null;
-  const toLose=p.targetWeight&&p.weight?Math.round(parseFloat(p.weight)-parseFloat(p.targetWeight)):null;
-  const isOk=p.age&&p.sex&&p.heightFt&&p.weight;
-  const refWeight=parseFloat(p.targetWeight)||parseFloat(p.weight)||0;
-  const pt=refWeight>0?proteinTarget(refWeight):null;
-
-  let statsHtml="";
-  if(bmi){
-    statsHtml=`<div style="margin-top:1.5rem;padding:1.1rem;background:rgba(0,0,0,.2);border-radius:.9rem;border:1px solid rgba(100,200,130,.1);animation:fadeIn .3s ease">
-      <p style="font-size:.68rem;color:#4a7a5a;text-transform:uppercase;letter-spacing:.09em;margin:0 0 .8rem;font-weight:600">Your Stats</p>
-      <div class="stat-grid">
-        <div class="stat-card" style="border-left:3px solid ${bmiColor(bmi)}"><div class="stat-label">BMI</div><div class="stat-val" style="color:${bmiColor(bmi)}">${bmi}</div><div class="stat-sub">${bmiCat(bmi)}</div></div>
-        ${bmr?`<div class="stat-card" style="border-left:3px solid #7ee8a2"><div class="stat-label">Resting Metabolic Rate</div><div class="stat-val" style="color:#7ee8a2">${bmr.toLocaleString()}</div><div class="stat-sub">kcal / day</div></div>`:""}
-        ${pt?`<div class="stat-card" style="border-left:3px solid #f0c080"><div class="stat-label">Protein Target</div><div class="stat-val" style="color:#f0c080">${pt.lo}–${pt.hi}g</div><div class="stat-sub">per day · based on ${p.targetWeight?'goal':'current'} wt</div></div>`:""}
-        ${toLose!==null?`<div class="stat-card" style="border-left:3px solid ${toLose>0?"#c8a8f0":"#7ee8a2"}"><div class="stat-label">${toLose>0?"To Lose":"To Gain"}</div><div class="stat-val" style="color:${toLose>0?"#c8a8f0":"#7ee8a2"}">${Math.abs(toLose)} lbs</div><div class="stat-sub">~${Math.ceil(Math.abs(toLose)/1.5)} weeks at pace</div></div>`:""}
-      </div>
-    </div>`;
-  }
-
-  return `<div class="card" style="animation:fadeIn .35s ease">
-    <h2 style="font-family:'Playfair Display',Georgia,serif;font-size:1.1rem;font-weight:600;color:#c8f0d8;margin:0 0 1.5rem;display:flex;align-items:center;gap:.5rem"><span style="font-size:1.4rem">📋</span> Your Profile</h2>
-    <div style="display:flex;flex-direction:column;gap:1.1rem">
-      <div><label class="lbl">Age</label><input class="inp" id="pr-age" type="number" placeholder="Enter your age" value="${p.age}" min="18" max="90"/></div>
-      <div>
-        <label class="lbl">Gender</label>
-        <div style="display:flex;gap:.6rem">
-          ${[{id:"female",label:"Female",icon:"♀"},{id:"male",label:"Male",icon:"♂"}].map(o=>`<button class="pr-sex" data-sex="${o.id}" style="flex:1;padding:.75rem;background:${p.sex===o.id?"rgba(78,203,113,0.18)":"rgba(255,255,255,0.04)"};border:1px solid ${p.sex===o.id?"rgba(78,203,113,0.5)":"rgba(100,200,130,0.15)"};border-radius:.65rem;color:${p.sex===o.id?"#a8e6be":"#6a9a7a"};font-size:.95rem;font-weight:${p.sex===o.id?600:400};cursor:pointer;font-family:inherit;transition:all .18s">${o.icon} ${o.label}</button>`).join("")}
-        </div>
-      </div>
-      <div>
-        <label class="lbl">Height</label>
-        <div style="display:flex;gap:.6rem">
-          <div style="position:relative;flex:1"><input class="inp" id="pr-hft" type="number" placeholder="5" value="${p.heightFt}" min="3" max="8" style="padding-right:2.5rem"/><span style="position:absolute;right:.8rem;top:50%;transform:translateY(-50%);color:#4a7a5a;font-size:.8rem;pointer-events:none">ft</span></div>
-          <div style="position:relative;flex:1"><input class="inp" id="pr-hin" type="number" placeholder="6" value="${p.heightIn}" min="0" max="11" style="padding-right:2.5rem"/><span style="position:absolute;right:.8rem;top:50%;transform:translateY(-50%);color:#4a7a5a;font-size:.8rem;pointer-events:none">in</span></div>
-        </div>
-      </div>
-      <div><label class="lbl">Current Weight</label><div style="position:relative"><input class="inp" id="pr-wt" type="number" placeholder="Enter your weight" value="${p.weight}" style="padding-right:3rem"/><span style="position:absolute;right:.9rem;top:50%;transform:translateY(-50%);color:#4a7a5a;font-size:.8rem;pointer-events:none">lbs</span></div></div>
-      <div><label class="lbl">Target Weight <span style="color:#3a5a4a;font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label><div style="position:relative"><input class="inp" id="pr-twt" type="number" placeholder="Your goal weight" value="${p.targetWeight}" style="padding-right:3rem"/><span style="position:absolute;right:.9rem;top:50%;transform:translateY(-50%);color:#4a7a5a;font-size:.8rem;pointer-events:none">lbs</span></div></div>
-    </div>
-    ${statsHtml}
-    <button class="btn-primary" id="pr-next" style="margin-top:1.5rem" ${isOk?"":'disabled'}>${isOk?"Continue to Dashboard →":"Fill in your profile to continue"}</button>
-  </div>`;
-}
-
-function buildDashboard(){
-  const { profile, points, dashTab } = state;
-  const pct=Math.min(100,Math.round((points/100)*100));
-  const refWeight=parseFloat(profile.targetWeight)||parseFloat(profile.weight)||0;
-  const pt=proteinTarget(refWeight);
-
-  const tabs=`<div class="tabs">
-    <button class="tab ${dashTab==="log"?"active":""}" data-tab="log">📋 Daily Log</button>
-    <button class="tab ${dashTab==="meals"?"active":""}" data-tab="meals">🥗 Meal Plan</button>
-    <button class="tab ${dashTab==="recipes"?"active":""}" data-tab="recipes">📖 Recipes</button>
-  </div>`;
-
-  const pointsBar=`<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.4rem">
-    <div>
-      <div style="font-size:.7rem;color:#5a8a6a;text-transform:uppercase;letter-spacing:.09em;font-weight:600;margin-bottom:.3rem">Today's Points</div>
-      <div class="points-badge">⭐ ${points} pts${points>=100?' · 🏆 Goal hit!':''}</div>
-    </div>
-    <div style="text-align:right">
-      <div style="font-size:.7rem;color:#5a8a6a;margin-bottom:.3rem">Protein: ${pt.lo}–${pt.hi}g/day</div>
-      <div style="font-size:.72rem;color:#4a7a5a">Goal wt: ${profile.targetWeight||profile.weight} lbs</div>
-    </div>
-  </div>
-  <div class="streak-bar"><div class="streak-fill" style="width:${pct}%"></div></div>
-  <div style="font-size:.7rem;color:#4a7a5a;margin:.4rem 0 1.2rem;text-align:right">${pct}% of daily goal (100 pts)</div>`;
-
-  let content="";
-  if(dashTab==="log") content=buildLogTab();
-  else if(dashTab==="meals") content=buildMealsTab();
-  else content=buildRecipesTab();
-
-  return `<div class="card" style="animation:fadeIn .35s ease">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem">
-      <div>
-        <h2 style="font-family:'Playfair Display',Georgia,serif;font-size:1.15rem;color:#c8f0d8;margin:0">Welcome, ${state.userName}!</h2>
-        <p style="font-size:.78rem;color:#6a9a7a;margin:.2rem 0 0">${new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'})}</p>
-      </div>
-      <div style="font-size:2rem">🌿</div>
-    </div>
-    ${pointsBar}
-    ${tabs}
-    ${content}
-  </div>`;
-}
-
-function buildLogTab(){
-  const { todayLogs } = state;
-  const items=[
-    { key:"peptide", icon:"💉", title:"Peptide Logged", sub:"Logged today's injection", pts:25 },
-    { key:"protein", icon:"🥩", title:"Protein Goal Hit", sub:"Reached daily protein target", pts:25 },
-    { key:"exercise", icon:"🏋️", title:"Exercise Completed", sub:"Any movement counts!", pts:25 },
-    { key:"eatWindow", icon:"⏱️", title:"Eating Window < 10 hrs", sub:"Time-restricted eating bonus", pts:25 },
-  ];
-  return items.map(it=>`
-    <div class="log-item ${todayLogs[it.key]?"logged":""}" data-log="${it.key}">
-      <div class="log-check">${todayLogs[it.key]?"✅":it.icon}</div>
-      <div class="log-info">
-        <div class="log-title">${it.title}</div>
-        <div class="log-sub">${todayLogs[it.key]?"Logged ✓":it.sub}</div>
-      </div>
-      <div class="pts-chip">+${it.pts} pts</div>
-    </div>
-  `).join("");
-}
-
-function buildMealsTab(){
-  if(!state.mealPlan) state.mealPlan=generateMealPlan(state.favorites);
-  const mp=state.mealPlan;
-  const order=[["breakfast","☀️ Breakfast"],["lunch","🌤 Lunch"],["snack","🍎 Snack"],["dinner","🌙 Dinner"]];
-  const fav=state.favorites;
-
-  let html=order.map(([slot,label])=>{
-    const m=mp[slot];
-    const isFav=fav.has(m.id);
-    return `<div class="meal-card">
-      <div class="meal-header">
-        <span class="meal-time">${label}</span>
-        <span class="meal-name">${m.name}</span>
-        <button class="heart-btn" data-fav="${m.id}" title="${isFav?"Unfavorite":"Favorite"}">${isFav?"❤️":"🤍"}</button>
-      </div>
-      <div class="meal-macros">
-        <span class="macro">🔥 ${m.cal} cal</span>
-        <span class="macro">💪 ${m.protein}g protein</span>
-        <span class="macro">🌾 ${m.carbs}g carbs</span>
-        <span class="macro">🥑 ${m.fat}g fat</span>
-      </div>
-      <button class="btn-ghost" data-recipe="${m.recipe}" style="margin-top:.75rem;width:100%;font-size:.8rem">📖 View Recipe</button>
-    </div>`;
-  }).join("");
-
-  const totalP=Object.values(mp).reduce((a,m)=>a+m.protein,0);
-  const pt=state.profile?proteinTarget(parseFloat(state.profile.targetWeight)||parseFloat(state.profile.weight)||0):{lo:0,hi:0};
-  const pctHit=Math.round((totalP/pt.hi)*100);
-  const barColor=totalP>=pt.lo?"#4ecb71":"#f0c080";
-
-  html=`<div style="background:rgba(0,0,0,.2);border-radius:.8rem;padding:.8rem 1rem;margin-bottom:1rem">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.4rem">
-      <span style="font-size:.75rem;color:#6a9a7a">Plan total protein</span>
-      <span style="font-size:.85rem;font-weight:700;color:${barColor}">${totalP}g / ${pt.lo}–${pt.hi}g goal</span>
-    </div>
-    <div class="streak-bar"><div class="streak-fill" style="width:${Math.min(100,pctHit)}%;background:${barColor}"></div></div>
-  </div>`+html;
-
-  html+=`<button class="btn-primary" id="regen-plan" style="margin-top:.5rem">🔄 Regenerate Meal Plan</button>`;
-  if(state.favorites.size>0) html+=`<p style="text-align:center;font-size:.72rem;color:#5a8a6a;margin-top:.6rem">❤️ ${state.favorites.size} favorite${state.favorites.size>1?"s":""} weighted 3× in generation</p>`;
-  return html;
-}
-
-function buildRecipesTab(){
-  return Object.values(RECIPES).map(r=>`
-    <div class="recipe-card">
-      <div class="recipe-title">${r.title}</div>
-      <div class="recipe-meta">⏱ ${r.time} &nbsp;|&nbsp; 🍽 Serves ${r.serves}</div>
-      <div class="recipe-steps">${r.steps}</div>
-    </div>
-  `).join("");
-}
-
-function showRecipeModal(recipeId){
-  const r=RECIPES[recipeId]; if(!r)return;
-  let existing=document.getElementById("recipe-modal");
-  if(existing)existing.remove();
-  const div=document.createElement("div");
-  div.className="modal-overlay"; div.id="recipe-modal";
-  div.innerHTML=`<div class="modal">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.2rem">
-      <h3 style="font-family:'Playfair Display',Georgia,serif;color:#c8f0d8;font-size:1.15rem">${r.title}</h3>
-      <button id="close-modal" style="background:none;border:none;color:#7ee8a2;font-size:1.4rem;cursor:pointer;line-height:1">✕</button>
-    </div>
-    <div style="font-size:.8rem;color:#6a9a7a;margin-bottom:1rem">⏱ ${r.time} &nbsp;|&nbsp; 🍽 Serves ${r.serves}</div>
-    <div style="font-size:.9rem;color:#c8f0d8;line-height:1.75">${r.steps}</div>
-    <button class="btn-primary" id="close-modal-btn" style="margin-top:1.5rem">Close</button>
-  </div>`;
-  document.body.appendChild(div);
-  div.querySelector("#close-modal").onclick=div.querySelector("#close-modal-btn").onclick=()=>div.remove();
-  div.onclick=(e)=>{ if(e.target===div)div.remove(); };
-}
-
-function attachEvents(){
-  if(state.screen==="phone"){
-    const inp=document.getElementById("ph-input");
-    const sendBtn=document.getElementById("ph-send");
-    let digits="";
-    inp.addEventListener("input",e=>{
-      digits=e.target.value.replace(/\D/g,"").slice(0,10);
-      e.target.value=formatPhone(digits);
-      sendBtn.disabled=digits.length!==10;
+function showGroceryList(){
+  var html='<div class="recipe-popup-body" style="text-align:left">';
+  html+='<p style="font-size:13px;color:var(--text3);margin-bottom:16px;line-height:1.5">Everything you need for this week\'s meal plan. Tap any item to check it off as you shop.</p>';
+  Object.keys(groceryData).forEach(function(cat,ci){
+    html+='<div class="grocery-section"><div class="grocery-cat">'+cat+'</div><div class="grocery-items">';
+    groceryData[cat].forEach(function(item,ii){
+      var key='g'+ci+'_'+ii;
+      var checked=groceryChecked[key];
+      html+='<div class="grocery-item" onclick="toggleGrocery(\''+key+'\',this)">'
+        +'<div class="grocery-check'+(checked?' checked':'')+'" id="gc_'+key+'">'+(checked?'✓':'')+'</div>'
+        +'<span class="grocery-item-text'+(checked?' checked':'')+'">'+item+'</span>'
+        +'</div>';
     });
-    sendBtn.addEventListener("click",()=>{
-      if(digits.length===10){
-        const card=document.querySelector(".card");
-        card.innerHTML=`<div style="text-align:center;margin-bottom:1.6rem">
-          <div style="font-size:2.8rem;margin-bottom:.5rem">📱</div>
-          <h2 style="font-family:'Playfair Display',Georgia,serif;font-size:1.3rem;color:#c8f0d8;margin:0 0 .4rem">Check your texts</h2>
-          <p style="font-size:.85rem;color:#6a9a7a;margin:0">We sent a 6-digit code to ${formatPhone(digits)}</p>
-        </div>
-        <label class="lbl">Enter 6-Digit Code</label>
-        <input class="inp" id="code-inp" type="number" placeholder=
+    html+='</div></div>';
+  });
+  html+='</div>';
+  document.getElementById('popIcon').textContent='🛒';
+  document.getElementById('popTitle').textContent='Grocery List for the Week';
+  var pt=document.getElementById('popText');pt.className='';pt.innerHTML=html;
+  document.getElementById('popupOverlay').style.display='flex';
+}
+
+function toggleGrocery(key,row){
+  groceryChecked[key]=!groceryChecked[key];
+  var check=document.getElementById('gc_'+key);
+  var text=row.querySelector('.grocery-item-text');
+  if(groceryChecked[key]){
+    check.classList.add('checked');check.textContent='✓';
+    if(text)text.classList.add('checked');
+  } else {
+    check.classList.remove('checked');check.textContent='';
+    if(text)text.classList.remove('checked');
+  }
+}
+
+function printGroceryList(){
+  var content='<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Grocery List — PeptideNourish</title>';
+  content+='<style>body{font-family:Georgia,serif;max-width:600px;margin:40px auto;color:#1a2e1f;font-size:14px}';
+  content+='h1{font-size:22px;color:#1a3a2a;margin-bottom:4px}.sub{color:#6b8f72;font-size:13px;margin-bottom:24px}';
+  content+='.cat{font-size:11px;font-weight:bold;text-transform:uppercase;letter-spacing:.6px;color:#4a8c5c;border-bottom:1px solid #c8e6cc;padding-bottom:4px;margin:18px 0 10px}';
+  content+='.grid{display:grid;grid-template-columns:1fr 1fr;gap:4px 16px}';
+  content+='.item{display:flex;align-items:center;gap:8px;padding:4px 0;font-size:13px}';
+  content+='.box{width:14px;height:14px;border:1.5px solid #4a8c5c;border-radius:3px;flex-shrink:0}';
+  content+='@media print{body{margin:20px}}</style></head><body>';
+  content+='<h1>🛒 Grocery List for the Week</h1>';
+  content+='<div class="sub">PeptideNourish · Created by a Registered Dietitian</div>';
+  Object.keys(groceryData).forEach(function(cat){
+    content+='<div class="cat">'+cat+'</div><div class="grid">';
+    groceryData[cat].forEach(function(item){
+      content+='<div class="item"><div class="box"></div><span>'+item+'</span></div>';
+    });
+    content+='</div>';
+  });
+  content+='</body></html>';
+  var win=window.open('','_blank');
+  win.document.write(content);win.document.close();win.focus();
+  setTimeout(function(){win.print();},400);
+}
+
+// ─── NOTIFICATION SYSTEM ──────────────────────────────
+var notifications=[];
+var notifOpen=false;
+
+function addNotif(type,icon,title,msg){
+  var n={id:Date.now()+'_'+Math.random(),type:type,icon:icon,title:title,msg:msg,time:new Date(),read:false};
+  notifications.unshift(n);
+  renderNotifs();
+  // Also show a brief in-app toast for urgency
+  if(type==='urgent'||type==='tip'){
+    var t=document.createElement('div');
+    t.style.cssText='position:fixed;top:68px;left:50%;transform:translateX(-50%);background:var(--g1);color:#fff;padding:10px 18px;border-radius:12px;font-size:13px;font-weight:500;z-index:400;display:flex;align-items:center;gap:8px;box-shadow:0 4px 20px rgba(0,0,0,.25);max-width:340px;text-align:center;animation:slideDown .3s ease';
+    t.innerHTML='<span style="font-size:18px">'+icon+'</span><span>'+title+'</span>';
+    document.body.appendChild(t);
+    setTimeout(function(){if(t.parentNode)t.parentNode.removeChild(t);},3500);
+  }
+}
+
+function renderNotifs(){
+  var unread=notifications.filter(function(n){return!n.read;}).length;
+  var badge=document.getElementById('bellBadge');
+  if(badge){badge.textContent=unread>9?'9+':unread;badge.classList.toggle('show',unread>0);}
+  var list=document.getElementById('notifList');
+  if(!list)return;
+  if(!notifications.length){list.innerHTML='<div class="notif-empty">All caught up! 🌿 Keep logging to earn more insights.</div>';return;}
+  list.innerHTML=notifications.map(function(n){
+    var ago=timeSince(n.time);
+    return'<div class="notif-item'+(n.read?'':' unread')+'" onclick="readNotif(\''+n.id+'\')">'
+      +'<div class="notif-dot '+n.type+'">'+n.icon+'</div>'
+      +'<div class="notif-body">'
+      +'<div class="notif-title">'+n.title+'</div>'
+      +'<div class="notif-msg">'+n.msg+'</div>'
+      +'<div class="notif-time">'+ago+'</div>'
+      +'</div></div>';
+  }).join('');
+}
+
+function timeSince(d){
+  var s=Math.round((Date.now()-new Date(d))/1000);
+  if(s<60)return'Just now';if(s<3600)return Math.floor(s/60)+' min ago';
+  if(s<86400)return Math.floor(s/3600)+' hr ago';return Math.floor(s/86400)+' day ago';
+}
+
+function readNotif(id){
+  var n=notifications.find(function(x){return x.id===id;});
+  if(n)n.read=true;renderNotifs();
+}
+
+function markAllRead(){notifications.forEach(function(n){n.read=true;});renderNotifs();}
+
+function toggleNotifPanel(e){
+  if(e)e.stopPropagation();
+  notifOpen=!notifOpen;
+  var panel=document.getElementById('notifPanel');
+  if(panel)panel.classList.toggle('open',notifOpen);
+}
+
+// Close panel when clicking outside
+document.addEventListener('click',function(e){
+  var panel=document.getElementById('notifPanel');
+  if(notifOpen&&panel&&!panel.contains(e.target)){
+    notifOpen=false;panel.classList.remove('open');
+  }
+});
+
+// ─── SMART NOTIFICATION SCHEDULER ────────────────────
+// Fires contextual avatar-named notifications based on what's been logged
+function scheduleNotifications(){
+  if(!S.profileDone)return;
+  var aname=S.avatarName||'your avatar';
+  var L=S.logs;
+  var todayProt=parseFloat(document.getElementById('protInput').value)||0;
+  var todayCardio=parseFloat(document.getElementById('cardioInput').value)||0;
+  var todayLift=parseFloat(document.getElementById('liftInput').value)||0;
+  var h=new Date().getHours();
+
+  // Clear and rebuild fresh set of daily notifications
+  notifications=[];
+
+  // ── Protein nudge ──────────────────────────────
+  if(todayProt===0){
+    addNotif('urgent','🥩',''+aname+' needs protein!',
+      'No protein logged yet today. '+aname+' can\'t grow on peptides alone — hit your '+S.protGoal+'g goal to keep those gains coming.');
+  } else if(todayProt < S.protGoal*0.5){
+    addNotif('tip','🥩','Halfway there on protein',
+      aname+' has '+todayProt+'g so far. Still need '+(S.protGoal-todayProt)+'g to hit your goal. A collagen shake or cottage cheese snack gets you there fast.');
+  } else if(todayProt>=S.protGoal){
+    addNotif('good','🥩','Protein goal crushed! 💪',
+      aname+' hit '+todayProt+'g of protein today. Muscle protein synthesis is fired up. Great work!');
+  }
+
+  // ── Exercise nudge ────────────────────────────
+  if(todayCardio===0 && L.cardioYest===0){
+    addNotif('urgent','🏃',aname+' is asking for a walk',
+      'No cardio logged in 2 days. Even 20 minutes boosts GLP-1 efficacy and keeps your metabolism humming. '+aname+' believes in you.');
+  } else if(todayCardio>0){
+    addNotif('good','🏃','Cardio logged! '+aname+' is glowing',
+      todayCardio+' min of cardio today. Movement supercharges your peptide protocol. Keep it up!');
+  }
+
+  if(L.liftWeek===0){
+    addNotif('urgent','💪',aname+' needs to lift!',
+      'No resistance training logged this week. This is the #1 way to protect muscle on GLP-1. Even 2 sessions/week makes a significant difference for '+aname+'\'s transformation.');
+  } else if(L.liftWeek>=3){
+    addNotif('good','💪',aname+' is getting STRONG',
+      L.liftWeek+' lifting sessions this week. Muscle preservation on your protocol is excellent. '+aname+' is leveling up fast!');
+  }
+
+  // ── Peptide nudge ────────────────────────────
+  if(S.peptides.length>0 && !L.pepLoggedYest){
+    addNotif('urgent','💊',aname+'\'s peptide streak is at risk!',
+      'Yesterday\'s peptide dose wasn\'t logged. Consistency is everything with peptide protocols — log today\'s dose to get '+aname+' back on track and earn your 20 pts.');
+  } else if(S.peptides.length>0){
+    addNotif('tip','💊','Time to log '+aname+'\'s peptides',
+      'Tap the peptide log on your dashboard to record today\'s doses and keep '+aname+'\'s streak alive. +20 pts per peptide!');
+  }
+
+  // ── Meal timing ──────────────────────────────
+  if(L.windowHrsYest>0 && L.windowHrsYest<8){
+    addNotif('tip','🕐','Eating window was short yesterday',
+      aname+' only had a '+L.windowHrsYest+'-hr eating window. Aim for 8–12 hrs for best results with your peptide stack. Adjust your sliders on the dashboard.');
+  }
+
+  // ── Sleep/energy from checkin ─────────────────
+  if(L.sleepCheckIn<=1){
+    addNotif('urgent','🌙',aname+' is running on fumes',
+      'Poor sleep blunts GH peptide release and raises cortisol. Try magnesium glycinate 300mg tonight and a consistent lights-out time. '+aname+' recovers while you sleep!');
+  }
+  if(L.energyCheckIn<=1){
+    addNotif('tip','⚡',aname+'\'s energy needs a boost',
+      'Low energy can mean low electrolytes or too little food from appetite suppression. Try a pinch of sea salt in water + a high-protein snack. '+aname+' will thank you.');
+  }
+
+  // ── Time-of-day tips ──────────────────────────
+  if(h>=6&&h<10){
+    addNotif('tip','🌅','Good morning from '+aname+'!',
+      'Sunlight + protein + movement in the first 2 hours sets your cortisol curve for the day. Start strong and '+aname+' starts strong.');
+  } else if(h>=14&&h<17){
+    addNotif('tip','🌤️','Afternoon check-in from '+aname,
+      'Great time for your afternoon snack and to log your eating window. Keeping protein spread across the day maximizes muscle protein synthesis.');
+  } else if(h>=20){
+    addNotif('tip','🌙','Wind-down reminder from '+aname,
+      'Magnesium glycinate 300mg before bed supports deep sleep — the time when peptides like BPC-157 and GH secretagogues do their best work. Log your check-in before you close out!');
+  }
+
+  // ── Points milestones ─────────────────────────
+  if(S.points>=50&&S.points<55){
+    addNotif('good','⭐',aname+' just leveled up!',
+      'You hit 50 points and '+aname+' evolved to Sprout 🌿. Keep logging daily to reach Level 3 at 200 points. Something special is waiting!');
+  } else if(S.points>=200&&S.points<205){
+    addNotif('good','⭐',aname+' is Growing 🌳!',
+      'Level 3 unlocked! '+aname+' is looking noticeably stronger. 300 more points to reach Thriving 🌟 — and earn your crown!');
+  }
+
+  renderNotifs();
+}
+
+// ═══════════════════════════════════════════
+// SIGN-IN SYSTEM
+// ═══════════════════════════════════════════
+var AUTH={phone:'',code:'',resendInterval:null};
+var DEMO_CODE='123456';
+
+function formatPhone(input){
+  var v=input.value.replace(/\D/g,'');
+  if(v.length<=3)input.value=v;
+  else if(v.length<=6)input.value='('+v.slice(0,3)+') '+v.slice(3);
+  else input.value='('+v.slice(0,3)+') '+v.slice(3,6)+'-'+v.slice(6,10);
+  document.getElementById('phoneError').style.display='none';
+}
+function phoneKeydown(e){if(e.key==='Enter')sendCode();}
+function getRawPhone(){return(document.getElementById('phoneInput').value||'').replace(/\D/g,'');}
+
+function sendCode(){
+  var raw=getRawPhone();
+  if(raw.length!==10){document.getElementById('phoneError').style.display='block';return;}
+  AUTH.phone=raw;
+  AUTH.code=DEMO_CODE; // in production: call Twilio API here
+  var display='('+raw.slice(0,3)+') '+raw.slice(3,6)+'-'+raw.slice(6);
+  document.getElementById('phoneSentTo').textContent='Sent to '+display;
+  document.getElementById('siStep1').classList.remove('active');
+  document.getElementById('siStep2').classList.add('active');
+  for(var i=0;i<6;i++){var d=document.getElementById('pc'+i);d.value='';d.classList.remove('filled');}
+  document.getElementById('codeError').style.display='none';
+  document.getElementById('codeSuccess').style.display='none';
+  document.getElementById('verifyBtn').disabled=true;
+  startResendTimer();
+  setTimeout(function(){document.getElementById('pc0').focus();},120);
+}
+
+function resendCode(){
+  AUTH.code=DEMO_CODE;
+  document.getElementById('codeError').style.display='none';
+  document.getElementById('resendBtn').style.display='none';
+  document.getElementById('resendTimerSpan').style.display='inline';
+  for(var i=0;i<6;i++){var d=document.getElementById('pc'+i);d.value='';d.classList.remove('filled');}
+  document.getElementById('verifyBtn').disabled=true;
+  startResendTimer();
+  document.getElementById('pc0').focus();
+}
+
+function startResendTimer(){
+  if(AUTH.resendInterval)clearInterval(AUTH.resendInterval);
+  var s=30;
+  document.getElementById('resendCount').textContent=s;
+  document.getElementById('resendTimerSpan').style.display='inline';
+  document.getElementById('resendBtn').style.display='none';
+  AUTH.resendInterval=setInterval(function(){
+    s--;document.getElementById('resendCount').textContent=s;
+    if(s<=0){clearInterval(AUTH.resendInterval);
+      document.getElementById('resendTimerSpan').style.display='none';
+      document.getElementById('resendBtn').style.display='inline';}
+  },1000);
+}
+
+function pcInput(idx){
+  var el=document.getElementById('pc'+idx);
+  var v=el.value.replace(/\D/g,'');
+  el.value=v?v[v.length-1]:'';
+  el.classList.toggle('filled',!!el.value);
+  if(el.value&&idx<5)document.getElementById('pc'+(idx+1)).focus();
+  var code='';for(var i=0;i<6;i++)code+=document.getElementById('pc'+i).value||'';
+  document.getElementById('verifyBtn').disabled=code.length<6;
+  document.getElementById('codeError').style.display='none';
+}
+
+function pcKey(e,idx){
+  if(e.key==='Backspace'){
+    var el=document.getElementById('pc'+idx);
+    if(!el.value&&idx>0){document.getElementById('pc'+(idx-1)).focus();}
+    else{el.value='';el.classList.remove('filled');}
+  }
+  if(e.key==='Enter')verifyCode();
+}
+
+function verifyCode(){
+  var code='';for(var i=0;i<6;i++)code+=document.getElementById('pc'+i).value||'';
+  if(code===AUTH.code){
+    document.getElementById('codeError').style.display='none';
+    document.getElementById('codeSuccess').style.display='block';
+    localStorage.setItem('pn_authed','1');
+    localStorage.setItem('pn_phone',AUTH.phone);
+    setTimeout(launchApp,900);
+  } else {
+    document.getElementById('codeError').style.display='block';
+    for(var i=0;i<6;i++){var d=document.getElementById('pc'+i);d.value='';d.classList.remove('filled');}
+    document.getElementById('verifyBtn').disabled=true;
+    document.getElementById('pc0').focus();
+  }
+}
+
+function goSignInBack(){
+  document.getElementById('siStep2').classList.remove('active');
+  document.getElementById('siStep1').classList.add('active');
+  if(AUTH.resendInterval)clearInterval(AUTH.resendInterval);
+}
+
+function launchApp(){
+  document.getElementById('signinPage').classList.remove('active');
+  document.getElementById('mainApp').style.display='block';
+  init();
+  if(S.profileDone)goPage('dashboard');
+}
+
+// ═══════════════════════════════════════════
+// LOCALSTORAGE PERSISTENCE
+// ═══════════════════════════════════════════
+var LS_KEY='pn_state_v3';
+
+function saveState(){
+  try{
+    localStorage.setItem(LS_KEY,JSON.stringify({
+      gender:S.gender,points:S.points,name:S.name,avatarName:S.avatarName,
+      peptides:S.peptides,goals:S.goals,profileDone:S.profileDone,
+      favorites:S.favorites,protGoal:S.protGoal,calGoal:S.calGoal||1900,
+      logs:S.logs,shownVibes:S.shownVibes,groceryChecked:groceryChecked
+    }));
+  }catch(e){}
+}
+
+function loadState(){
+  try{
+    var raw=localStorage.getItem(LS_KEY);
+    if(!raw)return;
+    var d=JSON.parse(raw);
+    S.gender=d.gender||'M';S.points=d.points||0;S.name=d.name||'';
+    S.avatarName=d.avatarName||'';S.peptides=d.peptides||[];S.goals=d.goals||[];
+    S.profileDone=!!d.profileDone;S.favorites=d.favorites||{};
+    S.protGoal=d.protGoal||160;S.calGoal=d.calGoal||1900;
+    S.shownVibes=d.shownVibes||[];
+    S.logs=Object.assign({protYest:142,protGoalYest:160,cardioYest:0,liftWeek:1,
+      pepLoggedYest:true,windowHrsYest:10,sleepCheckIn:3,energyCheckIn:3},d.logs||{});
+    if(d.groceryChecked)groceryChecked=d.groceryChecked;
+  }catch(e){}
+}
+
+function repopulateProfileFields(){
+  try{
+    if(S.name)document.getElementById('pName').value=S.name;
+    if(S.avatarName){document.getElementById('avatarName').value=S.avatarName;
+      document.getElementById('avatarNameHint').textContent=S.avatarName+' is going to be incredible. 💪';}
+    document.getElementById('gMale').classList.toggle('sel',S.gender==='M');
+    document.getElementById('gFemale').classList.toggle('sel',S.gender==='F');
+    S.peptides.forEach(function(pep){
+      var el=document.getElementById('pep_'+pep.replace(/[ \-]/g,'_'));
+      if(el)el.classList.add('sel');
+    });
+    renderSelPeps();
+    S.goals.forEach(function(id){
+      var el=document.getElementById('goal_'+id);if(el)el.classList.add('sel');
+    });
+    document.getElementById('protGoalLbl').textContent='Goal: '+S.protGoal+'g';
+    if(S.name)document.getElementById('dashGreeting').textContent=
+      (new Date().getHours()<12?'Good morning':new Date().getHours()<17?'Good afternoon':'Good evening')+' '+S.name+'! 🌿';
+  }catch(e){}
+}
+
+// ═══════════════════════════════════════════
+// PWA — inline service worker (no extra file)
+// ═══════════════════════════════════════════
+if('serviceWorker' in navigator){
+  window.addEventListener('load',function(){
+    try{
+      var sw='const C="pn-v1";self.addEventListener("install",e=>e.waitUntil(caches.open(C).then(c=>c.addAll(["/"]))));self.addEventListener("fetch",e=>e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request))));';
+      var blob=new Blob([sw],{type:'application/javascript'});
+      navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(function(){});
+    }catch(e){}
+  });
+}
+
+// ═══════════════════════════════════════════
+// AUTH GATE — check on load
+// ═══════════════════════════════════════════
+window.addEventListener('DOMContentLoaded',function(){
+  if(localStorage.getItem('pn_authed')==='1'){
+    // Already signed in — skip sign-in screen
+    document.getElementById('signinPage').classList.remove('active');
+    document.getElementById('mainApp').style.display='block';
+    init();
+    if(S.profileDone)goPage('dashboard');
+  }
+  // else: sign-in page already showing (default)
+});
+
+// ─── INIT ──────────────────────────────────
+function init(){
+  loadState();
+  buildPepCategories();buildGoals();buildCheckIn();buildMealPlan();
+  renderAvatar();updateWindow();renderNotifs();
+  if(S.profileDone){repopulateProfileFields();updateDashPeps();}
+  var now=new Date();
+  document.getElementById('dashDate').textContent=now.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+  var h=now.getHours();
+  var gr=(h<12?'Good morning':h<17?'Good afternoon':'Good evening');
+  document.getElementById('dashGreeting').textContent=gr+(S.name?' '+S.name:'')+'! 🌿';
+  renderDashHero();
+}
+
+function goPage(p){
+  document.querySelectorAll('.page').forEach(function(el){el.classList.remove('active')});
+  document.querySelectorAll('.nav-tab').forEach(function(t){t.classList.remove('active')});
+  document.getElementById('page-'+p).classList.add('active');
+  document.getElementById('tab-'+p).classList.add('active');
+  if(p==='dashboard'){renderDashHero();injectVibe();}
+}
+
+function goStep(n){
+  [1,2,3].forEach(function(i){
+    var s=document.getElementById('profStep'+i);if(s)s.style.display=i===n?'block':'none';
+    var ps=document.getElementById('ps'+i),sl=document.getElementById('sl'+i);
+    if(ps){ps.classList.remove('active','done');if(i<n)ps.classList.add('done');else if(i===n)ps.classList.add('active');}
+    if(sl){sl.classList.remove('active');if(i===n)sl.classList.add('active');}
+  });
+}
+
+function finishProfile(){
+  S.profileDone=true;
+  var name=document.getElementById('pName').value.trim();if(name)S.name=name;
+  var aname=document.getElementById('avatarName').value.trim();S.avatarName=aname||'Avatar';
+  updateDashPeps();goPage('dashboard');
+  document.getElementById('dashGreeting').textContent=(S.name?'Welcome back, '+S.name:'Welcome')+'! 🌿';
+  logPoints(50,'Profile complete! +50 pts ⭐');renderDashHero();
+  scheduleNotifications();
+  saveState();
+}
+
+function updateAvatarName(){
+  var an=document.getElementById('avatarName').value.trim();
+  document.getElementById('avatarNameHint').textContent=an?an+' is going to be incredible. 💪':'Your avatar\'s name will appear on your dashboard every day 👆';
+}
+
+function setGender(g){S.gender=g;document.getElementById('gMale').classList.toggle('sel',g==='M');document.getElementById('gFemale').classList.toggle('sel',g==='F');renderAvatar();calcStats();}
+
+function calcStats(){
+  var ft=parseFloat(document.getElementById('pFt').value)||0;
+  var ins=parseFloat(document.getElementById('pIn').value)||0;
+  var htCm=(ft*12+ins)*2.54;
+  var wtLbs=parseFloat(document.getElementById('pWt').value)||0;
+  var twtLbs=parseFloat(document.getElementById('pTWt').value)||0;
+  var wtKg=wtLbs*0.453592;
+  var twtKg=twtLbs*0.453592;
+  var age=parseFloat(document.getElementById('pAge').value)||30;
+  var act=parseFloat(document.getElementById('pActivity').value)||1.55;
+  if(!htCm||!wtLbs)return;
+  var bmi=wtKg/Math.pow(htCm/100,2);
+  var bmr=S.gender==='M'?(10*wtKg+6.25*htCm-5*age+5):(10*wtKg+6.25*htCm-5*age-161);
+  var tdee=bmr*act;
+  // Protein = 1.5g per kg of TARGET weight
+  var protGoal = twtKg>0 ? Math.round(twtKg*1.5) : Math.round(wtKg*1.5);
+  S.protGoal=protGoal;
+  document.getElementById('sBMI').textContent=bmi.toFixed(1);
+  document.getElementById('sBMR').textContent=Math.round(bmr);
+  document.getElementById('sGoal').textContent=twtLbs?Math.max(0,wtLbs-twtLbs).toFixed(0):'—';
+  document.getElementById('sProtGoal').textContent=protGoal;
+  document.getElementById('sTDEE').textContent=Math.round(tdee-500);
+  document.getElementById('tdeeBox') && (document.getElementById('tdeeBox').style='');
+  document.getElementById('protGoalNote').style.display='block';
+  document.getElementById('protGoalLbl').textContent='Goal: '+protGoal+'g';
+  S.logs.protGoalYest=protGoal;
+}
+
+// Avatar SVG generator
+function makeAvatarSvg(size,lvl,isMale){
+  var s=size||120,cx=s/2,cy=s*0.45;
+  var skin=isMale?'#D4956A':'#E8B591';var hair=isMale?'#3D2B1F':'#8B4513';
+  var bc=isMale?['#8B9DC3','#5B7DB1','#3A5F8A','#1E3A5F'][lvl-1]:['#C9A8B2','#B17B8F','#8A4F65','#5F1E3A'][lvl-1];
+  var bw=isMale?[18,21,24,27][lvl-1]:[15,18,20,22][lvl-1];
+  var viewH=Math.round(s*1.4);
+  var svg='<svg viewBox="0 0 '+s+' '+viewH+'" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">';
+  if(lvl>=3)svg+='<circle cx="'+cx+'" cy="'+cy+'" r="'+(cy-4)+'" fill="none" stroke="#FFD700" stroke-width="1" opacity="0.4"/>';
+  var lw=Math.round([5,6,8,9][lvl-1]);var ly=Math.round(viewH*0.67);
+  svg+='<rect x="'+(cx-lw-2)+'" y="'+ly+'" width="'+lw+'" height="'+(viewH-ly-2)+'" rx="4" fill="'+skin+'"/>';
+  svg+='<rect x="'+(cx+2)+'" y="'+ly+'" width="'+lw+'" height="'+(viewH-ly-2)+'" rx="4" fill="'+skin+'"/>';
+  var ty=Math.round(viewH*0.42);var th=Math.round(viewH*0.27);
+  svg+='<rect x="'+(cx-bw/2)+'" y="'+ty+'" width="'+bw+'" height="'+th+'" rx="5" fill="'+bc+'"/>';
+  if(lvl>=3){var mo=lvl>=4?0.5:0.22;svg+='<line x1="'+cx+'" y1="'+(ty+2)+'" x2="'+cx+'" y2="'+(ty+th)+'" stroke="rgba(0,0,0,'+mo+')" stroke-width="1"/>';if(isMale){svg+='<ellipse cx="'+(cx-6)+'" cy="'+(ty+10)+'" rx="5" ry="6" fill="none" stroke="rgba(0,0,0,'+mo+')" stroke-width="0.8"/><ellipse cx="'+(cx+6)+'" cy="'+(ty+10)+'" rx="5" ry="6" fill="none" stroke="rgba(0,0,0,'+mo+')" stroke-width="0.8"/>';}}
+  var aw=Math.round([3,4,5,6][lvl-1]);
+  svg+='<rect x="'+(cx-bw/2-aw*1.5)+'" y="'+ty+'" width="'+(aw*1.3)+'" height="'+(th*0.8)+'" rx="3" fill="'+bc+'"/>';
+  svg+='<rect x="'+(cx+bw/2+aw*0.2)+'" y="'+ty+'" width="'+(aw*1.3)+'" height="'+(th*0.8)+'" rx="3" fill="'+bc+'"/>';
+  svg+='<circle cx="'+(cx-bw/2-aw*0.85)+'" cy="'+(ty+th*0.78)+'" r="3" fill="'+skin+'"/>';
+  svg+='<circle cx="'+(cx+bw/2+aw*0.85)+'" cy="'+(ty+th*0.78)+'" r="3" fill="'+skin+'"/>';
+  var hr=Math.round(s*0.19);
+  svg+='<ellipse cx="'+cx+'" cy="'+cy+'" rx="'+hr+'" ry="'+(hr*1.1)+'" fill="'+skin+'"/>';
+  if(isMale)svg+='<ellipse cx="'+cx+'" cy="'+(cy-hr*0.6)+'" rx="'+hr+'" ry="'+(hr*0.55)+'" fill="'+hair+'"/>';
+  else{svg+='<ellipse cx="'+cx+'" cy="'+(cy-hr*0.65)+'" rx="'+(hr*1.1)+'" ry="'+(hr*0.6)+'" fill="'+hair+'"/>';svg+='<rect x="'+(cx-hr*1.15)+'" y="'+(cy-hr*0.3)+'" width="'+(hr*0.35)+'" height="'+(hr*1.2)+'" rx="'+(hr*0.18)+'" fill="'+hair+'"/>';svg+='<rect x="'+(cx+hr*0.8)+'" y="'+(cy-hr*0.3)+'" width="'+(hr*0.35)+'" height="'+(hr*1.2)+'" rx="'+(hr*0.18)+'" fill="'+hair+'"/>';}
+  var ey=cy-2;
+  svg+='<circle cx="'+(cx-hr*0.42)+'" cy="'+ey+'" r="'+(hr*0.16)+'" fill="#2D1B0E"/>';
+  svg+='<circle cx="'+(cx+hr*0.42)+'" cy="'+ey+'" r="'+(hr*0.16)+'" fill="#2D1B0E"/>';
+  svg+='<circle cx="'+(cx-hr*0.38)+'" cy="'+(ey-hr*0.06)+'" r="'+(hr*0.07)+'" fill="rgba(255,255,255,.7)"/>';
+  svg+='<circle cx="'+(cx+hr*0.46)+'" cy="'+(ey-hr*0.06)+'" r="'+(hr*0.07)+'" fill="rgba(255,255,255,.7)"/>';
+  var sy2=cy+hr*0.36;svg+='<path d="M'+(cx-hr*0.3)+' '+sy2+' Q'+cx+' '+(sy2+lvl*hr*0.07)+' '+(cx+hr*0.3)+' '+sy2+'" stroke="#2D1B0E" stroke-width="1" fill="none" stroke-linecap="round"/>';
+  if(lvl>=4)svg+='<text x="'+cx+'" y="'+(cy-hr*1.3)+'" text-anchor="middle" font-size="'+(hr*0.8)+'">👑</text>';
+  else if(lvl>=3)svg+='<text x="'+cx+'" y="'+(cy-hr*1.3)+'" text-anchor="middle" font-size="'+(hr*0.7)+'">✨</text>';
+  svg+='</svg>';return svg;
+}
+
+function renderAvatar(){
+  var pts=S.points;
+  var lvl=pts<50?1:pts<200?2:pts<500?3:4;
+  var lvlNames=['','Seed 🌱','Sprout 🌿','Growing 🌳','Thriving 🌟'];
+  var pPrev=[0,50,200,500][lvl-1],pNext=[50,200,500,1000][lvl-1];
+  var pct=Math.min(100,Math.round((pts-pPrev)/(pNext-pPrev)*100));
+  document.getElementById('avatarLevel').textContent='Level '+lvl+' — '+lvlNames[lvl];
+  document.getElementById('avatarPtsNum').textContent=pts;
+  document.getElementById('avatarBar').style.width=pct+'%';
+  document.getElementById('totalPts').textContent=pts;
+  document.getElementById('avatarWrap').innerHTML=makeAvatarSvg(110,lvl,S.gender==='M');
+}
+
+function renderDashHero(){
+  var pts=S.points;
+  var lvl=pts<50?1:pts<200?2:pts<500?3:4;
+  var lvlNames=['','Seed 🌱','Sprout 🌿','Growing 🌳','Thriving 🌟'];
+  var pPrev=[0,50,200,500][lvl-1],pNext=[50,200,500,1000][lvl-1];
+  var pct=Math.min(100,Math.round((pts-pPrev)/(pNext-pPrev)*100));
+  var aname=S.avatarName||'Your Avatar';
+  document.getElementById('dashAvatarSvg').innerHTML=makeAvatarSvg(88,lvl,S.gender==='M');
+  document.getElementById('dashAvatarName').textContent=aname;
+  document.getElementById('dashAvatarLevel').textContent='Level '+lvl+' — '+lvlNames[lvl];
+  document.getElementById('dashAvatarBar').style.width=pct+'%';
+  document.getElementById('dashPtsLabel').textContent=pts+' pts';
+  document.getElementById('dashLevelLabel').textContent='Level '+lvl;
+  document.getElementById('totalPts').textContent=pts;
+  var h=new Date().getHours(),gr=h<12?'Good morning':h<17?'Good afternoon':'Good evening';
+  document.getElementById('dashGreeting').textContent=gr+(S.name?' '+S.name:''+'')+'! 🌿';
+  buildNudges();
+}
+
+function buildNudges(){
+  var nl=document.getElementById('nudgeList');
+  if(!S.profileDone){nl.innerHTML='<div class="nudge tip"><span class="nudge-icon">💡</span><span>Complete your profile to see your personalized daily nudges here.</span></div>';return;}
+  var nudges=[];var L=S.logs;var aname=S.avatarName||'your avatar';
+  var todayProt=parseFloat(document.getElementById('protInput').value)||0;
+  var todayCardio=parseFloat(document.getElementById('cardioInput').value)||0;
+  var todayLift=parseFloat(document.getElementById('liftInput').value)||0;
+  var protYestPct=L.protGoalYest>0?Math.round(L.protYest/L.protGoalYest*100):100;
+  if(todayProt===0&&protYestPct<90){nudges.push({type:'warn',icon:'🥩',text:'Yesterday\'s protein was '+L.protYest+'g — short of your '+L.protGoalYest+'g goal. Prioritize protein early today so '+aname+' can keep building!'});}
+  else if(todayProt>0&&todayProt>=S.protGoal*0.5){nudges.push({type:'good',icon:'🥩',text:'Protein is on track today — '+todayProt+'g and counting. '+aname+' approves!'});}
+  else{nudges.push({type:'tip',icon:'🥩',text:'Protein goal today: '+S.protGoal+'g (1.5g/kg target weight). Starting with a protein-rich breakfast is the single best habit to hit your daily target.'});}
+  if(L.cardioYest===0&&todayCardio===0){nudges.push({type:'warn',icon:'🏃',text:'No cardio logged yet this week. Even 20 minutes today helps your peptides work better — movement boosts GLP-1 and GH peptide efficacy.'});}
+  else if(todayCardio>0){nudges.push({type:'good',icon:'🏃',text:todayCardio+' min cardio logged today. '+aname+' is getting stronger!'});}
+  if(L.liftWeek===0){nudges.push({type:'warn',icon:'💪',text:'No lifting sessions logged yet this week. Resistance training is the #1 way to protect muscle while on GLP-1 — even 2 sessions/week makes a real difference.'});}
+  else if(L.liftWeek>=3){nudges.push({type:'good',icon:'💪',text:L.liftWeek+' lifting sessions this week — excellent muscle preservation on your protocol.'});}
+  if(!L.pepLoggedYest&&S.peptides.length>0){nudges.push({type:'alert',icon:'💊',text:'Peptide log was missed yesterday. Tap Log ✓ below to keep '+aname+'\'s streak alive.'});}
+  else if(S.peptides.length>0){nudges.push({type:'good',icon:'💊',text:'Peptide streak is going strong! Tap Log ✓ to record today\'s doses.'});}
+  if(L.sleepCheckIn<=1){nudges.push({type:'warn',icon:'🌙',text:'Sleep was rough lately. Poor sleep raises cortisol and blunts GH release — try magnesium glycinate 300mg tonight.'});}
+  if(L.energyCheckIn<=1){nudges.push({type:'warn',icon:'⚡',text:'Energy has been low. Check electrolytes and make sure you\'re eating enough — GLP-1 appetite suppression can sneak up on you.'});}
+  if(L.windowHrsYest>=8){nudges.push({type:'good',icon:'🕐',text:'Great eating window yesterday ('+L.windowHrsYest+' hrs). Consistent meal timing helps your body sync with your protocol.'});}
+  nudges=nudges.slice(0,4);
+  nl.innerHTML=nudges.map(function(n){return'<div class="nudge '+n.type+'"><span class="nudge-icon">'+n.icon+'</span><span>'+n.text+'</span></div>';}).join('');
+}
+function updateNudges(){buildNudges();if(S.profileDone)scheduleNotifications();}
+
+// Vibes — jokes available from day 1, rebel unlocks at 100pts
+function injectVibe(){
+  var zone=document.getElementById('vibeZone');
+  var pool=[];
+  pool=pool.concat(vibes.encourage.map(function(v){return{v:v,type:'encourage'};}));
+  pool=pool.concat(vibes.mindful.map(function(v){return{v:v,type:'mindful'};}));
+  pool=pool.concat(vibes.joke.map(function(v){return{v:v,type:'joke'};}));
+  if(S.points>=100)pool=pool.concat(vibes.rebel.map(function(v){return{v:v,type:'rebel'};}));
+  var unused=pool.filter(function(p){return S.shownVibes.indexOf(p.v.title)<0;});
+  if(!unused.length){S.shownVibes=[];unused=pool;}
+  var pick=unused[Math.floor(Math.random()*unused.length)];
+  S.shownVibes.push(pick.v.title);
+  var labels={encourage:'💚 Encouragement',mindful:'🧘 Mindfulness',joke:'😄 Just for laughs',rebel:'🏴 Food for thought'};
+  zone.innerHTML='<div class="vibe-card '+pick.type+'" id="vibeCard">'
+    +'<button class="vibe-dismiss" onclick="dismissVibe()">✕</button>'
+    +'<div class="vibe-tag">'+labels[pick.type]+'</div>'
+    +'<strong style="font-size:15px;color:var(--text);display:block;margin-bottom:6px">'+pick.v.icon+' '+pick.v.title+'</strong>'
+    +'<div class="vibe-text">'+pick.v.text+'</div></div>';
+}
+function dismissVibe(){var vc=document.getElementById('vibeCard');if(vc)vc.remove();}
+function showVibePopup(){
+  var all=[];
+  all=all.concat(vibes.encourage);all=all.concat(vibes.mindful);all=all.concat(vibes.joke);
+  if(S.points>=100)all=all.concat(vibes.rebel);
+  var pick=all[Math.floor(Math.random()*all.length)];
+  showPopup(pick.icon,pick.title,pick.text);
+}
+
+// Peptides
+var pepOpen={};
+function buildPepCategories(){
+  var html='';Object.keys(pepData).forEach(function(cat){
+    var key=cat.replace(/[^a-z0-9]/gi,'X');
+    html+='<div class="pep-category"><div class="pep-cat-header" onclick="toggleCat(\''+key+'\')"><span>'+cat+'</span><span id="arr_'+key+'">▼</span></div><div class="pep-list" id="plist_'+key+'">';
+    pepData[cat].forEach(function(pep){html+='<button class="pep-tag" id="pep_'+pep.replace(/[ \-]/g,'_')+'" onclick="togglePep(\''+pep+'\')">'+pep+'</button>';});
+    html+='</div></div>';
+  });document.getElementById('pepCategories').innerHTML=html;
+}
+function toggleCat(key){pepOpen[key]=!pepOpen[key];var l=document.getElementById('plist_'+key),a=document.getElementById('arr_'+key);if(l)l.classList.toggle('open',pepOpen[key]);if(a)a.textContent=pepOpen[key]?'▲':'▼';}
+function togglePep(pep){var idx=S.peptides.indexOf(pep);if(idx>-1)S.peptides.splice(idx,1);else S.peptides.push(pep);var el=document.getElementById('pep_'+pep.replace(/[ \-]/g,'_'));if(el)el.classList.toggle('sel',S.peptides.indexOf(pep)>-1);renderSelPeps();}
+function renderSelPeps(){var w=document.getElementById('selPepsWrap'),l=document.getElementById('selPepsList');if(!S.peptides.length){w.style.display='none';return;}w.style.display='block';l.innerHTML=S.peptides.map(function(p){return'<div class="sel-pep-chip">'+p+'</div>';}).join('');}
+function buildGoals(){document.getElementById('goalsGrid').innerHTML=goalsData.map(function(g){return'<button class="goal-btn" id="goal_'+g.id+'" onclick="toggleGoal(\''+g.id+'\')" ><span class="goal-icon">'+g.icon+'</span>'+g.label+'</button>';}).join('');}
+function toggleGoal(id){var idx=S.goals.indexOf(id);if(idx>-1)S.goals.splice(idx,1);else S.goals.push(id);document.getElementById('goal_'+id).classList.toggle('sel',S.goals.indexOf(id)>-1);}
+
+// Dashboard peptide chips — show GLP name, not generic label
+function updateDashPeps(){
+  var el=document.getElementById('dashPeps');
+  var glpActive=S.peptides.filter(function(p){return glpPeps.indexOf(p)>-1;});
+  var wrap=document.getElementById('glpNoteWrap');
+  if(glpActive.length){
+    var glpName=glpActive[0];
+    wrap.style.display='block';
+    wrap.innerHTML='<div class="glp-note">'
+      +'<div class="glp-note-title">🟡 '+glpName+' — log your weekly dose:</div>'
+      +'<div class="dose-row">'
+      +'<label style="font-size:13px;color:#7a5c00;font-weight:500">Dose this week</label>'
+      +'<input class="dose-input" type="number" id="glpDose" placeholder="0.5" step="0.1" min="0">'
+      +'<span style="font-size:13px;color:#8a6800">mg</span>'
+      +'<button class="btn-outline" style="padding:6px 12px;font-size:12px;border-color:var(--gold-l);color:#7a5c00" onclick="logPoints(15,\''+glpName+' dose logged! +15 pts\')">Log dose ✓</button>'
+      +'</div>'
+      +'<div class="glp-note-tip">💡 <strong>Only increase your dose if you\'re not experiencing appetite suppression.</strong> Titrating slowly minimizes side effects like nausea and fatigue, and — critically — helps preserve lean muscle mass by giving your body time to adjust. Patience here pays off.'
+      +'</div></div>';
+  } else {
+    wrap.style.display='none';
+  }
+  if(!S.peptides.length){el.innerHTML='<p style="font-size:13px;color:var(--text3)">No peptides selected — go to Profile to add your stack.</p>';return;}
+  // GLP peptides are logged in the GLP section above — exclude from the chip row to avoid duplicates
+  var nonGlp=S.peptides.filter(function(p){return glpPeps.indexOf(p)<0;});
+  if(!nonGlp.length){el.innerHTML='';return;}
+  el.innerHTML=nonGlp.map(function(p){return'<div class="pep-chip">'+p+'<button class="pep-log-btn" id="logbtn_'+p.replace(/[ \-]/g,'_')+'" onclick="logPeptide(\''+p+'\')">Log ✓</button></div>';}).join('');
+}
+function logPeptide(pep){var btn=document.getElementById('logbtn_'+pep.replace(/[ \-]/g,'_'));if(btn){btn.textContent='✓ Done';btn.classList.add('logged');btn.disabled=true;}S.logs.pepLoggedYest=true;logPoints(20,pep+' logged! +20 pts');buildNudges();}
+
+// Check-in
+function buildCheckIn(){
+  document.getElementById('checkinGrid').innerHTML=checkInData.map(function(c,i){
+    var btns=c.emojis.map(function(em,j){return'<button class="emoji-btn" id="ci'+i+'e'+j+'" onclick="checkIn('+i+','+j+')">'+em+'</button>';}).join('');
+    return'<div class="checkin-item"><div class="checkin-cat">'+c.cat+'</div><div class="emoji-scale">'+btns+'</div><div class="emoji-scale-labels"><span>Rough</span><span>Great</span></div></div>';
+  }).join('');
+}
+function checkIn(catIdx,emojiIdx){
+  var c=checkInData[catIdx];
+  c.emojis.forEach(function(_,j){var b=document.getElementById('ci'+catIdx+'e'+j);if(b)b.classList.remove('sel','sel-neg');});
+  var btn=document.getElementById('ci'+catIdx+'e'+emojiIdx);var isNeg=emojiIdx<=1;
+  if(btn)btn.classList.add(isNeg?'sel-neg':'sel');
+  if(catIdx===2)S.logs.sleepCheckIn=emojiIdx;if(catIdx===1)S.logs.energyCheckIn=emojiIdx;
+  logPoints(5,'Check-in logged! +5 pts');buildNudges();
+  if(isNeg&&c.tips[emojiIdx]){
+    var labels=['Natural support tip 🌿','A gentle suggestion 💚','','',''];
+    showPopup(c.emojis[emojiIdx],labels[emojiIdx]||'A thought for you',c.tips[emojiIdx]);
+  }else if(emojiIdx===4){
+    var celebrates=['🎉 Nausea-free today!','🚀 Energy levels crushing it!','🌙 Great sleep = great recovery!','🎯 Locked in and focused!'];
+    showPopup('🎉','You\'re thriving!',celebrates[catIdx]+' Keep logging and '+(S.avatarName||'your avatar')+' levels up!');
+  }
+}
+
+function updateWindow(){var s=parseFloat(document.getElementById('winStart').value),e=parseFloat(document.getElementById('winEnd').value);if(e<=s)e=s+2;document.getElementById('wsLabel').textContent=fmtTime(s);document.getElementById('weLabel').textContent=fmtTime(e);var hrs=parseFloat((e-s).toFixed(1));document.getElementById('windowBadge').textContent=hrs+' hrs · '+fmtTime(s)+' – '+fmtTime(e);S.logs.windowHrsYest=hrs;buildNudges();}
+function fmtTime(h){var hh=Math.floor(h),mm=h%1===0.5?'30':'00',ap=hh<12?'AM':'PM',d=hh>12?hh-12:hh===0?12:hh;return d+':'+mm+' '+ap;}
+function updateProtBar(){var v=parseFloat(document.getElementById('protInput').value)||0;var g=S.protGoal||109;var p=Math.min(100,Math.round(v/g*100));document.getElementById('protBar').style.width=p+'%';document.getElementById('protTotal').textContent=v+'g logged';document.getElementById('protGoalLbl').textContent='Goal: '+g+'g';buildNudges();}
+function saveProtLog(){var v=parseFloat(document.getElementById('protInput').value)||0;if(v>0){S.logs.protYest=v;logPoints(10,'Protein logged! +10 pts');buildNudges();}}
+function logExercise(){var c=parseFloat(document.getElementById('cardioInput').value)||0;var l=parseFloat(document.getElementById('liftInput').value)||0;S.logs.cardioYest=c;S.logs.liftWeek=l;if(c>0||l>0)logPoints(15,'Exercise logged! +15 pts');buildNudges();}
+
+// Meal plan — full recipe cards + "All Recipes for the Week" + fun recipes
+function buildMealPlan(){
+  var html='';
+  mealPlan.forEach(function(sec){
+    html+='<div style="margin-bottom:20px"><div class="meal-type-header">'+sec.icon+' '+sec.type+'</div>';
+    sec.items.forEach(function(item,i){
+      var key=sec.type.replace(/ /g,'_')+'_'+i,fav=S.favorites[key];
+      var safeName=item.name.replace(/'/g,'&#39;');
+      html+='<div class="meal-item"><div class="meal-item-body">'
+        +'<div class="meal-item-name">'+item.name+'</div>'
+        +'<div class="meal-item-macros">'+item.macros+'</div>'
+        +'<button class="recipe-link" onclick="showFullRecipe('+JSON.stringify(i)+',\''+sec.type.replace(/ /g,'_')+'\')">📖 Recipe</button>'
+        +'</div><button class="heart-btn" id="hrt_'+key+'" onclick="toggleFav(\''+key+'\',\''+safeName+'\')">'+(fav?'❤️':'🤍')+'</button></div>';
+    });html+='</div>';
+  });
+  document.getElementById('mealPlanContent').innerHTML=html;
+
+  var rhtml='';
+  mealPlan.forEach(function(sec){
+    sec.items.forEach(function(item){
+      rhtml+='<div class="recipe-full">'
+        +'<div class="recipe-full-name">'+item.name+'</div>'
+        +'<div class="recipe-full-macros">'+item.macros+'</div>'
+        +'<div class="recipe-full-cols">'
+        +'<div><div class="recipe-col-head">Ingredients</div>'
+        +'<ul class="recipe-ing-list">'+item.ingredients.map(function(ing){return'<li>'+ing+'</li>';}).join('')+'</ul></div>'
+        +'<div><div class="recipe-col-head">Instructions</div>'
+        +'<ol class="recipe-steps-list">'+item.steps.map(function(st){return'<li>'+st+'</li>';}).join('')+'</ol>'
+        +(item.note?'<div class="recipe-note">📌 '+item.note+'</div>':'')
+        +'</div></div></div>';
+    });
+  });
+  document.getElementById('allRecipesBody').innerHTML=rhtml;
+  buildFunRecipes();
+}
+
+function buildFunRecipes(){
+  var el=document.getElementById('funRecipesBody');if(!el)return;
+  el.innerHTML=funRecipes.map(function(r,idx){
+    var bodyId='funrec'+idx;
+    return'<div class="fun-recipe-card">'
+      +'<div class="fun-recipe-header" onclick="toggleFunRec(\''+bodyId+'\','+idx+')">'
+      +'<div style="flex:1">'
+      +'<div class="fun-recipe-tag">'+r.tag+'</div>'
+      +'<div class="fun-recipe-name">'+r.name+'</div>'
+      +'<div class="fun-recipe-tagline">'+r.tagline+'</div>'
+      +'</div>'
+      +'<span id="funarr'+idx+'" style="font-size:16px;color:var(--g3);flex-shrink:0;margin-left:8px">▼</span>'
+      +'</div>'
+      +'<div class="fun-recipe-body" id="'+bodyId+'" style="display:none">'
+      +'<div style="font-size:12px;color:var(--text3);margin-bottom:12px">'+r.macros+' &nbsp;·&nbsp; Serves '+r.serves+' &nbsp;·&nbsp; '+r.prepTime+'</div>'
+      +'<div class="recipe-full-cols">'
+      +'<div><div class="recipe-col-head">Ingredients</div>'
+      +'<ul class="recipe-ing-list">'+r.ingredients.map(function(i){return'<li>'+i+'</li>';}).join('')+'</ul></div>'
+      +'<div><div class="recipe-col-head">Instructions</div>'
+      +'<ol class="recipe-steps-list">'+r.steps.map(function(s){return'<li>'+s+'</li>';}).join('')+'</ol>'
+      +(r.note?'<div class="recipe-note" style="margin-top:10px">💡 '+r.note+'</div>':'')
+      +'</div></div></div></div>';
+  }).join('');
+}
+var funRecOpen={};
+function toggleFunRec(id,idx){
+  funRecOpen[id]=!funRecOpen[id];
+  var el=document.getElementById(id);if(el)el.style.display=funRecOpen[id]?'block':'none';
+  var arr=document.getElementById('funarr'+idx);if(arr)arr.textContent=funRecOpen[id]?'▲':'▼';
+}
+
+// Show full recipe in popup
+function showFullRecipe(itemIdx,secType){
+  var sec=mealPlan.find(function(s){return s.type.replace(/ /g,'_')===secType;});
+  if(!sec)return;var item=sec.items[itemIdx];if(!item)return;
+  var html='<div style="text-align:left">'
+    +'<div style="font-size:12px;color:var(--text3);margin-bottom:10px">'+item.macros+'</div>'
+    +'<div style="font-weight:600;font-size:13px;color:var(--g3);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Ingredients</div>'
+    +'<ul style="list-style:none;font-size:13px;line-height:1.8;color:var(--text2);margin-bottom:14px">'
+    +item.ingredients.map(function(i){return'<li>• '+i+'</li>';}).join('')
+    +'</ul>'
+    +'<div style="font-weight:600;font-size:13px;color:var(--g3);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Instructions</div>'
+    +'<ol style="padding-left:16px;font-size:13px;line-height:1.8;color:var(--text2);margin-bottom:12px">'
+    +item.steps.map(function(s){return'<li style="margin-bottom:4px">'+s+'</li>';}).join('')
+    +'</ol>'
+    +(item.note?'<div style="background:var(--g7);border-radius:10px;padding:10px 12px;font-size:12px;color:var(--g3);font-style:italic">📌 '+item.note+'</div>':'')
+    +'</div>';
+  document.getElementById('popIcon').textContent='🍽️';
+  document.getElementById('popTitle').textContent=item.name;
+  document.getElementById('popText').innerHTML=html;
+  document.getElementById('popupOverlay').style.display='flex';
+}
+
+function toggleFav(key,name){S.favorites[key]=!S.favorites[key];var btn=document.getElementById('hrt_'+key);if(btn)btn.textContent=S.favorites[key]?'❤️':'🤍';if(S.favorites[key]){logPoints(2,'"'+name+'" favorited! +2 pts');showPopup('❤️','Favorited!','"'+name+'" saved to your favorites and will appear more often in your meal plans!');}}
+function showEbookPopup(){showPopup('📚','Your Personalized eBook','Your eBook will include:<br><br>✅ Your macro & calorie targets<br>✅ Protein goal (1.5g/kg target weight)<br>✅ Meal timing goals for your peptide stack<br>✅ Why each nutrient matters for your protocols<br>✅ Natural support tips for all side effects<br>✅ Your favorited meal plan items<br>✅ All weekly recipes with full ingredient amounts<br>✅ Supplement timing guide<br><br><em style="color:var(--text3)">In the full app, this generates a beautifully designed downloadable PDF!</em>');}
+
+// Print/download recipes
+function printRecipes(){
+  var content=document.getElementById('allRecipesBody').innerHTML;
+  var win=window.open('','_blank');
+  win.document.write('<html><head><title>My Weekly Recipes — PeptideNourish</title>');
+  win.document.write('<style>body{font-family:Georgia,serif;max-width:700px;margin:40px auto;color:#1a2e1f;line-height:1.7}');
+  win.document.write('h1{font-size:24px;color:#2d5a3d;margin-bottom:4px}');
+  win.document.write('.recipe-full{margin-bottom:32px;padding-bottom:28px;border-bottom:1px solid #c8e6cc}');
+  win.document.write('.recipe-full-name{font-size:18px;font-weight:700;color:#1a3a2a;margin-bottom:4px}');
+  win.document.write('.recipe-full-macros{font-size:12px;color:#6b8f72;margin-bottom:12px}');
+  win.document.write('.recipe-full-cols{display:grid;grid-template-columns:1fr 1.4fr;gap:20px}');
+  win.document.write('.recipe-col-head{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#4a8c5c;margin-bottom:6px}');
+  win.document.write('.recipe-ing-list{list-style:none;padding:0;font-size:13px;line-height:1.8}');
+  win.document.write('.recipe-ing-list li::before{content:"• ";color:#4a8c5c}');
+  win.document.write('.recipe-steps-list{padding-left:18px;font-size:13px;line-height:1.8}');
+  win.document.write('.recipe-note{font-size:12px;color:#4a8c5c;font-style:italic;margin-top:10px;border-left:3px solid #6db87a;padding-left:10px}');
+  win.document.write('@media print{body{margin:20px}.recipe-full{page-break-inside:avoid}}');
+  win.document.write('</style></head><body>');
+  win.document.write('<h1>🌿 My Weekly Recipes</h1>');
+  win.document.write('<p style="font-size:13px;color:#6b8f72;margin-bottom:28px">PeptideNourish · Created by a Registered Dietitian</p>');
+  win.document.write(content);
+  win.document.write('</body></html>');
+  win.document.close();
+  win.focus();
+  setTimeout(function(){win.print();},400);
+}
+
+function downloadRecipes(){
+  var lines=['# My Weekly Recipes — PeptideNourish\n*Created by a Registered Dietitian*\n'];
+  mealPlan.forEach(function(sec){
+    sec.items.forEach(function(item){
+      lines.push('\n## '+item.name);
+      lines.push('*'+item.macros+'*\n');
+      lines.push('### Ingredients');
+      item.ingredients.forEach(function(ing){lines.push('- '+ing);});
+      lines.push('\n### Instructions');
+      item.steps.forEach(function(st,i){lines.push((i+1)+'. '+st);});
+      if(item.note)lines.push('\n> 📌 '+item.note);
+      lines.push('\n---');
+    });
+  });
+  var blob=new Blob([lines.join('\n')],{type:'text/markdown'});
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='PeptideNourish_Weekly_Recipes.md';a.click();
+}
+
+function logPoints(n,msg){S.points+=n;renderAvatar();renderDashHero();var t=document.createElement('div');t.className='pts-toast';t.innerHTML='⭐ '+msg;document.body.appendChild(t);setTimeout(function(){if(t.parentNode)t.parentNode.removeChild(t);},2800);if(S.profileDone){scheduleNotifications();saveState();}}
+function toggleHistory(id){document.getElementById(id).classList.toggle('open');}
+function showPopup(icon,title,text){document.getElementById('popIcon').textContent=icon;document.getElementById('popTitle').textContent=title;document.getElementById('popText').innerHTML=text;document.getElementById('popupOverlay').style.display='flex';}
+function closePopup(){document.getElementById('popupOverlay').style.display='none';}
+function maybeClose(e){if(e.target===document.getElementById('popupOverlay'))closePopup();}
+
+function signOut(){
+  if(!confirm('Sign out? Your profile and progress are saved — you\'ll pick right up where you left off when you sign back in.'))return;
+  localStorage.removeItem('pn_authed');
+  localStorage.removeItem('pn_phone');
+  // Reset in-memory state
+  S.profileDone=false;S.points=0;
+  document.getElementById('mainApp').style.display='none';
+  document.getElementById('signinPage').classList.add('active');
+  document.getElementById('siStep1').classList.add('active');
+  document.getElementById('siStep2').classList.remove('active');
+  document.getElementById('phoneInput').value='';
+  document.getElementById('phoneError').style.display='none';
+}
+
+// init() is called from the auth gate (DOMContentLoaded) or launchApp()
+</script>
+</body>
+</html>
