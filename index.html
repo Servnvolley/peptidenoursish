@@ -1,0 +1,432 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{min-height:100vh;background:linear-gradient(145deg,#0a1a0f 0%,#0d2218 50%,#0a1a10 100%);font-family:'DM Sans','Segoe UI',sans-serif;color:#d4edd9;padding:1.5rem 1rem 3rem}
+  body::before{content:'';position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(ellipse at 15% 15%,rgba(78,203,113,0.07) 0%,transparent 55%),radial-gradient(ellipse at 85% 85%,rgba(60,150,100,0.05) 0%,transparent 55%);z-index:0}
+  .wrap{max-width:480px;margin:0 auto;position:relative;z-index:1}
+  .logo-area{text-align:center;margin-bottom:1.8rem}
+  .logo-badge{display:inline-block;background:rgba(78,203,113,0.1);border:1px solid rgba(78,203,113,0.22);border-radius:2rem;padding:.28rem 1rem;font-size:.68rem;letter-spacing:.13em;text-transform:uppercase;color:#7ee8a2;margin-bottom:.8rem}
+  .logo-title{font-family:'Playfair Display',Georgia,serif;font-size:clamp(1.8rem,5vw,2.4rem);font-weight:700;background:linear-gradient(135deg,#c8f0d8 0%,#7ee8a2 60%,#4ecb71 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1.15;margin-bottom:.3rem}
+  .logo-sub{color:#6a9a7a;font-size:.85rem}
+  .card{background:rgba(255,255,255,0.03);border:1px solid rgba(100,200,130,0.16);border-radius:1.4rem;padding:1.8rem;backdrop-filter:blur(12px);box-shadow:0 8px 40px rgba(0,0,0,0.3)}
+  .btn-primary{width:100%;padding:.9rem 1rem;background:linear-gradient(135deg,#2d8a4e 0%,#4ecb71 100%);border:none;border-radius:.9rem;color:#0a1a0f;font-size:1rem;font-weight:700;cursor:pointer;letter-spacing:.04em;font-family:'Playfair Display',Georgia,serif;box-shadow:0 4px 24px rgba(78,203,113,0.3);transition:all .2s}
+  .btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 28px rgba(78,203,113,0.4)}
+  .btn-primary:disabled{background:rgba(78,203,113,0.1);color:#3a5a4a;cursor:not-allowed;box-shadow:none;transform:none}
+  .btn-ghost{background:none;border:1px solid rgba(100,200,130,0.25);border-radius:.7rem;color:#7ee8a2;font-size:.85rem;padding:.55rem 1rem;cursor:pointer;transition:all .2s}
+  .btn-ghost:hover{background:rgba(78,203,113,0.08);border-color:rgba(78,203,113,0.4)}
+  .lbl{font-size:.72rem;color:#5a8a6a;display:block;margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.09em;font-weight:600}
+  .inp{width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(100,200,130,0.2);border-radius:.65rem;padding:.75rem 1rem;color:#d4edd9;font-size:1rem;outline:none;transition:border-color .2s;font-family:inherit}
+  .inp:focus{border-color:rgba(78,203,113,.5)}
+  .inp::placeholder{color:#3a5a4a}
+  input[type=number]::-webkit-inner-spin-button{opacity:.3}
+  .dots{display:flex;justify-content:center;gap:.5rem;margin-bottom:1.4rem}
+  .dot{height:8px;border-radius:4px;transition:all .3s ease}
+  .tabs{display:flex;gap:.4rem;margin-bottom:1.5rem;background:rgba(0,0,0,0.2);border-radius:.9rem;padding:.3rem}
+  .tab{flex:1;padding:.55rem .5rem;background:none;border:none;color:#6a9a7a;font-size:.8rem;font-weight:600;cursor:pointer;border-radius:.65rem;transition:all .2s;font-family:inherit}
+  .tab.active{background:rgba(78,203,113,0.15);color:#7ee8a2;border:1px solid rgba(78,203,113,0.3)}
+  .points-badge{display:flex;align-items:center;gap:.5rem;background:rgba(255,200,50,0.1);border:1px solid rgba(255,200,50,0.3);border-radius:2rem;padding:.35rem .9rem;font-size:.82rem;font-weight:700;color:#ffd54f}
+  .log-item{background:rgba(255,255,255,0.04);border:1px solid rgba(100,200,130,0.12);border-radius:.9rem;padding:1rem 1.1rem;display:flex;align-items:center;gap:.9rem;cursor:pointer;transition:all .2s;margin-bottom:.7rem}
+  .log-item:hover{background:rgba(78,203,113,0.06);border-color:rgba(78,203,113,0.25)}
+  .log-item.logged{background:rgba(78,203,113,0.1);border-color:rgba(78,203,113,0.4)}
+  .log-check{width:36px;height:36px;border-radius:50%;border:2px solid rgba(100,200,130,0.3);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;transition:all .2s;background:rgba(0,0,0,0.2)}
+  .log-item.logged .log-check{background:linear-gradient(135deg,#2d8a4e,#4ecb71);border-color:#4ecb71}
+  .log-info{flex:1}
+  .log-title{font-size:.95rem;font-weight:600;color:#c8f0d8}
+  .log-sub{font-size:.75rem;color:#6a9a7a;margin-top:.15rem}
+  .pts-chip{background:rgba(255,200,50,0.15);border:1px solid rgba(255,200,50,0.3);border-radius:1rem;padding:.15rem .55rem;font-size:.72rem;font-weight:700;color:#ffd54f;flex-shrink:0}
+  .streak-bar{height:6px;background:rgba(100,200,130,0.12);border-radius:3px;overflow:hidden;margin-top:.5rem}
+  .streak-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,#2d8a4e,#4ecb71);transition:width .6s ease}
+  .meal-card{background:rgba(255,255,255,0.04);border:1px solid rgba(100,200,130,0.12);border-radius:.9rem;padding:.9rem 1rem;margin-bottom:.7rem;animation:fadeIn .3s ease}
+  .meal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.4rem}
+  .meal-time{font-size:.67rem;color:#4a7a5a;text-transform:uppercase;letter-spacing:.09em;font-weight:600}
+  .meal-name{font-size:.95rem;font-weight:600;color:#c8f0d8;flex:1;margin:0 .6rem}
+  .heart-btn{background:none;border:none;font-size:1.2rem;cursor:pointer;padding:.1rem;transition:transform .15s;line-height:1}
+  .heart-btn:hover{transform:scale(1.2)}
+  .meal-macros{display:flex;gap:.7rem;font-size:.75rem;color:#7a9a8a;flex-wrap:wrap}
+  .macro{background:rgba(0,0,0,0.2);border-radius:.4rem;padding:.1rem .45rem}
+  .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:100;display:flex;align-items:flex-end;justify-content:center;animation:fadeIn .2s ease}
+  .modal{background:#0d2218;border:1px solid rgba(100,200,130,0.2);border-radius:1.4rem 1.4rem 0 0;padding:1.8rem;width:100%;max-width:480px;max-height:80vh;overflow-y:auto;animation:slideUp .3s ease}
+  .recipe-card{background:rgba(255,255,255,0.04);border:1px solid rgba(100,200,130,0.12);border-radius:.9rem;padding:1rem;margin-bottom:.8rem}
+  .recipe-title{font-size:1rem;font-weight:700;color:#c8f0d8;margin-bottom:.4rem}
+  .recipe-meta{font-size:.75rem;color:#6a9a7a;margin-bottom:.6rem}
+  .recipe-steps{font-size:.82rem;color:#9abaa8;line-height:1.6}
+  .toast{position:fixed;top:1.2rem;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#2d8a4e,#4ecb71);color:#0a1a0f;font-weight:700;padding:.55rem 1.2rem;border-radius:2rem;font-size:.9rem;z-index:200;animation:toastAnim .3s ease;white-space:nowrap;box-shadow:0 4px 20px rgba(78,203,113,0.4)}
+  .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-top:.8rem}
+  .stat-card{background:rgba(255,255,255,0.04);border-radius:.65rem;padding:.75rem 1rem}
+  .stat-label{font-size:.67rem;color:#4a7a5a;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.15rem}
+  .stat-val{font-size:1.1rem;font-weight:700;font-family:monospace}
+  .stat-sub{font-size:.7rem;color:#6a8a7a;margin-top:.1rem}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+  @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+  @keyframes toastAnim{from{opacity:0;transform:translateX(-50%) translateY(-8px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+  @keyframes popIn{0%{transform:scale(1)}50%{transform:scale(1.35)}100%{transform:scale(1)}}
+  .pop{animation:popIn .25s ease}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="logo-area">
+    <div class="logo-badge">Created by Registered Dietitian</div>
+    <div class="logo-title">PeptideRx Nutrition</div>
+    <p class="logo-sub">Personalized peptide protocols powered by clinical expertise</p>
+  </div>
+  <div id="app"></div>
+</div>
+
+<script>
+const MOCK_CODE = "123456";
+const state = {
+  screen: "phone",
+  userName: "",
+  profile: null,
+  points: 0,
+  todayLogs: { peptide: false, protein: false, exercise: false, eatWindow: false },
+  favorites: new Set(),
+  dashTab: "log",
+  mealPlan: null,
+  toastTimer: null,
+};
+
+const ALL_MEALS = {
+  breakfast: [
+    { id:"b1", name:"Greek Yogurt Protein Bowl", protein:38, carbs:22, fat:8, cal:320, recipe:"r1" },
+    { id:"b2", name:"Scrambled Egg & Avocado Toast", protein:28, carbs:26, fat:18, cal:380, recipe:"r2" },
+    { id:"b3", name:"Cottage Cheese & Berries", protein:34, carbs:18, fat:5, cal:270, recipe:"r3" },
+    { id:"b4", name:"Protein Smoothie Bowl", protein:42, carbs:30, fat:9, cal:360, recipe:"r4" },
+  ],
+  lunch: [
+    { id:"l1", name:"Grilled Chicken & Quinoa Bowl", protein:52, carbs:38, fat:12, cal:470, recipe:"r5" },
+    { id:"l2", name:"Salmon & Roasted Veggies", protein:48, carbs:20, fat:22, cal:460, recipe:"r6" },
+    { id:"l3", name:"Turkey & Avocado Wrap (lettuce)", protein:44, carbs:12, fat:15, cal:360, recipe:"r7" },
+    { id:"l4", name:"Shrimp & Zucchini Stir-Fry", protein:40, carbs:14, fat:10, cal:320, recipe:"r8" },
+  ],
+  dinner: [
+    { id:"d1", name:"Baked Cod & Sweet Potato", protein:46, carbs:32, fat:8, cal:390, recipe:"r9" },
+    { id:"d2", name:"Lean Ground Turkey Bowl", protein:50, carbs:28, fat:14, cal:430, recipe:"r10" },
+    { id:"d3", name:"Chicken Breast & Asparagus", protein:55, carbs:10, fat:9, cal:340, recipe:"r11" },
+    { id:"d4", name:"Tofu & Bok Choy Stir-Fry", protein:32, carbs:18, fat:12, cal:310, recipe:"r12" },
+  ],
+  snack: [
+    { id:"s1", name:"Hard-Boiled Eggs + Hummus", protein:18, carbs:8, fat:10, cal:200, recipe:"r13" },
+    { id:"s2", name:"Edamame & Sea Salt", protein:16, carbs:12, fat:6, cal:175, recipe:"r14" },
+    { id:"s3", name:"Protein Shake + Almonds", protein:28, carbs:6, fat:9, cal:220, recipe:"r15" },
+  ],
+};
+
+const RECIPES = {
+  r1:{ title:"Greek Yogurt Protein Bowl", time:"5 min", serves:1, steps:"Scoop 1.5 cups non-fat Greek yogurt into a bowl. Top with ½ cup mixed berries, 2 tbsp honey, 2 tbsp hemp seeds, and 1 tbsp chia seeds. Drizzle with 1 tbsp almond butter. Stir gently and enjoy cold." },
+  r2:{ title:"Scrambled Egg & Avocado Toast", time:"10 min", serves:1, steps:"Whisk 3 large eggs with a pinch of salt. Cook over medium-low heat with a light spray of olive oil, stirring slowly until just set. Toast 1 slice Ezekiel bread. Spread ½ mashed avocado on toast, top with eggs. Season with everything bagel seasoning." },
+  r3:{ title:"Cottage Cheese & Berries", time:"3 min", serves:1, steps:"Spoon 1 cup low-fat cottage cheese into a bowl. Add ¾ cup mixed strawberries and blueberries. Sprinkle with 1 tsp vanilla extract and a drizzle of honey. Optional: 1 tbsp crushed walnuts for crunch." },
+  r4:{ title:"Protein Smoothie Bowl", time:"7 min", serves:1, steps:"Blend 1 scoop vanilla protein powder, ½ frozen banana, ½ cup frozen cauliflower rice, ½ cup almond milk, 1 tsp almond butter until thick. Pour into bowl. Top with sliced banana, granola (2 tbsp), and bee pollen." },
+  r5:{ title:"Grilled Chicken & Quinoa Bowl", time:"25 min", serves:1, steps:"Season 6 oz chicken breast with garlic, cumin, salt. Grill 6 min per side. Rest 5 min, slice. Cook ¾ cup quinoa per package. Layer quinoa, chicken, ½ cup roasted cherry tomatoes, cucumber, fresh parsley. Drizzle with lemon-tahini dressing (1 tbsp tahini + lemon juice + water)." },
+  r6:{ title:"Salmon & Roasted Veggies", time:"22 min", serves:1, steps:"Preheat oven 425°F. Toss 1 cup broccoli, ½ cup bell pepper with 1 tsp olive oil, salt, pepper. Roast 18 min. Season 6 oz salmon with lemon zest, dill, salt. Pan-sear in oven-safe skillet 4 min skin-side down, flip, finish in oven 6 min. Serve with veggies." },
+  r7:{ title:"Turkey Lettuce Wrap", time:"10 min", serves:1, steps:"In a skillet, brown 5 oz ground turkey with garlic powder, onion, cumin, and a splash of coconut aminos. Wash and dry 4 butter lettuce leaves. Fill each with turkey, sliced avocado, diced tomato, and a squeeze of lime. Top with cilantro." },
+  r8:{ title:"Shrimp & Zucchini Stir-Fry", time:"15 min", serves:1, steps:"Heat 1 tsp sesame oil in a wok. Add 6 oz peeled shrimp, cook 2 min per side. Remove. Add 1 spiralized zucchini, 1 cup snap peas, minced ginger, garlic. Stir-fry 3 min. Return shrimp. Add 1 tbsp coconut aminos, ½ tsp sriracha. Toss and serve." },
+  r9:{ title:"Baked Cod & Sweet Potato", time:"30 min", serves:1, steps:"Preheat oven to 400°F. Cube 1 medium sweet potato, toss with ½ tsp olive oil, cinnamon, salt. Roast 20 min. Season 6 oz cod with paprika, garlic, lemon zest. Place on parchment, bake 15 min. Serve cod over sweet potato with steamed greens." },
+  r10:{ title:"Lean Ground Turkey Bowl", time:"20 min", serves:1, steps:"Brown 6 oz 93% lean ground turkey with diced onion, bell pepper, cumin, chili powder. Add ½ cup black beans, ½ cup salsa. Simmer 5 min. Serve over 1 cup cauliflower rice. Top with 2 tbsp non-fat Greek yogurt and fresh cilantro." },
+  r11:{ title:"Chicken Breast & Asparagus", time:"20 min", serves:1, steps:"Pound 7 oz chicken breast to even thickness. Season with Italian herbs, garlic, lemon. Pan-sear in oven-safe pan 3 min per side, then roast at 400°F for 10 min. Blanch 1 bunch asparagus 3 min in boiling salted water. Plate together with lemon wedge." },
+  r12:{ title:"Tofu & Bok Choy Stir-Fry", time:"18 min", serves:1, steps:"Press and cube 7 oz extra-firm tofu. Pan-fry in 1 tsp sesame oil until golden, 8 min total. Remove. Stir-fry 2 heads baby bok choy, minced garlic, grated ginger 3 min. Add tofu back. Sauce: 1 tbsp low-sodium soy sauce, 1 tsp rice vinegar, ½ tsp chili flakes. Serve over 1 cup brown rice." },
+  r13:{ title:"Hard-Boiled Eggs + Hummus", time:"12 min", serves:1, steps:"Place 2 eggs in cold water, bring to boil, cover and remove from heat, wait 10 min. Transfer to ice bath, peel when cool. Slice eggs. Serve alongside ¼ cup store-bought or homemade hummus with sliced cucumber and bell pepper strips for dipping." },
+  r14:{ title:"Edamame & Sea Salt", time:"5 min", serves:1, steps:"Place 1.5 cups frozen shelled edamame in a microwave-safe bowl with 2 tbsp water. Microwave 2–3 min until heated through. Drain. Toss with a pinch of flaky sea salt and optional sesame oil. Eat immediately as a warm snack or chill for a cold option." },
+  r15:{ title:"Protein Shake + Almonds", time:"3 min", serves:1, steps:"Blend 1 scoop your preferred protein powder with 1 cup unsweetened almond milk, a handful of ice, and optional ½ tsp vanilla. Shake or blend until smooth. Pair with exactly 1 oz (about 23) raw almonds for healthy fats and satiety without excess calories." },
+};
+
+function calcBMI(lbs,ht){ return ((lbs/(ht*ht))*703).toFixed(1); }
+function bmiCat(b){ return b<18.5?"Underweight":b<25?"Normal weight":b<30?"Overweight":"Obese"; }
+function bmiColor(b){ return b<18.5?"#80d4f0":b<25?"#7ee8a2":b<30?"#f0c080":"#f08080"; }
+function calcBMR(lbs,ht,age,sex){
+  const kg=lbs*0.453592,cm=ht*2.54;
+  return sex==="male"?Math.round(10*kg+6.25*cm-5*age+5):Math.round(10*kg+6.25*cm-5*age-161);
+}
+function formatPhone(v){
+  const d=v.replace(/\D/g,"").slice(0,10);
+  if(d.length<4)return d;
+  if(d.length<7)return`(${d.slice(0,3)}) ${d.slice(3)}`;
+  return`(${d.slice(0,3)}) ${d.slice(3,6)}-${d.slice(6)}`;
+}
+function proteinTarget(targetWeightLbs){
+  const kg=targetWeightLbs*0.453592;
+  return { lo:Math.round(kg*1.5), hi:Math.round(kg*2.0) };
+}
+function generateMealPlan(favs){
+  const pick=(arr)=>{
+    const weighted=[];
+    arr.forEach(m=>{ const times=favs.has(m.id)?3:1; for(let i=0;i<times;i++)weighted.push(m); });
+    return weighted[Math.floor(Math.random()*weighted.length)];
+  };
+  return { breakfast:pick(ALL_MEALS.breakfast), lunch:pick(ALL_MEALS.lunch), dinner:pick(ALL_MEALS.dinner), snack:pick(ALL_MEALS.snack) };
+}
+
+function render(){
+  document.getElementById("app").innerHTML=buildApp();
+  attachEvents();
+}
+
+function showToast(msg){
+  if(state.toastTimer)clearTimeout(state.toastTimer);
+  let t=document.getElementById("global-toast");
+  if(!t){ t=document.createElement("div"); t.id="global-toast"; t.className="toast"; document.body.appendChild(t); }
+  t.textContent=msg; t.style.display="block"; t.style.animation="none";
+  requestAnimationFrame(()=>{ t.style.animation="toastAnim .3s ease"; });
+  state.toastTimer=setTimeout(()=>{ t.style.display="none"; },2200);
+}
+
+function buildApp(){
+  const dotsScreens=["phone","name","profile"];
+  const dotsIdx=dotsScreens.indexOf(state.screen);
+  let dots="";
+  if(dotsIdx>=0){
+    dots=`<div class="dots">`+dotsScreens.map((_,i)=>`<div class="dot" style="width:${i===dotsIdx?24:8}px;background:${i<dotsIdx?"#4ecb71":i===dotsIdx?"#7ee8a2":"rgba(100,200,130,0.2)"}"></div>`).join("")+`</div>`;
+  }
+  let body="";
+  if(state.screen==="phone") body=buildPhone();
+  else if(state.screen==="name") body=buildName();
+  else if(state.screen==="profile") body=buildProfile();
+  else if(state.screen==="dashboard") body=buildDashboard();
+  return dots+body;
+}
+
+function buildPhone(){
+  return `<div class="card" style="animation:fadeIn .35s ease">
+    <div style="text-align:center;margin-bottom:1.6rem">
+      <div style="font-size:2.8rem;margin-bottom:.5rem">📱</div>
+      <h2 style="font-family:'Playfair Display',Georgia,serif;font-size:1.3rem;color:#c8f0d8;margin:0 0 .4rem">Sign in with your phone</h2>
+      <p style="font-size:.85rem;color:#6a9a7a;margin:0">No password needed — we'll text you a code</p>
+    </div>
+    <label class="lbl">Mobile Number</label>
+    <div style="position:relative;margin-bottom:1.2rem">
+      <span style="position:absolute;left:1rem;top:50%;transform:translateY(-50%);color:#4a7a5a;font-size:.95rem;pointer-events:none">🇺🇸 +1</span>
+      <input class="inp" id="ph-input" type="tel" placeholder="(555) 000-0000" style="padding-left:4.2rem;font-size:1.05rem;letter-spacing:.04em"/>
+    </div>
+    <button class="btn-primary" id="ph-send" disabled>Send Code →</button>
+    <p style="text-align:center;font-size:.72rem;color:#3a5a4a;margin-top:1rem">By continuing you agree to receive a one-time SMS.</p>
+  </div>`;
+}
+
+function buildName(){
+  return `<div class="card" style="animation:fadeIn .35s ease">
+    <div style="text-align:center;margin-bottom:1.6rem">
+      <div style="font-size:2.4rem;margin-bottom:.5rem">👋</div>
+      <h2 style="font-family:'Playfair Display',Georgia,serif;font-size:1.3rem;color:#c8f0d8;margin:0 0 .4rem">What should we call you?</h2>
+      <p style="font-size:.85rem;color:#6a9a7a;margin:0">We'll personalize everything to you</p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:1rem">
+      <div><label class="lbl">First Name</label><input class="inp" id="nm-first" type="text" placeholder="e.g. Sarah"/></div>
+      <div><label class="lbl">Last Name <span style="color:#3a5a4a;font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label><input class="inp" id="nm-last" type="text" placeholder="e.g. Johnson"/></div>
+    </div>
+    <button class="btn-primary" id="nm-next" style="margin-top:1.5rem" disabled>Enter your first name to continue</button>
+  </div>`;
+}
+
+function buildProfile(){
+  const p=state._profileDraft||{age:"",sex:"",heightFt:"",heightIn:"",weight:"",targetWeight:""};
+  const totalIn=(parseInt(p.heightFt||0)*12)+(parseInt(p.heightIn||0));
+  const bmi=p.weight&&totalIn>0?parseFloat(calcBMI(parseFloat(p.weight),totalIn)):null;
+  const bmr=p.weight&&totalIn>0&&p.age&&p.sex?calcBMR(parseFloat(p.weight),totalIn,parseInt(p.age),p.sex):null;
+  const toLose=p.targetWeight&&p.weight?Math.round(parseFloat(p.weight)-parseFloat(p.targetWeight)):null;
+  const isOk=p.age&&p.sex&&p.heightFt&&p.weight;
+  const refWeight=parseFloat(p.targetWeight)||parseFloat(p.weight)||0;
+  const pt=refWeight>0?proteinTarget(refWeight):null;
+
+  let statsHtml="";
+  if(bmi){
+    statsHtml=`<div style="margin-top:1.5rem;padding:1.1rem;background:rgba(0,0,0,.2);border-radius:.9rem;border:1px solid rgba(100,200,130,.1);animation:fadeIn .3s ease">
+      <p style="font-size:.68rem;color:#4a7a5a;text-transform:uppercase;letter-spacing:.09em;margin:0 0 .8rem;font-weight:600">Your Stats</p>
+      <div class="stat-grid">
+        <div class="stat-card" style="border-left:3px solid ${bmiColor(bmi)}"><div class="stat-label">BMI</div><div class="stat-val" style="color:${bmiColor(bmi)}">${bmi}</div><div class="stat-sub">${bmiCat(bmi)}</div></div>
+        ${bmr?`<div class="stat-card" style="border-left:3px solid #7ee8a2"><div class="stat-label">Resting Metabolic Rate</div><div class="stat-val" style="color:#7ee8a2">${bmr.toLocaleString()}</div><div class="stat-sub">kcal / day</div></div>`:""}
+        ${pt?`<div class="stat-card" style="border-left:3px solid #f0c080"><div class="stat-label">Protein Target</div><div class="stat-val" style="color:#f0c080">${pt.lo}–${pt.hi}g</div><div class="stat-sub">per day · based on ${p.targetWeight?'goal':'current'} wt</div></div>`:""}
+        ${toLose!==null?`<div class="stat-card" style="border-left:3px solid ${toLose>0?"#c8a8f0":"#7ee8a2"}"><div class="stat-label">${toLose>0?"To Lose":"To Gain"}</div><div class="stat-val" style="color:${toLose>0?"#c8a8f0":"#7ee8a2"}">${Math.abs(toLose)} lbs</div><div class="stat-sub">~${Math.ceil(Math.abs(toLose)/1.5)} weeks at pace</div></div>`:""}
+      </div>
+    </div>`;
+  }
+
+  return `<div class="card" style="animation:fadeIn .35s ease">
+    <h2 style="font-family:'Playfair Display',Georgia,serif;font-size:1.1rem;font-weight:600;color:#c8f0d8;margin:0 0 1.5rem;display:flex;align-items:center;gap:.5rem"><span style="font-size:1.4rem">📋</span> Your Profile</h2>
+    <div style="display:flex;flex-direction:column;gap:1.1rem">
+      <div><label class="lbl">Age</label><input class="inp" id="pr-age" type="number" placeholder="Enter your age" value="${p.age}" min="18" max="90"/></div>
+      <div>
+        <label class="lbl">Gender</label>
+        <div style="display:flex;gap:.6rem">
+          ${[{id:"female",label:"Female",icon:"♀"},{id:"male",label:"Male",icon:"♂"}].map(o=>`<button class="pr-sex" data-sex="${o.id}" style="flex:1;padding:.75rem;background:${p.sex===o.id?"rgba(78,203,113,0.18)":"rgba(255,255,255,0.04)"};border:1px solid ${p.sex===o.id?"rgba(78,203,113,0.5)":"rgba(100,200,130,0.15)"};border-radius:.65rem;color:${p.sex===o.id?"#a8e6be":"#6a9a7a"};font-size:.95rem;font-weight:${p.sex===o.id?600:400};cursor:pointer;font-family:inherit;transition:all .18s">${o.icon} ${o.label}</button>`).join("")}
+        </div>
+      </div>
+      <div>
+        <label class="lbl">Height</label>
+        <div style="display:flex;gap:.6rem">
+          <div style="position:relative;flex:1"><input class="inp" id="pr-hft" type="number" placeholder="5" value="${p.heightFt}" min="3" max="8" style="padding-right:2.5rem"/><span style="position:absolute;right:.8rem;top:50%;transform:translateY(-50%);color:#4a7a5a;font-size:.8rem;pointer-events:none">ft</span></div>
+          <div style="position:relative;flex:1"><input class="inp" id="pr-hin" type="number" placeholder="6" value="${p.heightIn}" min="0" max="11" style="padding-right:2.5rem"/><span style="position:absolute;right:.8rem;top:50%;transform:translateY(-50%);color:#4a7a5a;font-size:.8rem;pointer-events:none">in</span></div>
+        </div>
+      </div>
+      <div><label class="lbl">Current Weight</label><div style="position:relative"><input class="inp" id="pr-wt" type="number" placeholder="Enter your weight" value="${p.weight}" style="padding-right:3rem"/><span style="position:absolute;right:.9rem;top:50%;transform:translateY(-50%);color:#4a7a5a;font-size:.8rem;pointer-events:none">lbs</span></div></div>
+      <div><label class="lbl">Target Weight <span style="color:#3a5a4a;font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label><div style="position:relative"><input class="inp" id="pr-twt" type="number" placeholder="Your goal weight" value="${p.targetWeight}" style="padding-right:3rem"/><span style="position:absolute;right:.9rem;top:50%;transform:translateY(-50%);color:#4a7a5a;font-size:.8rem;pointer-events:none">lbs</span></div></div>
+    </div>
+    ${statsHtml}
+    <button class="btn-primary" id="pr-next" style="margin-top:1.5rem" ${isOk?"":'disabled'}>${isOk?"Continue to Dashboard →":"Fill in your profile to continue"}</button>
+  </div>`;
+}
+
+function buildDashboard(){
+  const { profile, points, dashTab } = state;
+  const pct=Math.min(100,Math.round((points/100)*100));
+  const refWeight=parseFloat(profile.targetWeight)||parseFloat(profile.weight)||0;
+  const pt=proteinTarget(refWeight);
+
+  const tabs=`<div class="tabs">
+    <button class="tab ${dashTab==="log"?"active":""}" data-tab="log">📋 Daily Log</button>
+    <button class="tab ${dashTab==="meals"?"active":""}" data-tab="meals">🥗 Meal Plan</button>
+    <button class="tab ${dashTab==="recipes"?"active":""}" data-tab="recipes">📖 Recipes</button>
+  </div>`;
+
+  const pointsBar=`<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.4rem">
+    <div>
+      <div style="font-size:.7rem;color:#5a8a6a;text-transform:uppercase;letter-spacing:.09em;font-weight:600;margin-bottom:.3rem">Today's Points</div>
+      <div class="points-badge">⭐ ${points} pts${points>=100?' · 🏆 Goal hit!':''}</div>
+    </div>
+    <div style="text-align:right">
+      <div style="font-size:.7rem;color:#5a8a6a;margin-bottom:.3rem">Protein: ${pt.lo}–${pt.hi}g/day</div>
+      <div style="font-size:.72rem;color:#4a7a5a">Goal wt: ${profile.targetWeight||profile.weight} lbs</div>
+    </div>
+  </div>
+  <div class="streak-bar"><div class="streak-fill" style="width:${pct}%"></div></div>
+  <div style="font-size:.7rem;color:#4a7a5a;margin:.4rem 0 1.2rem;text-align:right">${pct}% of daily goal (100 pts)</div>`;
+
+  let content="";
+  if(dashTab==="log") content=buildLogTab();
+  else if(dashTab==="meals") content=buildMealsTab();
+  else content=buildRecipesTab();
+
+  return `<div class="card" style="animation:fadeIn .35s ease">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem">
+      <div>
+        <h2 style="font-family:'Playfair Display',Georgia,serif;font-size:1.15rem;color:#c8f0d8;margin:0">Welcome, ${state.userName}!</h2>
+        <p style="font-size:.78rem;color:#6a9a7a;margin:.2rem 0 0">${new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'})}</p>
+      </div>
+      <div style="font-size:2rem">🌿</div>
+    </div>
+    ${pointsBar}
+    ${tabs}
+    ${content}
+  </div>`;
+}
+
+function buildLogTab(){
+  const { todayLogs } = state;
+  const items=[
+    { key:"peptide", icon:"💉", title:"Peptide Logged", sub:"Logged today's injection", pts:25 },
+    { key:"protein", icon:"🥩", title:"Protein Goal Hit", sub:"Reached daily protein target", pts:25 },
+    { key:"exercise", icon:"🏋️", title:"Exercise Completed", sub:"Any movement counts!", pts:25 },
+    { key:"eatWindow", icon:"⏱️", title:"Eating Window < 10 hrs", sub:"Time-restricted eating bonus", pts:25 },
+  ];
+  return items.map(it=>`
+    <div class="log-item ${todayLogs[it.key]?"logged":""}" data-log="${it.key}">
+      <div class="log-check">${todayLogs[it.key]?"✅":it.icon}</div>
+      <div class="log-info">
+        <div class="log-title">${it.title}</div>
+        <div class="log-sub">${todayLogs[it.key]?"Logged ✓":it.sub}</div>
+      </div>
+      <div class="pts-chip">+${it.pts} pts</div>
+    </div>
+  `).join("");
+}
+
+function buildMealsTab(){
+  if(!state.mealPlan) state.mealPlan=generateMealPlan(state.favorites);
+  const mp=state.mealPlan;
+  const order=[["breakfast","☀️ Breakfast"],["lunch","🌤 Lunch"],["snack","🍎 Snack"],["dinner","🌙 Dinner"]];
+  const fav=state.favorites;
+
+  let html=order.map(([slot,label])=>{
+    const m=mp[slot];
+    const isFav=fav.has(m.id);
+    return `<div class="meal-card">
+      <div class="meal-header">
+        <span class="meal-time">${label}</span>
+        <span class="meal-name">${m.name}</span>
+        <button class="heart-btn" data-fav="${m.id}" title="${isFav?"Unfavorite":"Favorite"}">${isFav?"❤️":"🤍"}</button>
+      </div>
+      <div class="meal-macros">
+        <span class="macro">🔥 ${m.cal} cal</span>
+        <span class="macro">💪 ${m.protein}g protein</span>
+        <span class="macro">🌾 ${m.carbs}g carbs</span>
+        <span class="macro">🥑 ${m.fat}g fat</span>
+      </div>
+      <button class="btn-ghost" data-recipe="${m.recipe}" style="margin-top:.75rem;width:100%;font-size:.8rem">📖 View Recipe</button>
+    </div>`;
+  }).join("");
+
+  const totalP=Object.values(mp).reduce((a,m)=>a+m.protein,0);
+  const pt=state.profile?proteinTarget(parseFloat(state.profile.targetWeight)||parseFloat(state.profile.weight)||0):{lo:0,hi:0};
+  const pctHit=Math.round((totalP/pt.hi)*100);
+  const barColor=totalP>=pt.lo?"#4ecb71":"#f0c080";
+
+  html=`<div style="background:rgba(0,0,0,.2);border-radius:.8rem;padding:.8rem 1rem;margin-bottom:1rem">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.4rem">
+      <span style="font-size:.75rem;color:#6a9a7a">Plan total protein</span>
+      <span style="font-size:.85rem;font-weight:700;color:${barColor}">${totalP}g / ${pt.lo}–${pt.hi}g goal</span>
+    </div>
+    <div class="streak-bar"><div class="streak-fill" style="width:${Math.min(100,pctHit)}%;background:${barColor}"></div></div>
+  </div>`+html;
+
+  html+=`<button class="btn-primary" id="regen-plan" style="margin-top:.5rem">🔄 Regenerate Meal Plan</button>`;
+  if(state.favorites.size>0) html+=`<p style="text-align:center;font-size:.72rem;color:#5a8a6a;margin-top:.6rem">❤️ ${state.favorites.size} favorite${state.favorites.size>1?"s":""} weighted 3× in generation</p>`;
+  return html;
+}
+
+function buildRecipesTab(){
+  return Object.values(RECIPES).map(r=>`
+    <div class="recipe-card">
+      <div class="recipe-title">${r.title}</div>
+      <div class="recipe-meta">⏱ ${r.time} &nbsp;|&nbsp; 🍽 Serves ${r.serves}</div>
+      <div class="recipe-steps">${r.steps}</div>
+    </div>
+  `).join("");
+}
+
+function showRecipeModal(recipeId){
+  const r=RECIPES[recipeId]; if(!r)return;
+  let existing=document.getElementById("recipe-modal");
+  if(existing)existing.remove();
+  const div=document.createElement("div");
+  div.className="modal-overlay"; div.id="recipe-modal";
+  div.innerHTML=`<div class="modal">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.2rem">
+      <h3 style="font-family:'Playfair Display',Georgia,serif;color:#c8f0d8;font-size:1.15rem">${r.title}</h3>
+      <button id="close-modal" style="background:none;border:none;color:#7ee8a2;font-size:1.4rem;cursor:pointer;line-height:1">✕</button>
+    </div>
+    <div style="font-size:.8rem;color:#6a9a7a;margin-bottom:1rem">⏱ ${r.time} &nbsp;|&nbsp; 🍽 Serves ${r.serves}</div>
+    <div style="font-size:.9rem;color:#c8f0d8;line-height:1.75">${r.steps}</div>
+    <button class="btn-primary" id="close-modal-btn" style="margin-top:1.5rem">Close</button>
+  </div>`;
+  document.body.appendChild(div);
+  div.querySelector("#close-modal").onclick=div.querySelector("#close-modal-btn").onclick=()=>div.remove();
+  div.onclick=(e)=>{ if(e.target===div)div.remove(); };
+}
+
+function attachEvents(){
+  if(state.screen==="phone"){
+    const inp=document.getElementById("ph-input");
+    const sendBtn=document.getElementById("ph-send");
+    let digits="";
+    inp.addEventListener("input",e=>{
+      digits=e.target.value.replace(/\D/g,"").slice(0,10);
+      e.target.value=formatPhone(digits);
+      sendBtn.disabled=digits.length!==10;
+    });
+    sendBtn.addEventListener("click",()=>{
+      if(digits.length===10){
+        const card=document.querySelector(".card");
+        card.innerHTML=`<div style="text-align:center;margin-bottom:1.6rem">
+          <div style="font-size:2.8rem;margin-bottom:.5rem">📱</div>
+          <h2 style="font-family:'Playfair Display',Georgia,serif;font-size:1.3rem;color:#c8f0d8;margin:0 0 .4rem">Check your texts</h2>
+          <p style="font-size:.85rem;color:#6a9a7a;margin:0">We sent a 6-digit code to ${formatPhone(digits)}</p>
+        </div>
+        <label class="lbl">Enter 6-Digit Code</label>
+        <input class="inp" id="code-inp" type="number" placeholder=
