@@ -1,18 +1,22 @@
-// netlify/functions/send-code.js
-// Sends a Twilio Verify OTP to the provided phone number
-
 const twilio = require('twilio');
 
 exports.handler = async (event) => {
-  // Only allow POST
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: JSON.stringify({ error: 'Method not allowed' }) };
   }
 
+  // Log env vars presence (not values) for debugging
+  console.log('ENV CHECK:', {
+    hasSID: !!process.env.TWILIO_ACCOUNT_SID,
+    hasToken: !!process.env.TWILIO_AUTH_TOKEN,
+    hasVerify: !!process.env.TWILIO_VERIFY_SID,
+    verifySID: process.env.TWILIO_VERIFY_SID
+  });
+
   let phone;
   try {
     ({ phone } = JSON.parse(event.body));
-  } catch {
+  } catch(e) {
     return { statusCode: 400, body: JSON.stringify({ error: 'Invalid request body' }) };
   }
 
@@ -20,13 +24,11 @@ exports.handler = async (event) => {
     return { statusCode: 400, body: JSON.stringify({ error: 'Phone number required' }) };
   }
 
-  // Sanitize â€” must start with + and contain only digits after
   const cleaned = phone.replace(/\s/g, '');
-  if (!/^\+\d{7,15}$/.test(cleaned)) {
-    return {
-      statusCode: 400,
-      body: JSON.stringify({ error: 'Phone must be in E.164 format, e.g. +15551234567' })
-    };
+
+  if (!process.env.TWILIO_ACCOUNT_SID || !process.env.TWILIO_AUTH_TOKEN || !process.env.TWILIO_VERIFY_SID) {
+    console.error('Missing environment variables');
+    return { statusCode: 500, body: JSON.stringify({ error: 'Server configuration error — missing credentials' }) };
   }
 
   const client = twilio(
@@ -39,12 +41,13 @@ exports.handler = async (event) => {
       .services(process.env.TWILIO_VERIFY_SID)
       .verifications.create({ to: cleaned, channel: 'sms' });
 
+    console.log('Verification status:', verification.status);
     return {
       statusCode: 200,
-      body: JSON.stringify({ status: verification.status }) // 'pending'
+      body: JSON.stringify({ status: verification.status })
     };
   } catch (err) {
-    console.error('Twilio error:', err.message);
+    console.error('Twilio error:', err.message, err.code);
     return {
       statusCode: 500,
       body: JSON.stringify({ error: err.message })
