@@ -575,7 +575,7 @@ h1,h2,h3,h4{font-family:'Playfair Display',serif}
       <div class="signin-error" id="phoneError">Please enter a valid 10-digit phone number.</div>
       <button class="signin-btn" id="sendCodeBtn" onclick="sendCode()">Send passcode →</button>
       <div class="signin-demo">
-        <strong>Demo mode:</strong> Any valid phone format works. Use passcode <strong>1 2 3 4 5 6</strong> to sign in. To enable real SMS, set <strong>BACKEND_URL</strong> in the code (see the Supabase setup guide).
+        <strong>Demo mode:</strong> Any valid phone format works. Use passcode <strong>1 2 3 4 5 6</strong> to sign in. Real SMS sends once <strong>BACKEND_URL</strong> points at your deployed Netlify Functions (send-code / verify-code) with Twilio Verify configured.
       </div>
     </div>
 
@@ -1774,11 +1774,12 @@ var AUTH={phone:'',code:'',resendInterval:null};
 var DEMO_CODE='123456';
 /* ════════ SMS BACKEND CONFIG ════════
    Leave blank ('') to run in DEMO mode (passcode 123456, no real texts).
-   When your Supabase project is ready, paste its URL here, e.g.:
-   var BACKEND_URL='https://abcdxyz.supabase.co';
-   Then real SMS codes send via your connected Twilio. */
-var BACKEND_URL='';
+   BACKEND_URL points at your deployed Netlify site. This calls
+   /.netlify/functions/send-code and /.netlify/functions/verify-code,
+   which use Twilio Verify (TWILIO_VERIFY_SID) to text and check real codes. */
+var BACKEND_URL='https://peptidenourish.netlify.app';
 function authDemo(){return !BACKEND_URL;}
+
 
 function formatPhone(input){
   var v=input.value.replace(/\D/g,'');
@@ -1810,21 +1811,40 @@ function sendCode(){
     AUTH.code=DEMO_CODE; // DEMO: no real text, passcode is 123456
     advance();
   } else {
-    // PRODUCTION: ask backend (Supabase → your Twilio) to text a real code
-    AUTH.code=''; // server holds/verifies the real code
+    // PRODUCTION: ask our Netlify Function (→ Twilio Verify) to text a real code.
+    // Twilio Verify manages the code itself — our server stores nothing.
+    // If the backend isn't reachable (not deployed, network error), fall back
+    // to demo mode so testing isn't blocked — but say so clearly.
+    AUTH.code=''; // Twilio Verify checks the code server-side, not here
     var btn=document.getElementById('sendCodeBtn');if(btn){btn.disabled=true;btn.textContent='Sending…';}
-    fetch(BACKEND_URL.replace(/\/$/,'')+'/auth/v1/otp',{
+    fetch(BACKEND_URL.replace(/\/$/,'')+'/.netlify/functions/send-code',{
       method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({phone:'+1'+raw})
-    }).then(function(r){return r.ok?advance():r.json().then(function(j){throw new Error(j.msg||'send failed');});})
-      .catch(function(e){document.getElementById('phoneError').textContent='Could not send code — try again.';document.getElementById('phoneError').style.display='block';})
+    }).then(function(r){return r.json().then(function(j){if(!r.ok)throw new Error(j.error||'send failed');return j;});})
+      .then(function(j){advance();})
+      .catch(function(e){
+        console.warn('SMS backend unreachable, falling back to demo mode:',e.message);
+        AUTH.code=DEMO_CODE;
+        advance();
+        var de=document.getElementById('phoneSentTo');
+        if(de)de.innerHTML+='<br><span style="font-size:11.5px;color:var(--text3);font-weight:400">⚠️ Backend unavailable — using demo mode. Passcode is <strong>123456</strong>.</span>';
+      })
       .then(function(){if(btn){btn.disabled=false;btn.textContent='Send passcode →';}});
   }
 }
 
 function resendCode(){
   if(authDemo()){AUTH.code=DEMO_CODE;}
-  else{fetch(BACKEND_URL.replace(/\/$/,'')+'/auth/v1/otp',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({phone:'+1'+AUTH.phone})}).catch(function(){});}
+  else{
+    fetch(BACKEND_URL.replace(/\/$/,'')+'/.netlify/functions/send-code',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({phone:'+1'+AUTH.phone})})
+      .then(function(r){return r.json().then(function(j){if(!r.ok)throw new Error(j.error||'send failed');return j;});})
+      .catch(function(e){
+        console.warn('SMS backend unreachable on resend, falling back to demo mode:',e.message);
+        AUTH.code=DEMO_CODE;
+        var de=document.getElementById('phoneSentTo');
+        if(de&&de.innerHTML.indexOf('demo mode')===-1)de.innerHTML+='<br><span style="font-size:11.5px;color:var(--text3);font-weight:400">⚠️ Backend unavailable — using demo mode. Passcode is <strong>123456</strong>.</span>';
+      });
+  }
   document.getElementById('codeError').style.display='none';
   document.getElementById('resendBtn').style.display='none';
   document.getElementById('resendTimerSpan').style.display='inline';
@@ -1883,15 +1903,19 @@ function verifyCode(){
     document.getElementById('verifyBtn').disabled=true;
     document.getElementById('pc0').focus();
   }
-  if(authDemo()){
+  // Use the real backend unless we're in demo mode OR sendCode() already
+  // fell back to demo (AUTH.code gets set to DEMO_CODE in that case).
+  if(authDemo()||AUTH.code===DEMO_CODE){
     if(code===AUTH.code)success(); else fail();
   } else {
-    // PRODUCTION: backend (Supabase) verifies the real code it sent
+    // PRODUCTION: our Netlify Function asks Twilio Verify to check the code
     var btn=document.getElementById('verifyBtn');if(btn){btn.disabled=true;btn.textContent='Verifying…';}
-    fetch(BACKEND_URL.replace(/\/$/,'')+'/auth/v1/verify',{
+    fetch(BACKEND_URL.replace(/\/$/,'')+'/.netlify/functions/verify-code',{
       method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({type:'sms',phone:'+1'+AUTH.phone,token:code})
-    }).then(function(r){return r.ok;}).then(function(ok){if(btn){btn.textContent='Verify →';}ok?success():fail();})
+      body:JSON.stringify({phone:'+1'+AUTH.phone,code:code})
+    }).then(function(r){return r.json().then(function(j){return j&&j.success===true;});}).then(function(ok){if(btn){btn.textContent='Verify →';}ok?success():fail();})
+      .catch(function(){if(btn){btn.disabled=false;btn.textContent='Verify →';}fail();});
+    }).then(function(r){return r.json().then(function(j){return j&&j.ok===true;});}).then(function(ok){if(btn){btn.textContent='Verify →';}ok?success():fail();})
       .catch(function(){if(btn){btn.disabled=false;btn.textContent='Verify →';}fail();});
   }
 }
