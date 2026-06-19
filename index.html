@@ -210,7 +210,9 @@ h1,h2,h3,h4{font-family:'Playfair Display',serif}
 .pep-tag .pep-check{width:16px;height:16px;border-radius:4px;border:1.5px solid currentColor;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:10px;opacity:0.5}
 .pep-tag.sel .pep-check{opacity:1;background:rgba(255,255,255,.25);border-color:rgba(255,255,255,.6)}
 .sel-peps-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-.sel-pep-chip{background:var(--g5);color:#fff;border-radius:8px;padding:5px 13px;font-size:12px;font-weight:600}
+.sel-pep-chip{background:var(--g5);color:#fff;border-radius:8px;padding:5px 8px 5px 13px;font-size:12px;font-weight:600;display:inline-flex;align-items:center;gap:8px}
+.sel-pep-chip .pep-recon-btn{padding:4px 9px;font-size:13px;background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.35);margin-left:0}
+.sel-pep-chip .pep-recon-btn:hover{background:rgba(255,255,255,.3);color:#fff}
 /* HEALTH AUTONOMY QUOTE CARD */
 .quote-card{background:linear-gradient(135deg,var(--g1) 0%,var(--g5) 100%);border-radius:16px;padding:22px 24px;margin-bottom:20px;position:relative;overflow:hidden}
 .quote-card::before{content:'"';position:absolute;top:-10px;left:12px;font-size:100px;color:rgba(255,255,255,.08);font-family:'Playfair Display',serif;line-height:1}
@@ -219,15 +221,20 @@ h1,h2,h3,h4{font-family:'Playfair Display',serif}
 .quote-attr{font-size:12px;color:rgba(255,255,255,.6);font-weight:500;letter-spacing:.3px}
 .quote-tag{display:inline-flex;align-items:center;gap:6px;margin-top:10px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:20px;padding:5px 12px;font-size:11px;color:rgba(255,255,255,.8);font-weight:500}
 /* Injection emoji red badge */
-.inj-badge{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;background:#dc2626;border-radius:7px;font-size:16px;flex-shrink:0;box-shadow:0 2px 6px rgba(220,38,38,.35)}
-.pep-chip{background:var(--g7);border:1px solid var(--border);border-radius:20px;padding:7px 14px;font-size:13px;font-weight:500;color:var(--g2);display:flex;align-items:center;gap:8px}
+.inj-badge{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;background:var(--g3);border-radius:7px;font-size:16px;flex-shrink:0;box-shadow:0 2px 6px rgba(111,191,141,.3)}
+.pep-chip{background:var(--g7);border:1px solid var(--border);border-radius:20px;padding:10px 16px;font-size:15px;font-weight:600;color:var(--g2);display:flex;align-items:center;gap:8px}
+@keyframes confFall{to{transform:translateY(105vh) rotate(540deg);opacity:.2}}
+@keyframes celPop{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes celRise{from{transform:translateY(24px) scale(.9);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
 /* Dashboard logs */
 .dash-peps{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:10px}
 .pep-chip{background:var(--g7);border:1px solid var(--border);border-radius:20px;padding:7px 14px;font-size:13px;font-weight:500;color:var(--g2);display:flex;align-items:center;gap:8px}
 .bz-tips-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
 @media(max-width:600px){.bz-tips-grid{grid-template-columns:1fr}}
-.pep-log-btn{padding:3px 10px;background:var(--g2);color:#fff;border:none;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s}
+.pep-log-btn{padding:8px 16px;background:var(--g2);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s}
 .pep-log-btn:hover{background:var(--g1)}.pep-log-btn.logged{background:var(--g4)}
+.pep-recon-btn{padding:8px 12px;background:var(--veg4);color:var(--g2);border:1px solid var(--g3);border-radius:10px;font-size:15px;cursor:pointer;font-family:'DM Sans',sans-serif;margin-left:8px;transition:all .15s}
+.pep-recon-btn:hover{background:var(--g3);color:#fff}
 .glp-note{background:#fff8e7;border:1px solid var(--gold-l);border-radius:12px;padding:14px;margin-top:12px}
 .glp-note-title{font-size:14px;font-weight:600;color:#7a5c00;margin-bottom:6px}
 .glp-note-tip{font-size:12px;color:#8a6800;line-height:1.6;margin-top:8px;padding-top:8px;border-top:1px solid var(--gold-l)}
@@ -568,7 +575,7 @@ h1,h2,h3,h4{font-family:'Playfair Display',serif}
       <div class="signin-error" id="phoneError">Please enter a valid 10-digit phone number.</div>
       <button class="signin-btn" id="sendCodeBtn" onclick="sendCode()">Send passcode →</button>
       <div class="signin-demo">
-        <strong>Demo mode:</strong> Any valid phone format works. Use passcode <strong>1 2 3 4 5 6</strong> to sign in. In production, a real SMS would be sent via Twilio.
+        <strong>Demo mode:</strong> Any valid phone format works. Use passcode <strong>1 2 3 4 5 6</strong> to sign in. To enable real SMS, set <strong>BACKEND_URL</strong> in the code (see the Supabase setup guide).
       </div>
     </div>
 
@@ -606,6 +613,7 @@ h1,h2,h3,h4{font-family:'Playfair Display',serif}
     <button class="nav-tab active" id="tab-profile" onclick="goPage('profile')">Profile</button>
     <button class="nav-tab" id="tab-dashboard" onclick="goPage('dashboard')">Dashboard</button>
     <button class="nav-tab" id="tab-meals" onclick="goPage('meals')">Meal Plan</button>
+    <button class="nav-tab" id="tab-squad" onclick="goPage('squad')">Squad</button>
   </div>
   <div style="display:flex;align-items:center;gap:10px">
     <button onclick="signOut()" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);font-family:'DM Sans',sans-serif;font-size:12px;padding:5px 10px;border-radius:7px;cursor:pointer;transition:all .2s" onmouseover="this.style.background='rgba(255,255,255,.2)'" onmouseout="this.style.background='rgba(255,255,255,.1)'">Sign out</button>
@@ -641,7 +649,7 @@ h1,h2,h3,h4{font-family:'Playfair Display',serif}
       <div class="quote-mark">"</div>
       <div class="quote-text">Leave all the afternoon for exercise and recreation, which are as necessary as reading. I will rather say more necessary, because health is worth more than learning.</div>
       <div class="quote-attr">— Thomas Jefferson, letter to his nephew Peter Carr, 1785</div>
-      <div class="quote-tag"><span class="inj-badge" style="width:20px;height:20px;font-size:12px;border-radius:5px">💉</span> Your health. Your protocol. Your results.</div>
+      <div class="quote-tag"><span class="inj-badge" style="width:20px;height:20px;font-size:12px;border-radius:5px">✨</span> Your health. Your protocol. Your results.</div>
     </div>
     <div class="card">
       <div class="card-title">👤 About You</div>
@@ -754,6 +762,11 @@ h1,h2,h3,h4{font-family:'Playfair Display',serif}
           <input type="range" min="0" max="100" value="20" id="avHairSlider" oninput="renderAvatarPreview()" style="flex:1;accent-color:var(--g3)">
           <div id="avHairSwatch" style="width:26px;height:26px;border-radius:50%;border:2px solid var(--border);flex-shrink:0"></div>
         </div>
+        <div style="display:flex;align-items:center;gap:12px;margin-top:14px">
+          <span style="font-size:13px;font-weight:500;color:var(--text2);min-width:72px">Hair length</span>
+          <input type="range" min="0" max="100" value="65" id="avHairLenSlider" oninput="renderAvatarPreview()" style="flex:1;accent-color:var(--g3)">
+          <span id="avHairLenLabel" style="font-size:11px;color:var(--text3);min-width:48px;text-align:right">Long</span>
+        </div>
       </div>
 
       <!-- Body build selector -->
@@ -769,6 +782,28 @@ h1,h2,h3,h4{font-family:'Playfair Display',serif}
 
       <!-- Hidden grid kept for JS compatibility but not shown -->
       <div style="display:none" id="avatarPreviewGrid"></div>
+
+      <!-- Outfit picker -->
+      <div style="max-width:440px;margin:18px auto 8px">
+        <div style="font-size:13px;font-weight:600;color:var(--text2);margin-bottom:10px;text-align:center">Outfit</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center" id="avOutfitBtns"></div>
+      </div>
+
+      <!-- Accessory picker -->
+      <div style="max-width:440px;margin:14px auto 4px">
+        <div style="font-size:13px;font-weight:600;color:var(--text2);margin-bottom:10px;text-align:center">Accessories</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center" id="avAccBtns"></div>
+      </div>
+
+      <!-- Team cap picker (Savage+) -->
+      <div style="max-width:440px;margin:14px auto 4px">
+        <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;align-items:center" id="avTeamBtns"></div>
+      </div>
+
+      <!-- Pet companion picker (Legend) -->
+      <div style="max-width:440px;margin:14px auto 4px">
+        <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;align-items:center" id="avPetBtns"></div>
+      </div>
     </div>
     <div style="display:flex;justify-content:space-between">
       <button class="btn-outline" onclick="goStep(1)">← Back</button>
@@ -786,7 +821,7 @@ h1,h2,h3,h4{font-family:'Playfair Display',serif}
       <div class="quote-tag">🌿 You are your own best health advocate</div>
     </div>
     <div class="card">
-      <div class="card-title"><span class="inj-badge">💉</span> Your Peptide Stack</div>
+      <div class="card-title"><span class="inj-badge">✨</span> Your Peptide Stack</div>
       <p style="font-size:13px;color:var(--text3);margin-bottom:18px">Select all peptides you are currently taking. They will appear on your dashboard for daily logging.</p>
       <div id="pepCategories"></div>
       <div id="selPepsWrap" style="display:none;margin-top:16px;padding-top:14px;border-top:1px solid var(--border)">
@@ -841,6 +876,7 @@ h1,h2,h3,h4{font-family:'Playfair Display',serif}
       <div class="dah-xp-label" id="dahXpLabel">0 / 500 pts</div>
     </div>
     <div class="dah-pts-row">⭐ <span id="dashPtsLabel">0 pts</span> &nbsp;·&nbsp; <span id="dashLevelLabel">Level 1</span></div>
+    <button onclick="openShareCard()" style="margin-top:14px;display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);color:#fff;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;padding:9px 18px;border-radius:22px;cursor:pointer">📸 Share my card</button>
     <div class="dah-tap-hint">tap your avatar to say hi 👆</div>
 
     <!-- Locked next level -->
@@ -874,7 +910,7 @@ h1,h2,h3,h4{font-family:'Playfair Display',serif}
   </div>
 
   <div class="card">
-    <div class="card-title"><span class="inj-badge">💉</span> Today's Peptide Log</div>
+    <div class="card-title"><span class="inj-badge">✨</span> Today's Peptide Log</div>
     <div class="dash-peps" id="dashPeps"><p style="font-size:13px;color:var(--text3)">Complete your profile to see your stack here.</p></div>
     <div id="glpNoteWrap" style="display:none"></div>
     <button class="history-btn" onclick="toggleHistory('pepHistory')">📋 View peptide log history</button>
@@ -1018,6 +1054,15 @@ h1,h2,h3,h4{font-family:'Playfair Display',serif}
   </div>
 </div>
 
+<!-- ═══ SQUAD / COMMUNITY ═══ -->
+<div class="page" id="page-squad">
+  <div style="margin-bottom:18px">
+    <h2 style="font-size:28px;color:var(--g1);margin-bottom:4px">Your Squad</h2>
+    <p style="color:var(--text3);font-size:14px">Train together, stay accountable, cheer each other on.</p>
+  </div>
+  <div id="squadBody"></div>
+</div>
+
 <!-- MOBILE BOTTOM NAV -->
 <nav class="bottom-nav" id="bottomNav">
   <button class="bottom-nav-item active" id="bnt-profile" onclick="goPage('profile')" aria-label="Profile">
@@ -1031,6 +1076,10 @@ h1,h2,h3,h4{font-family:'Playfair Display',serif}
   <button class="bottom-nav-item" id="bnt-meals" onclick="goPage('meals')" aria-label="Meal Plan">
     <span class="bottom-nav-icon">🥗</span>
     <span class="bottom-nav-label">Meals</span>
+  </button>
+  <button class="bottom-nav-item" id="bnt-squad" onclick="goPage('squad')" aria-label="Squad">
+    <span class="bottom-nav-icon">👥</span>
+    <span class="bottom-nav-label">Squad</span>
   </button>
   <button class="bottom-nav-item" id="bnt-notif" onclick="toggleNotifPanel(event)" aria-label="Notifications">
     <span class="bottom-nav-icon">🔔</span>
@@ -1124,7 +1173,7 @@ var vibes={
     {icon:'🤯',title:'Sleep tracking is a trap',text:'I started tracking my sleep to optimize my GH peptide timing. Now I lie awake stressed about my sleep score. This is fine. Everything is fine. My deep sleep is at 12%.'},
     {icon:'😴',title:'The nap protocol',text:'Studies show napping improves GH release, muscle recovery, and cognitive function. This is the first time science has told me to do something I was already doing. I have never felt more validated.'},
     {icon:'🥗',title:'The protein paradox',text:'The cruel irony of GLP-1: the one time in your life you actually need to eat 160 grams of protein a day... is also the one time you\'re never hungry. The universe has a sense of humor.'},
-    {icon:'💉',title:'Explaining peptides to grandma',text:'"So it\'s like a shot you give yourself?" "Yes." "And it makes you not hungry?" "Yes." "And you paid HOW much for it?" ...Grandma doesn\'t get the ROI conversation.'},
+    {icon:'✨',title:'Explaining peptides to grandma',text:'"So it\'s like a shot you give yourself?" "Yes." "And it makes you not hungry?" "Yes." "And you paid HOW much for it?" ...Grandma doesn\'t get the ROI conversation.'},
     {icon:'🏃',title:'The 5am club',text:'I set my alarm for 5am to exercise before my eating window opens. My eating window doesn\'t open until 10am. I have made peace with the fact that I am, clinically, a lot.'},
     {icon:'📱',title:'Algorithm activated',text:'I mentioned semaglutide once to a friend. Now my entire Instagram is peptide clinics, carnivore doctors, and people filming their groceries. The algorithm knows. It always knows.'},
     {icon:'🧪',title:'Lab results era',text:'Remember when you only got blood work done when something was wrong? Now I get it done quarterly and I\'m disappointed if my IGF-1 is the same as last time. Growth. In every sense.'},
@@ -1136,7 +1185,7 @@ var vibes={
   ],
   rebel:[
     {icon:'🏴',title:'Fun fact they didn\'t teach you',text:'The FDA took 20+ years to acknowledge dietary fat wasn\'t the enemy. An entire generation ate low-fat cookies and got sicker. You\'re right to ask questions.'},
-    {icon:'💉',title:'The business model problem',text:'A patient cured is a customer lost. That\'s not a conspiracy — it\'s basic economics. Which is why taking ownership of your health is genuinely radical.'},
+    {icon:'✨',title:'The business model problem',text:'A patient cured is a customer lost. That\'s not a conspiracy — it\'s basic economics. Which is why taking ownership of your health is genuinely radical.'},
     {icon:'🔬',title:'Science moves faster than approvals',text:'By the time a compound clears clinical trials, patent, and formulary approval, it\'s 10–15 years old. The cutting edge is always ahead of the permission slip.'},
     {icon:'🧑‍⚕️',title:'Your doctor has 7 minutes.',text:'That\'s the average patient visit. They\'re not ignoring you — they\'re structurally prevented from going deep. You spending 30 minutes researching your protocol isn\'t "too much." It\'s exactly right.'},
     {icon:'📋',title:'Standard of care ≠ optimal care',text:'"Standard of care" means what most doctors do for most people. It\'s designed for the middle of the bell curve. You\'re optimizing for you. Those are very different goals.'},
@@ -1558,7 +1607,7 @@ function addNotif(type,icon,title,msg){
   if(type==='urgent'||type==='tip'){
     var t=document.createElement('div');
     t.style.cssText='position:fixed;top:68px;left:50%;transform:translateX(-50%);background:var(--g1);color:#fff;padding:10px 18px;border-radius:12px;font-size:13px;font-weight:500;z-index:400;display:flex;align-items:center;gap:8px;box-shadow:0 4px 20px rgba(0,0,0,.25);max-width:340px;text-align:center;animation:slideDown .3s ease';
-    var _ih=icon==='💉'?'<span style="display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;background:#dc2626;border-radius:6px;font-size:15px;box-shadow:0 2px 5px rgba(220,38,38,.4);flex-shrink:0">💉</span>':'<span style="font-size:18px">'+icon+'</span>';
+    var _ih=icon==='✨'?'<span style="display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;background:var(--g3);border-radius:6px;font-size:15px;box-shadow:0 2px 5px rgba(220,38,38,.4);flex-shrink:0">✨</span>':'<span style="font-size:18px">'+icon+'</span>';
     t.innerHTML=_ih+'<span>'+title+'</span>';
     document.body.appendChild(t);
     setTimeout(function(){if(t.parentNode)t.parentNode.removeChild(t);},3500);
@@ -1574,8 +1623,8 @@ function renderNotifs(){
   if(!notifications.length){list.innerHTML='<div class="notif-empty">All caught up! 🌿 Keep logging to earn more insights.</div>';return;}
   list.innerHTML=notifications.map(function(n){
     var ago=timeSince(n.time);
-    var dotHtml=n.icon==='💉'
-      ?'<div class="notif-dot '+n.type+'" style="background:#dc2626"><span style="font-size:16px">💉</span></div>'
+    var dotHtml=n.icon==='✨'
+      ?'<div class="notif-dot '+n.type+'" style="background:var(--g3)"><span style="font-size:16px">✨</span></div>'
       :'<div class="notif-dot '+n.type+'">'+n.icon+'</div>';
     return'<div class="notif-item'+(n.read?'':' unread')+'" onclick="readNotif(\''+n.id+'\')">'
       +dotHtml
@@ -1642,7 +1691,7 @@ function scheduleNotifications(){
     if(showToast){
       var t=document.createElement('div');
       t.style.cssText='position:fixed;top:68px;left:50%;transform:translateX(-50%);background:var(--g1);color:#fff;padding:10px 18px;border-radius:12px;font-size:13px;font-weight:500;z-index:400;display:flex;align-items:center;gap:8px;box-shadow:0 4px 20px rgba(0,0,0,.25);max-width:320px;text-align:center;animation:slideDown .3s ease';
-      var _ih2=icon==='💉'?'<span style="display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;background:#dc2626;border-radius:6px;font-size:15px;box-shadow:0 2px 5px rgba(220,38,38,.4);flex-shrink:0">💉</span>':'<span style="font-size:18px">'+icon+'</span>';
+      var _ih2=icon==='✨'?'<span style="display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;background:var(--g3);border-radius:6px;font-size:15px;box-shadow:0 2px 5px rgba(220,38,38,.4);flex-shrink:0">✨</span>':'<span style="font-size:18px">'+icon+'</span>';
       t.innerHTML=_ih2+'<span>'+title+'</span>';
       document.body.appendChild(t);
       setTimeout(function(){if(t.parentNode)t.parentNode.removeChild(t);},3500);
@@ -1723,6 +1772,13 @@ function _showMilestoneToast(icon,msg){
 // ═══════════════════════════════════════════
 var AUTH={phone:'',code:'',resendInterval:null};
 var DEMO_CODE='123456';
+/* ════════ SMS BACKEND CONFIG ════════
+   Leave blank ('') to run in DEMO mode (passcode 123456, no real texts).
+   When your Supabase project is ready, paste its URL here, e.g.:
+   var BACKEND_URL='https://abcdxyz.supabase.co';
+   Then real SMS codes send via your connected Twilio. */
+var BACKEND_URL='';
+function authDemo(){return !BACKEND_URL;}
 
 function formatPhone(input){
   var v=input.value.replace(/\D/g,'');
@@ -1738,21 +1794,37 @@ function sendCode(){
   var raw=getRawPhone();
   if(raw.length!==10){document.getElementById('phoneError').style.display='block';return;}
   AUTH.phone=raw;
-  AUTH.code=DEMO_CODE; // in production: call Twilio API here
   var display='('+raw.slice(0,3)+') '+raw.slice(3,6)+'-'+raw.slice(6);
   document.getElementById('phoneSentTo').textContent='Sent to '+display;
-  document.getElementById('siStep1').classList.remove('active');
-  document.getElementById('siStep2').classList.add('active');
-  for(var i=0;i<6;i++){var d=document.getElementById('pc'+i);d.value='';d.classList.remove('filled');}
-  document.getElementById('codeError').style.display='none';
-  document.getElementById('codeSuccess').style.display='none';
-  document.getElementById('verifyBtn').disabled=true;
-  startResendTimer();
-  setTimeout(function(){document.getElementById('pc0').focus();},120);
+  function advance(){
+    document.getElementById('siStep1').classList.remove('active');
+    document.getElementById('siStep2').classList.add('active');
+    for(var i=0;i<6;i++){var d=document.getElementById('pc'+i);d.value='';d.classList.remove('filled');}
+    document.getElementById('codeError').style.display='none';
+    document.getElementById('codeSuccess').style.display='none';
+    document.getElementById('verifyBtn').disabled=true;
+    startResendTimer();
+    setTimeout(function(){document.getElementById('pc0').focus();},120);
+  }
+  if(authDemo()){
+    AUTH.code=DEMO_CODE; // DEMO: no real text, passcode is 123456
+    advance();
+  } else {
+    // PRODUCTION: ask backend (Supabase → your Twilio) to text a real code
+    AUTH.code=''; // server holds/verifies the real code
+    var btn=document.getElementById('sendCodeBtn');if(btn){btn.disabled=true;btn.textContent='Sending…';}
+    fetch(BACKEND_URL.replace(/\/$/,'')+'/auth/v1/otp',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({phone:'+1'+raw})
+    }).then(function(r){return r.ok?advance():r.json().then(function(j){throw new Error(j.msg||'send failed');});})
+      .catch(function(e){document.getElementById('phoneError').textContent='Could not send code — try again.';document.getElementById('phoneError').style.display='block';})
+      .then(function(){if(btn){btn.disabled=false;btn.textContent='Send passcode →';}});
+  }
 }
 
 function resendCode(){
-  AUTH.code=DEMO_CODE;
+  if(authDemo()){AUTH.code=DEMO_CODE;}
+  else{fetch(BACKEND_URL.replace(/\/$/,'')+'/auth/v1/otp',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({phone:'+1'+AUTH.phone})}).catch(function(){});}
   document.getElementById('codeError').style.display='none';
   document.getElementById('resendBtn').style.display='none';
   document.getElementById('resendTimerSpan').style.display='inline';
@@ -1798,17 +1870,29 @@ function pcKey(e,idx){
 
 function verifyCode(){
   var code='';for(var i=0;i<6;i++)code+=document.getElementById('pc'+i).value||'';
-  if(code===AUTH.code){
+  function success(){
     document.getElementById('codeError').style.display='none';
     document.getElementById('codeSuccess').style.display='block';
     localStorage.setItem('pn_authed','1');
     localStorage.setItem('pn_phone',AUTH.phone);
     setTimeout(launchApp,900);
-  } else {
+  }
+  function fail(){
     document.getElementById('codeError').style.display='block';
     for(var i=0;i<6;i++){var d=document.getElementById('pc'+i);d.value='';d.classList.remove('filled');}
     document.getElementById('verifyBtn').disabled=true;
     document.getElementById('pc0').focus();
+  }
+  if(authDemo()){
+    if(code===AUTH.code)success(); else fail();
+  } else {
+    // PRODUCTION: backend (Supabase) verifies the real code it sent
+    var btn=document.getElementById('verifyBtn');if(btn){btn.disabled=true;btn.textContent='Verifying…';}
+    fetch(BACKEND_URL.replace(/\/$/,'')+'/auth/v1/verify',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({type:'sms',phone:'+1'+AUTH.phone,token:code})
+    }).then(function(r){return r.ok;}).then(function(ok){if(btn){btn.textContent='Verify →';}ok?success():fail();})
+      .catch(function(){if(btn){btn.disabled=false;btn.textContent='Verify →';}fail();});
   }
 }
 
@@ -1838,7 +1922,9 @@ function saveState(){
       favorites:S.favorites,protGoal:S.protGoal,calGoal:S.calGoal||1900,age:S.age||30,
       logs:S.logs,shownVibes:S.shownVibes,groceryChecked:groceryChecked,
       avSkin:S.avSkin,avHair:S.avHair,avBuild:S.avBuild,
-      avSkinHex:S.avSkinHex,avHairHex:S.avHairHex
+      avSkinHex:S.avSkinHex,avHairHex:S.avHairHex,
+      avHairLen:S.avHairLen,avOutfit:S.avOutfit,avAcc:S.avAcc,
+      avTeam:S.avTeam,avPet:S.avPet,avPetAcc:S.avPetAcc
     }));
   }catch(e){}
 }
@@ -1861,6 +1947,12 @@ function loadState(){
     if(d.avBuild)S.avBuild=d.avBuild;
     if(d.avSkinHex)S.avSkinHex=d.avSkinHex;
     if(d.avHairHex)S.avHairHex=d.avHairHex;
+    if(d.avHairLen!==undefined)S.avHairLen=d.avHairLen;
+    if(d.avOutfit)S.avOutfit=d.avOutfit;
+    if(d.avAcc)S.avAcc=d.avAcc;
+    if(d.avTeam!==undefined)S.avTeam=d.avTeam;
+    if(d.avPet!==undefined)S.avPet=d.avPet;
+    if(d.avPetAcc!==undefined)S.avPetAcc=d.avPetAcc;
   }catch(e){}
 }
 
@@ -1917,6 +2009,37 @@ window.addEventListener('DOMContentLoaded',function(){
 
 // ─── AVATAR BUILDER STATE + JS ─────────────
 S.avSkin=30;S.avHair=20;S.avBuild='lean';S.avSkinHex='#D4956A';S.avHairHex='#8B4513';
+S.avHairLen=45;S.avOutfit='tee';S.avAcc=[];S.avTeam='';S.avPet='';S.avPetAcc='';
+var avOutfitOpts=[['tee','Tee'],['tank','Tank'],['jersey','Jersey'],['hoodie','Hoodie'],['denimjacket','Denim Jkt'],['denimoveralls','Overalls']];
+var avAccOpts=[['shades','Shades'],['cap','Cap'],['cowboyhat','Cowboy Hat'],['bucket','Bucket'],['beanie','Beanie'],['headphones','Headphones'],['earbuds','Earbuds'],['hoops','Hoops'],['chain','Chain'],['watch','Watch'],['bluejeans','Blue Jeans'],['denimshorts','Shorts'],['denimskirt','Skirt'],['cowboyboots','Boots'],['boattote','Boat Tote'],['yeticooler','Cooler']];
+var avPetOpts=[['pup','Golden'],['beagle','Beagle'],['yorkie','Yorkie'],['cat','Cat'],['bunny','Bunny'],['parrot','Parrot'],['fox','Fox']];
+function avBuildOutfitBtns(){var w=document.getElementById('avOutfitBtns');if(w){w.innerHTML=avOutfitOpts.map(function(o){var sel=(S.avOutfit===o[0])?' sel':'';return '<button class="av-build-btn'+sel+'" onclick="setAvOutfit(\''+o[0]+'\')">'+o[1]+'</button>';}).join('');}var a=document.getElementById('avAccBtns');if(a){a.innerHTML=avAccOpts.map(function(o){var sel=(S.avAcc.indexOf(o[0])>-1)?' sel':'';return '<button class="av-build-btn'+sel+'" onclick="toggleAvAcc(\''+o[0]+'\')">'+o[1]+'</button>';}).join('');}}
+function setAvOutfit(o){S.avOutfit=o;avBuildOutfitBtns();renderAvatarPreview();}
+function avBuildExtra(){
+  var curLvl=getLevel?getLevel(S.points):1;
+  var pt=document.getElementById('avTeamBtns');
+  if(pt){var unlocked=(curLvl>=3);pt.innerHTML=avTeamHdr(unlocked)+AV_TEAMS.map(function(t){var sel=(S.avTeam===t.id)?' sel':'';return '<button class="av-build-btn'+sel+'" '+(unlocked?'':'disabled style=\"opacity:.45;cursor:not-allowed\"')+' onclick="setAvTeam(\''+t.id+'\')">'+t.abbr+'</button>';}).join('');}
+  var pp=document.getElementById('avPetBtns');
+  if(pp){var ul=(curLvl>=4);pp.innerHTML=avPetHdr(ul)+avPetOpts.map(function(o){var sel=(S.avPet===o[0])?' sel':'';return '<button class="av-build-btn'+sel+'" '+(ul?'':'disabled style=\"opacity:.45;cursor:not-allowed\"')+' onclick="setAvPet(\''+o[0]+'\')">'+o[1]+'</button>';}).join('');}
+}
+function avTeamHdr(u){return '<div style="width:100%;font-size:11px;color:var(--text3);margin-bottom:4px">Team cap '+(u?'(Savage+)':'🔒 Unlocks at Savage (Lv 3)')+'</div>';}
+function avPetHdr(u){return '<div style="width:100%;font-size:11px;color:var(--text3);margin-bottom:4px">Companion '+(u?'(Legend)':'🔒 Adopt at Legend (Lv 4)')+'</div>';}
+function toggleAvAcc(id){var i=S.avAcc.indexOf(id);var HEAD=['cap','cowboyhat','bucket','beanie','headphones'];var BOTTOM=['denimshorts','denimskirt'];if(i>-1){S.avAcc.splice(i,1);}else{if(HEAD.indexOf(id)>-1)S.avAcc=S.avAcc.filter(function(x){return HEAD.indexOf(x)<0;});if(BOTTOM.indexOf(id)>-1)S.avAcc=S.avAcc.filter(function(x){return BOTTOM.indexOf(x)<0;});S.avAcc.push(id);}avBuildOutfitBtns();renderAvatarPreview();}
+function setAvTeam(id){S.avTeam=(S.avTeam===id)?'':id;avBuildExtra();renderAvatarPreview();}
+function setAvPet(id){var _was=S.avPet;S.avPet=(S.avPet===id)?'':id;avBuildExtra();renderAvatarPreview();if(id&&_was!==id&&getLevel(S.points)>=4){celebrateAdoption(id);}}
+function celebrateAdoption(pet){
+  var PET_NM={pup:'Golden Retriever',beagle:'Beagle',yorkie:'Yorkie',cat:'Cat',bunny:'Bunny',parrot:'Parrot',fox:'Fox'};
+  var ov=document.createElement('div');ov.id='adoptOv';
+  ov.style.cssText='position:fixed;inset:0;z-index:9600;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 40%,rgba(20,40,29,.82),rgba(8,16,12,.94));backdrop-filter:blur(4px);font-family:"DM Sans",sans-serif;opacity:0;transition:opacity .25s';
+  var conf='';for(var i=0;i<46;i++){var c=['#e6c265','#6fbf8d','#2f8a5f','#f3dd95','#fff'][i%5];var lft=Math.random()*100,dur=(1.8+Math.random()*1.6).toFixed(2),del=(Math.random()*0.6).toFixed(2),sz=(6+Math.random()*7).toFixed(0);conf+='<span style="position:absolute;top:-20px;left:'+lft.toFixed(1)+'%;width:'+sz+'px;height:'+(sz*0.6).toFixed(0)+'px;background:'+c+';border-radius:2px;animation:confFall '+dur+'s '+del+'s ease-in forwards;opacity:.9"></span>';}
+  ov.innerHTML='<div style="position:absolute;inset:0;overflow:hidden;pointer-events:none">'+conf+'</div>'
+    +'<div style="color:#f3dd95;font-size:13px;font-weight:800;letter-spacing:3px;text-transform:uppercase;animation:celPop .5s ease">New Companion</div>'
+    +'<div style="width:150px;height:150px;margin:10px 0;animation:celRise .6s .1s ease both">'+buildPet(pet,150,S.avPetAcc||null)+'</div>'
+    +'<div style="font-family:\'Playfair Display\',serif;font-size:30px;font-weight:700;color:#fff;animation:celPop .5s .15s ease both">Meet your '+(PET_NM[pet]||'pet')+'! 🎉</div>'
+    +'<div style="color:rgba(255,255,255,.85);font-size:14px;margin-top:6px;max-width:280px;text-align:center;animation:celPop .5s .25s ease both">'+(S.avatarName||'Your avatar')+' earned a loyal companion. They\'ll show up on your dashboard.</div>'
+    +'<button onclick="document.getElementById(\'adoptOv\').remove()" style="margin-top:20px;padding:12px 28px;border-radius:24px;border:none;cursor:pointer;font-family:inherit;font-size:15px;font-weight:700;background:linear-gradient(90deg,#2f8a5f,#e6c265);color:#fff;animation:celPop .5s .3s ease both">Love it 🐾</button>';
+  document.body.appendChild(ov);requestAnimationFrame(function(){ov.style.opacity='1';});
+}
 var avSkinPalette=['#FDDBB4','#F5C89A','#E8B591','#D4956A','#C8803A','#B06030','#965020','#7A3A18','#5C2508','#3A1505'];
 var avHairPalette=['#F5E6C8','#D4B06A','#C8A050','#A07828','#8B4513','#7a3a10','#5C2508','#3D2B1F','#2D1B0E','#1a0a04','#C0392B','#8B0000','#2980B9','#8E44AD','#1abc9c','#2C3E50','#95A5A6','#BDC3C7','#FFFFFF'];
 function avIC(pal,t){var idx=t/100*(pal.length-1),lo=Math.floor(idx),hi=Math.min(pal.length-1,lo+1),f=idx-lo;return avLH(pal[lo],pal[hi],f);}
@@ -1928,6 +2051,8 @@ function renderAvatarPreview(){
   var st=parseInt((document.getElementById('avSkinSlider')||{}).value||S.avSkin);
   var ht=parseInt((document.getElementById('avHairSlider')||{}).value||S.avHair);
   S.avSkin=st;S.avHair=ht;
+  var hl=parseInt((document.getElementById('avHairLenSlider')||{}).value);
+  if(!isNaN(hl)){S.avHairLen=hl;var hll=document.getElementById('avHairLenLabel');if(hll)hll.textContent=hl<25?'Short':hl<55?'Medium':hl<80?'Long':'Very long';}
   var skin=avIC(avSkinPalette,st),hair=avIC(avHairPalette,ht);
   S.avSkinHex=skin;S.avHairHex=hair;
   var ss=document.getElementById('avSkinSwatch'),hs=document.getElementById('avHairSwatch');
@@ -1945,7 +2070,303 @@ function renderAvatarPreview(){
   var nameVal=(document.getElementById('avatarName')||{}).value||'Your Avatar';
   if(nameEl)nameEl.textContent=nameVal||'Your Avatar';
 }
+
+/* ── PET COMPANION (Legend reward) ── */
+var PET_ART={"pup":"<g> <ellipse cx=\"50\" cy=\"92\" rx=\"24\" ry=\"5\" fill=\"#000\" opacity=\"0.12\" /> {/* feathered tail */} <path d=\"M70,76 Q90,74 90,54 Q84,66 72,66 Z\" fill=#e3ab5b /> <path d=\"M73,74 Q86,72 87,58 Q82,66 74,67 Z\" fill=#f5e9cf opacity=\"0.6\" /> {/* body */} <ellipse cx=\"50\" cy=\"72\" rx=\"23\" ry=\"20\" fill=#e3ab5b /> <ellipse cx=\"50\" cy=\"80\" rx=\"15\" ry=\"11\" fill=#f5e9cf /> <ellipse cx=\"38\" cy=\"86\" rx=\"6\" ry=\"4.5\" fill=#f5e9cf /><ellipse cx=\"62\" cy=\"86\" rx=\"6\" ry=\"4.5\" fill=#f5e9cf /> {/* head */} <circle cx=\"50\" cy=\"42\" r=\"21\" fill=#e3ab5b /> {/* floppy hanging ears */} <path d=\"M31,30 Q18,30 17,48 Q17,62 28,60 Q33,46 34,34 Z\" fill=#c98f3f /> <path d=\"M69,30 Q82,30 83,48 Q83,62 72,60 Q67,46 66,34 Z\" fill=#c98f3f /> {/* muzzle */} <ellipse cx=\"50\" cy=\"50\" rx=\"13\" ry=\"11\" fill=#f5e9cf /> <circle cx=\"42\" cy=\"40\" r=\"3\" fill=#2a2018 /><circle cx=\"58\" cy=\"40\" r=\"3\" fill=#2a2018 /> <circle cx=\"43\" cy=\"39\" r=\"1\" fill=\"#fff\" /><circle cx=\"59\" cy=\"39\" r=\"1\" fill=\"#fff\" /> <ellipse cx=\"50\" cy=\"48\" rx=\"3.6\" ry=\"2.7\" fill=#2a2018 /> <path d=\"M50,50.5 Q50,56 44,55.5 M50,50.5 Q50,56 56,55.5\" fill=\"none\" stroke=#2a2018 stroke-width=\"1.6\" stroke-linecap=\"round\" /> {/* lolling tongue */} <path d=\"M50,55 Q47,61 50,62 Q53,61 50,55 Z\" fill=\"#e8857f\" /> </g>","beagle":"<g> <ellipse cx=\"50\" cy=\"92\" rx=\"24\" ry=\"5\" fill=\"#000\" opacity=\"0.12\" /> {/* white-tipped tail */} <path d=\"M70,75 Q86,73 86,57 Q80,68 70,66 Z\" fill=#a06c3d /> <path d=\"M81,68 Q86,64 85,57 Q82,64 78,66 Z\" fill=#f3ead7 /> {/* body white + brown saddle */} <ellipse cx=\"50\" cy=\"72\" rx=\"22\" ry=\"20\" fill=#f3ead7 /> <path d=\"M31,66 Q50,57 69,66 Q69,79 63,84 Q50,80 37,84 Q31,79 31,66 Z\" fill=#a06c3d /> <ellipse cx=\"50\" cy=\"81\" rx=\"14\" ry=\"10\" fill=#f3ead7 /> <ellipse cx=\"38\" cy=\"86\" rx=\"6\" ry=\"4.5\" fill=#f3ead7 /><ellipse cx=\"62\" cy=\"86\" rx=\"6\" ry=\"4.5\" fill=#f3ead7 /> {/* head white */} <circle cx=\"50\" cy=\"42\" r=\"21\" fill=#f3ead7 /> {/* brown eye patches, white blaze down the middle */} <path d=\"M29,38 Q27,23 43,24 Q47,31 45,45 Q35,46 29,38 Z\" fill=#a06c3d /> <path d=\"M71,38 Q73,23 57,24 Q53,31 55,45 Q65,46 71,38 Z\" fill=#a06c3d /> {/* long brown floppy ears */} <path d=\"M31,30 Q15,32 15,53 Q16,65 28,61 Q33,46 35,34 Z\" fill=#5c4230 /> <path d=\"M69,30 Q85,32 85,53 Q84,65 72,61 Q67,46 65,34 Z\" fill=#5c4230 /> {/* muzzle */} <ellipse cx=\"50\" cy=\"50\" rx=\"12\" ry=\"10\" fill=#f3ead7 /> <circle cx=\"42\" cy=\"40\" r=\"3\" fill=#2a2018 /><circle cx=\"58\" cy=\"40\" r=\"3\" fill=#2a2018 /> <circle cx=\"43\" cy=\"39\" r=\"1\" fill=\"#fff\" /><circle cx=\"59\" cy=\"39\" r=\"1\" fill=\"#fff\" /> <ellipse cx=\"50\" cy=\"48\" rx=\"3.6\" ry=\"2.7\" fill=#2a2018 /> <path d=\"M50,50.5 Q50,56 44,55.5 M50,50.5 Q50,56 56,55.5\" fill=\"none\" stroke=#2a2018 stroke-width=\"1.6\" stroke-linecap=\"round\" /> </g>","yorkie":"<g> <ellipse cx=\"50\" cy=\"92\" rx=\"20\" ry=\"5\" fill=\"#000\" opacity=\"0.12\" /> {/* steel-gray silky body */} <ellipse cx=\"50\" cy=\"74\" rx=\"19\" ry=\"18\" fill=#737a82 /> <path d=\"M34,70 Q31,84 36,90\" stroke=#5c636b stroke-width=\"1.3\" fill=\"none\" stroke-linecap=\"round\" /> <path d=\"M66,70 Q69,84 64,90\" stroke=#5c636b stroke-width=\"1.3\" fill=\"none\" stroke-linecap=\"round\" /> <path d=\"M50,72 Q50,86 50,91\" stroke=#5c636b stroke-width=\"1.1\" fill=\"none\" stroke-linecap=\"round\" opacity=\"0.7\" /> {/* tan feet + chest */} <ellipse cx=\"40\" cy=\"88\" rx=\"6\" ry=\"4.5\" fill=#c1924f /><ellipse cx=\"60\" cy=\"88\" rx=\"6\" ry=\"4.5\" fill=#c1924f /> <ellipse cx=\"50\" cy=\"80\" rx=\"11\" ry=\"10\" fill=#d8ab66 /> {/* tan silky head */} <circle cx=\"50\" cy=\"40\" r=\"19\" fill=#c1924f /> <path d=\"M31,38 Q26,55 33,61 Q37,50 37,42 Z\" fill=#d8ab66 /> <path d=\"M69,38 Q74,55 67,61 Q63,50 63,42 Z\" fill=#d8ab66 /> {/* small perky ears */} <path d=\"M37,26 L33,11 L47,22 Z\" fill=#c1924f /><path d=\"M38,24 L36,15 L45,22 Z\" fill=#5c636b opacity=\"0.5\" /> <path d=\"M63,26 L67,11 L53,22 Z\" fill=#c1924f /><path d=\"M62,24 L64,15 L55,22 Z\" fill=#5c636b opacity=\"0.5\" /> {/* topknot tuft */} <ellipse cx=\"50\" cy=\"23\" rx=\"6\" ry=\"5\" fill=#d8ab66 /> {/* face */} <circle cx=\"43\" cy=\"40\" r=\"2.8\" fill=#2a2018 /><circle cx=\"57\" cy=\"40\" r=\"2.8\" fill=#2a2018 /> <circle cx=\"44\" cy=\"39\" r=\"0.9\" fill=\"#fff\" /><circle cx=\"58\" cy=\"39\" r=\"0.9\" fill=\"#fff\" /> <ellipse cx=\"50\" cy=\"47\" rx=\"3.4\" ry=\"2.6\" fill=#2a2018 /> <path d=\"M50,49.5 Q50,54 46,53.5 M50,49.5 Q50,54 54,53.5\" fill=\"none\" stroke=#2a2018 stroke-width=\"1.4\" stroke-linecap=\"round\" /> </g>","cat":"<g> <ellipse cx=\"50\" cy=\"92\" rx=\"22\" ry=\"5\" fill=\"#000\" opacity=\"0.12\" /> <path d=\"M30,84 Q8,82 12,60 Q16,76 32,76 Z\" fill=#8b9298 /> <ellipse cx=\"52\" cy=\"74\" rx=\"20\" ry=\"19\" fill=#8b9298 /> <ellipse cx=\"52\" cy=\"80\" rx=\"12\" ry=\"10\" fill=#e9ecef /> <path d=\"M34,30 L30,12 L46,24 Z\" fill=#8b9298 /><path d=\"M35,27 L33,17 L43,24 Z\" fill=\"#f0a9a0\" /> <path d=\"M70,30 L74,12 L58,24 Z\" fill=#8b9298 /><path d=\"M69,27 L71,17 L61,24 Z\" fill=\"#f0a9a0\" /> <circle cx=\"52\" cy=\"40\" r=\"20\" fill=#8b9298 /> <path d=\"M44,40 Q47,44 44,46 M60,40 Q57,44 60,46\" fill=\"none\" stroke=#2a2018 stroke-width=\"2\" stroke-linecap=\"round\" /> <path d=\"M52,46 l-3,3 h6 Z\" fill=\"#f0a9a0\" /> <path d=\"M52,49 Q52,53 48,53 M52,49 Q52,53 56,53\" fill=\"none\" stroke=#2a2018 stroke-width=\"1.4\" stroke-linecap=\"round\" /> <g stroke=#6c7278 stroke-width=\"1\" stroke-linecap=\"round\" opacity=\"0.7\"> <line x1=\"40\" y1=\"47\" x2=\"26\" y2=\"45\" /><line x1=\"40\" y1=\"50\" x2=\"27\" y2=\"51\" /> <line x1=\"64\" y1=\"47\" x2=\"78\" y2=\"45\" /><line x1=\"64\" y1=\"50\" x2=\"77\" y2=\"51\" /> </g>","bunny":"<g> <ellipse cx=\"50\" cy=\"92\" rx=\"22\" ry=\"5\" fill=\"#000\" opacity=\"0.12\" /> <ellipse cx=\"50\" cy=\"74\" rx=\"21\" ry=\"19\" fill=#f4f1ea /> <ellipse cx=\"38\" cy=\"88\" rx=\"7\" ry=\"4.5\" fill=#f4f1ea /><ellipse cx=\"62\" cy=\"88\" rx=\"7\" ry=\"4.5\" fill=#f4f1ea /> <ellipse cx=\"40\" cy=\"24\" rx=\"6.5\" ry=\"20\" fill=#f4f1ea transform=\"rotate(-12 40 24)\" /> <ellipse cx=\"40\" cy=\"26\" rx=\"3\" ry=\"14\" fill=#f0b8bc transform=\"rotate(-12 40 26)\" /> <ellipse cx=\"60\" cy=\"24\" rx=\"6.5\" ry=\"20\" fill=#f4f1ea transform=\"rotate(12 60 24)\" /> <ellipse cx=\"60\" cy=\"26\" rx=\"3\" ry=\"14\" fill=#f0b8bc transform=\"rotate(12 60 26)\" /> <circle cx=\"50\" cy=\"48\" r=\"19\" fill=#f4f1ea /> <circle cx=\"43\" cy=\"46\" r=\"2.6\" fill=#2a2018 /><circle cx=\"57\" cy=\"46\" r=\"2.6\" fill=#2a2018 /> <path d=\"M50,52 l-2.5,2.5 h5 Z\" fill=#f0b8bc /> <circle cx=\"38\" cy=\"52\" r=\"3.4\" fill=#f0b8bc opacity=\"0.5\" /><circle cx=\"62\" cy=\"52\" r=\"3.4\" fill=#f0b8bc opacity=\"0.5\" /> </g>","parrot":"<g> <ellipse cx=\"50\" cy=\"92\" rx=\"18\" ry=\"4.5\" fill=\"#000\" opacity=\"0.12\" /> <path d=\"M58,86 Q70,80 66,52 Q62,74 52,80 Z\" fill=#1c5a3c /> <ellipse cx=\"50\" cy=\"62\" rx=\"18\" ry=\"24\" fill=#2f8a5f /> <ellipse cx=\"44\" cy=\"64\" rx=\"11\" ry=\"18\" fill=#6fbf8d /> <circle cx=\"50\" cy=\"34\" r=\"17\" fill=#2f8a5f /> <path d=\"M40,20 Q50,10 60,20 Q54,18 50,20 Q46,18 40,20 Z\" fill=#6fbf8d /> <circle cx=\"46\" cy=\"32\" r=\"3\" fill=#2a2018 /><circle cx=\"47\" cy=\"31\" r=\"1\" fill=\"#fff\" /> <path d=\"M58,30 Q70,32 66,40 Q60,40 57,37 Z\" fill=#e6c265 /> <path d=\"M58,37 Q64,39 62,43 Q59,42 57,40 Z\" fill=\"#c79b3a\" /> <line x1=\"46\" y1=\"86\" x2=\"44\" y2=\"92\" stroke=#e6c265 stroke-width=\"2.4\" stroke-linecap=\"round\" /> <line x1=\"54\" y1=\"86\" x2=\"56\" y2=\"92\" stroke=#e6c265 stroke-width=\"2.4\" stroke-linecap=\"round\" /> </g>","fox":"<g> <ellipse cx=\"50\" cy=\"92\" rx=\"23\" ry=\"5\" fill=\"#000\" opacity=\"0.12\" /> <path d=\"M68,80 Q90,78 86,54 Q82,64 80,52 Q78,70 64,74 Z\" fill=#e08a45 /> <path d=\"M82,76 Q90,72 86,60 Q84,70 78,72 Z\" fill=#f3e7d2 /> <ellipse cx=\"50\" cy=\"74\" rx=\"21\" ry=\"18\" fill=#e08a45 /> <ellipse cx=\"50\" cy=\"80\" rx=\"13\" ry=\"10\" fill=#f3e7d2 /> <path d=\"M30,30 L24,8 L44,24 Z\" fill=#e08a45 /><path d=\"M31,25 L29,14 L40,23 Z\" fill=#2a2018 opacity=\"0.8\" /> <path d=\"M70,30 L76,8 L56,24 Z\" fill=#e08a45 /><path d=\"M69,25 L71,14 L60,23 Z\" fill=#2a2018 opacity=\"0.8\" /> <circle cx=\"50\" cy=\"42\" r=\"20\" fill=#e08a45 /> <path d=\"M50,38 Q34,46 40,58 Q50,52 50,52 Q50,52 60,58 Q66,46 50,38 Z\" fill=#f3e7d2 /> <circle cx=\"42\" cy=\"42\" r=\"2.8\" fill=#2a2018 /><circle cx=\"58\" cy=\"42\" r=\"2.8\" fill=#2a2018 /> <ellipse cx=\"50\" cy=\"52\" rx=\"3\" ry=\"2.4\" fill=#2a2018 /> </g>"};
+function buildPet(id,size,acc){var a=PET_ART[id]||PET_ART.pup;return '<svg viewBox="0 0 100 100" width="'+size+'" height="'+size+'" style="display:block;overflow:visible">'+a+(acc?petAccVanilla(acc,id):'')+'</svg>';}
+
+var PET_ANCHOR={pup:{nx:50,ny:60,tx:50,ty:22},beagle:{nx:50,ny:60,tx:50,ty:22},yorkie:{nx:50,ny:58,tx:50,ty:20},cat:{nx:52,ny:58,tx:52,ty:21},bunny:{nx:50,ny:64,tx:50,ty:31},parrot:{nx:50,ny:50,tx:50,ty:18},fox:{nx:50,ny:60,tx:50,ty:23}};
+function petAccVanilla(acc,id){var A=PET_ANCHOR[id]||PET_ANCHOR.pup;var nx=A.nx,ny=A.ny,tx=A.tx,ty=A.ty;
+ if(acc==='bandana'){return '<path d="M'+(nx-13)+','+(ny-2)+' L'+(nx+13)+','+(ny-2)+' L'+nx+','+(ny+12)+' Z" fill="#c0392b"/><path d="M'+(nx-13)+','+(ny-2)+' L'+(nx+13)+','+(ny-2)+'" stroke="#9c2b20" stroke-width="2"/>';}
+ if(acc==='collar'){return '<path d="M'+(nx-13)+','+(ny-1)+' Q'+nx+','+(ny+7)+' '+(nx+13)+','+(ny-1)+'" fill="none" stroke="#2f6fb0" stroke-width="4" stroke-linecap="round"/><circle cx="'+nx+'" cy="'+(ny+5)+'" r="2.6" fill="#e6c265"/>';}
+ if(acc==='bow'){return '<path d="M'+(tx-9)+','+(ty-2)+' L'+(tx-1)+','+ty+' L'+(tx-9)+','+(ty+5)+' Z" fill="#e87fa6"/><path d="M'+(tx+9)+','+(ty-2)+' L'+(tx+1)+','+ty+' L'+(tx+9)+','+(ty+5)+' Z" fill="#e87fa6"/><circle cx="'+tx+'" cy="'+(ty+1.5)+'" r="2.4" fill="#d45f8c"/>';}
+ if(acc==='cap'){return '<path d="M'+(tx-12)+','+(ty+3)+' Q'+tx+','+(ty-12)+' '+(tx+12)+','+(ty+3)+' Z" fill="#1c5a3c"/><ellipse cx="'+(tx-6)+'" cy="'+(ty+4)+'" rx="10" ry="3.5" fill="#1c5a3c"/>';}
+ return '';}
+
+/* ── NEW AVATAR (redesigned flat character, tier glow-up) ──
+   Drop-in replacement: same call signature, delegates to buildRAVG_NEW.
+   Keeps skin / hair / build / gender / level; renders the new style. */
 function buildRAVG(lvl,skin,skinD,skinL,hair,hairD,hairH,gender,build,W,H){
+  var team=(lvl>=3&&S.avTeam)?AV_TEAMS.filter(function(t){return t.id===S.avTeam;})[0]:null;
+  var mono=(S.avatarName||'L').charAt(0);
+  return buildRAVG_NEW(lvl,skin,hair,gender,build,H,{hairLen:S.avHairLen,outfit:S.avOutfit,acc:S.avAcc,team:team,monogram:mono});
+}
+var AV_TEAMS=[
+  {id:'bama',abbr:'BAMA',primary:'#9E1B32',secondary:'#ffffff'},
+  {id:'uga',abbr:'UGA',primary:'#BA0C2F',secondary:'#000000'},
+  {id:'aub',abbr:'AUB',primary:'#0C2340',secondary:'#E87722'},
+  {id:'gt',abbr:'GT',primary:'#003057',secondary:'#B3A369'},
+  {id:'lsu',abbr:'LSU',primary:'#461D7C',secondary:'#FDD023'},
+  {id:'fsu',abbr:'FSU',primary:'#782F40',secondary:'#CEB888'}
+];
+function buildRAVG_NEW(lvl,skin,hair,gender,build,H,opts){
+  opts=opts||{};
+  var oOutfit=opts.outfit||'tee';
+  var oAcc=opts.acc||[];
+  var oHairLen=(opts.hairLen==null)?(gender==='M'?15:45):opts.hairLen;
+  var level=Math.max(0,Math.min(3,(lvl||1)-1));
+  var masc=(gender==='M');
+  var buildNum={lean:0.5,avg:1,curvy:1.5,heavy:2}[build];
+  if(buildNum===undefined)buildNum=1;
+  var GREEN='#2f8a5f',GREEND='#1c5a3c',GREENL='#6fbf8d',SAGE='#9bb3a4',GOLD='#e6c265',GOLDL='#f3dd95',INK='#10241a',CREAM='#f6f3ea';
+  var uid='rav'+Math.floor(Math.random()*1e6);
+  var cfg=[
+    {sw:25,arm:12,leg:17,outfit:SAGE,  aura:0,gold:false},
+    {sw:29,arm:13,leg:18,outfit:GREEN, aura:1,gold:false},
+    {sw:29,arm:12,leg:18,outfit:GREEND,aura:2,gold:true },
+    {sw:31,arm:13,leg:19,outfit:GREEND,aura:3,gold:true }
+  ][level];
+  var gColor=cfg.outfit;
+  var sw=(cfg.sw+(masc?2:-4))*(0.85+buildNum*0.15);
+  var armW=cfg.arm+(masc?1.5:0);
+  var wristW=armW*0.58;
+  var cx=100,shY=92,faceCy=60;
+  var hipY=masc?142:134;
+  var faceRx=masc?18:16.5,faceRy=20;
+  var waistY=shY+(hipY-shY)*0.5;
+  var waistW=sw*(masc?0.74:0.48);
+  var hipW=sw*(masc?0.70:0.86);
+  var Lx=cx-sw,Rx=cx+sw;
+  var aLx=cx-sw+3,aRx=cx+sw-3,aSY=shY+7;
+  // poses by level
+  var poseName=['rest','hips',(masc?'flex':'fitflex'),'victory'][level];
+  var POSES={
+    rest:    {l:[[aLx,aSY],[cx-sw-8,124],[cx-sw-3,144]], r:[[aRx,aSY],[cx+sw+8,124],[cx+sw+3,144]]},
+    hips:    {l:[[aLx,aSY],[cx-sw-13,122],[cx-hipW+2,132]], r:[[aRx,aSY],[cx+sw+13,122],[cx+hipW-2,132]]},
+    flex:    {l:[[aLx,aSY],[cx-sw-15,110],[cx-sw+4,82]], r:[[aRx,aSY],[cx+sw+15,110],[cx+sw-4,82]]},
+    fitflex: {l:[[aLx,aSY],[cx-sw-11,120],[cx-hipW+1,132]], r:[[aRx,aSY],[cx+sw+12,108],[cx+sw-1,80]]},
+    victory: {l:[[aLx,aSY],[cx-sw-10,46]], r:[[aRx,aSY],[cx+sw+10,46]]}
+  };
+  var arms=POSES[poseName];
+  function toPath(p){var d='M'+p[0][0]+','+p[0][1];for(var i=1;i<p.length;i++)d+=' L'+p[i][0]+','+p[i][1];return d;}
+  function lerp(a,b,t){return [a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t];}
+  function darken(c,a){return avDk(c,a);}
+  var hairD=avDk(hair,22);
+  var s='<svg viewBox="0 0 200 224" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" style="width:100%;height:'+H+'px;display:block">';
+  // defs — aura gradient
+  s+='<defs><radialGradient id="'+uid+'a" cx="50%" cy="45%" r="55%">'
+    +'<stop offset="0%" stop-color="'+(cfg.gold?GOLDL:GREENL)+'" stop-opacity="0.5"/>'
+    +'<stop offset="70%" stop-color="'+(cfg.gold?GOLD:GREEN)+'" stop-opacity="0.1"/>'
+    +'<stop offset="100%" stop-color="'+GREEN+'" stop-opacity="0"/></radialGradient></defs>';
+  // aura
+  if(cfg.aura>=1)s+='<ellipse cx="100" cy="120" rx="86" ry="100" fill="url(#'+uid+'a)"/>';
+  if(cfg.aura>=2){s+='<circle cx="100" cy="118" r="78" fill="none" stroke="'+GOLD+'" stroke-opacity="0.22" stroke-width="2"/>';
+                  s+='<circle cx="100" cy="118" r="100" fill="none" stroke="'+GOLD+'" stroke-opacity="0.12" stroke-width="2"/>';}
+  if(cfg.aura>=3){for(var bi=0;bi<12;bi++){var ba=(bi/12)*Math.PI*2;s+='<line x1="'+(100+Math.cos(ba)*102).toFixed(1)+'" y1="'+(118+Math.sin(ba)*116).toFixed(1)+'" x2="'+(100+Math.cos(ba)*116).toFixed(1)+'" y2="'+(118+Math.sin(ba)*132).toFixed(1)+'" stroke="'+GOLD+'" stroke-opacity="0.5" stroke-width="2" stroke-linecap="round"/>';}}
+  // ground shadow
+  s+='<ellipse cx="100" cy="210" rx="'+(sw+16).toFixed(1)+'" ry="8" fill="#000" opacity="0.13"/>';
+  // legs / jeans / shorts / skirt / overalls + footwear (boots or sneakers)
+  var lx0=cx-hipW*0.45,rx0=cx+hipW*0.45,lxA=cx-13,rxA=cx+13,ankleY=201;
+  var jeansOn=(oAcc.indexOf('bluejeans')>-1);
+  var overallsOn=(oOutfit==='denimoveralls');
+  var shortsOn=(!overallsOn&&!masc&&oAcc.indexOf('denimshorts')>-1);
+  var skirtOn=(!overallsOn&&!masc&&oAcc.indexOf('denimskirt')>-1);
+  var bootsOn=(oAcc.indexOf('cowboyboots')>-1);
+  var bareLegs=(shortsOn||skirtOn);
+  var DENC='#42597f',DENCD='#324666',DENSTITCH='#d8c98a',OVDEN='#5a7aa8';
+  var legColor=bareLegs?skin:(overallsOn?OVDEN:(jeansOn?DENC:'#33453b'));
+  var legW=bareLegs?(cfg.leg*0.82):(overallsOn?cfg.leg+3:cfg.leg);
+  s+='<path d="M'+lx0.toFixed(1)+','+hipY+' L'+lxA+','+ankleY+'" stroke="'+legColor+'" stroke-width="'+legW+'" stroke-linecap="'+(overallsOn?'butt':'round')+'" fill="none"/>';
+  s+='<path d="M'+rx0.toFixed(1)+','+hipY+' L'+rxA+','+ankleY+'" stroke="'+legColor+'" stroke-width="'+legW+'" stroke-linecap="'+(overallsOn?'butt':'round')+'" fill="none"/>';
+  if(jeansOn&&!bareLegs){s+='<path d="M'+lx0.toFixed(1)+','+(hipY+3)+' L'+lxA+',198" stroke="'+DENSTITCH+'" stroke-width="0.7" opacity="0.5" fill="none"/><path d="M'+rx0.toFixed(1)+','+(hipY+3)+' L'+rxA+',198" stroke="'+DENSTITCH+'" stroke-width="0.7" opacity="0.5" fill="none"/>';}
+  if(overallsOn){s+='<rect x="'+(lxA-(cfg.leg+5)/2)+'" y="'+(ankleY-4)+'" width="'+(cfg.leg+5)+'" height="8" fill="'+OVDEN+'"/><rect x="'+(rxA-(cfg.leg+5)/2)+'" y="'+(ankleY-4)+'" width="'+(cfg.leg+5)+'" height="8" fill="'+OVDEN+'"/>';}
+  // denim shorts (over upper thigh)
+  if(shortsOn){var shL=[lx0+(lxA-lx0)*0.44,hipY+(ankleY-hipY)*0.44],shR=[rx0+(rxA-rx0)*0.44,hipY+(ankleY-hipY)*0.44];
+    s+='<path d="M'+lx0.toFixed(1)+','+hipY+' L'+shL[0].toFixed(1)+','+shL[1].toFixed(1)+'" stroke="'+DENC+'" stroke-width="'+(cfg.leg+2)+'" stroke-linecap="round" fill="none"/>';
+    s+='<path d="M'+rx0.toFixed(1)+','+hipY+' L'+shR[0].toFixed(1)+','+shR[1].toFixed(1)+'" stroke="'+DENC+'" stroke-width="'+(cfg.leg+2)+'" stroke-linecap="round" fill="none"/>';
+    s+='<path d="M'+(cx-hipW*0.55).toFixed(1)+','+(hipY-2)+' Q'+cx+','+(hipY+9)+' '+(cx+hipW*0.55).toFixed(1)+','+(hipY-2)+' L'+(cx+hipW*0.55).toFixed(1)+','+(hipY+3)+' Q'+cx+','+(hipY+14)+' '+(cx-hipW*0.55).toFixed(1)+','+(hipY+3)+' Z" fill="'+DENC+'"/>';}
+  // denim skirt (A-line)
+  if(skirtOn){s+='<path d="M'+(cx-waistW*0.92).toFixed(1)+','+(hipY-5)+' L'+(cx-hipW-8).toFixed(1)+','+(hipY+26)+' Q'+cx+','+(hipY+33)+' '+(cx+hipW+8).toFixed(1)+','+(hipY+26)+' L'+(cx+waistW*0.92).toFixed(1)+','+(hipY-5)+' Q'+cx+','+(hipY-1)+' '+(cx-waistW*0.92).toFixed(1)+','+(hipY-5)+' Z" fill="'+DENC+'"/>';
+    s+='<path d="M'+(cx-waistW*0.92).toFixed(1)+','+(hipY-5)+' Q'+cx+','+(hipY-1)+' '+(cx+waistW*0.92).toFixed(1)+','+(hipY-5)+'" fill="none" stroke="'+DENCD+'" stroke-width="2.5"/>';}
+  // footwear
+  var TANB='#9a6a38',TANBD='#76512a',CRB='#e8d9b8',HEELB='#3a2a1c';
+  function frontSneaker(fx){var g='';g+='<path d="M'+(fx-10)+',208 Q'+fx+',211.5 '+(fx+10)+',208 L'+(fx+10)+',210.5 Q'+fx+',213.5 '+(fx-10)+',210.5 Z" fill="#d8d2c4"/>';
+    g+='<path d="M'+(fx-10)+',208 Q'+(fx-10)+',200 '+(fx-4)+',199 Q'+(fx+4)+',199 '+(fx+7)+',203 Q'+(fx+9)+',204 '+(fx+10)+',208 Q'+fx+',210.5 '+(fx-10)+',208 Z" fill="'+CREAM+'"/>';
+    g+='<path d="M'+(fx-8)+',207.5 Q'+(fx-1)+',204 '+(fx+6)+',205" fill="none" stroke="'+GREEN+'" stroke-width="2.2" stroke-linecap="round"/>';return g;}
+  function profileSneaker(fx){var g='';g+='<path d="M'+(fx-7)+',209 Q'+fx+',211.5 '+(fx+15)+',210.5 L'+(fx+16)+',212.5 Q'+fx+',214 '+(fx-8)+',212 Z" fill="#d8d2c4"/>';
+    g+='<path d="M'+(fx-7)+',209 Q'+(fx-7)+',201 '+(fx-1)+',200 L'+(fx+6)+',200.5 Q'+(fx+14)+',202 '+(fx+16)+',208 Q'+(fx+16)+',210 '+(fx+14)+',210.5 Q'+fx+',211.5 '+(fx-7)+',209 Z" fill="'+CREAM+'"/>';
+    g+='<path d="M'+(fx-5)+',208 Q'+(fx+3)+',204.5 '+(fx+11)+',206" fill="none" stroke="'+GREEN+'" stroke-width="2.2" stroke-linecap="round"/>';return g;}
+  function boot(fx){var bTop=overallsOn?200:(masc?188:178),w=overallsOn?cfg.leg*0.42:cfg.leg*0.5;var g='';
+    g+='<path d="M'+(fx-w).toFixed(1)+','+bTop+' L'+(fx-w).toFixed(1)+',204 Q'+(fx-w).toFixed(1)+',210 '+fx+',210 Q'+(fx+w).toFixed(1)+',210 '+(fx+w).toFixed(1)+',204 L'+(fx+w).toFixed(1)+','+bTop+' Z" fill="'+TANB+'"/>';
+    g+='<path d="M'+(fx-w-1).toFixed(1)+',209 Q'+fx+',212 '+(fx+w+1).toFixed(1)+',209 L'+(fx+w+1).toFixed(1)+',211 Q'+fx+',213.5 '+(fx-w-1).toFixed(1)+',211 Z" fill="'+TANBD+'"/>';
+    g+='<rect x="'+(fx-w).toFixed(1)+'" y="210" width="5.5" height="4.5" rx="1" fill="'+HEELB+'"/><rect x="'+(fx+w-5.5).toFixed(1)+'" y="210" width="5.5" height="4.5" rx="1" fill="'+HEELB+'"/>';
+    if(!overallsOn)g+='<path d="M'+(fx-w+1).toFixed(1)+','+(bTop+5)+' Q'+fx+','+(bTop+9)+' '+(fx+w-1).toFixed(1)+','+(bTop+5)+'" fill="none" stroke="'+CRB+'" stroke-width="1" opacity="0.6"/>';
+    return g;}
+  if(bootsOn)s+=boot(cx-13)+boot(cx+13);
+  else s+=frontSneaker(cx-13)+profileSneaker(cx+13);
+  // floor props
+  if(oAcc.indexOf('boattote')>-1){var bx=cx+48,canvas='#e7dcc2',navy='#27395c';
+    s+='<ellipse cx="'+bx+'" cy="214" rx="16" ry="3.5" fill="#000" opacity="0.12"/>';
+    s+='<path d="M'+(bx-7)+',189 Q'+(bx-7.5)+',176 '+bx+',176 Q'+(bx+7.5)+',176 '+(bx+7)+',189" fill="none" stroke="'+navy+'" stroke-width="2.6"/>';
+    s+='<path d="M'+(bx-13)+',189 L'+(bx+13)+',189 L'+(bx+11)+',211 Q'+bx+',213 '+(bx-11)+',211 Z" fill="'+canvas+'"/>';
+    s+='<rect x="'+(bx-13)+'" y="189" width="26" height="6" fill="'+navy+'"/>';
+    s+='<text x="'+bx+'" y="204" text-anchor="middle" font-family="Playfair Display,serif" font-size="9" font-weight="600" fill="'+navy+'">'+((opts.monogram||'L')+'').charAt(0).toUpperCase()+'</text>';}
+  if(oAcc.indexOf('yeticooler')>-1){var yx=cx-50,tan2='#cdb88f',tanD2='#b09a6b',latch='#5f6b62';
+    s+='<ellipse cx="'+yx+'" cy="214" rx="26" ry="4" fill="#000" opacity="0.13"/>';
+    s+='<rect x="'+(yx-23)+'" y="183" width="46" height="31" rx="5.5" fill="'+tan2+'"/>';
+    s+='<rect x="'+(yx-23)+'" y="183" width="46" height="9.5" rx="5" fill="'+tanD2+'"/>';
+    s+='<rect x="'+(yx-13)+'" y="188" width="6.5" height="12" rx="2.6" fill="'+latch+'"/><rect x="'+(yx+6.5)+'" y="188" width="6.5" height="12" rx="2.6" fill="'+latch+'"/>';
+    s+='<text x="'+yx+'" y="207" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="9.5" font-weight="800" letter-spacing="1.2" fill="#7a6a44">YETI</text>';}
+  // skin arms
+  function armSkin(p){return '<path d="'+toPath(p)+'" stroke="'+skin+'" stroke-width="'+armW+'" fill="none" stroke-linecap="round" stroke-linejoin="round"/>';}
+  s+=armSkin(arms.l)+armSkin(arms.r);
+  // neck + shoulder skin base
+  s+='<path d="M'+(cx-5.5)+','+(faceCy+faceRy-8)+' L'+(cx+5.5)+','+(faceCy+faceRy-8)+' L'+(cx+6)+','+(shY-5)+' L'+(cx+sw*0.85).toFixed(1)+','+(shY+8)+' Q'+cx+','+(shY+12)+' '+(cx-sw*0.85).toFixed(1)+','+(shY+8)+' L'+(cx-6)+','+(shY-5)+' Z" fill="'+skin+'"/>';
+  // skin torso
+  s+='<path d="M'+(cx-sw*0.8).toFixed(1)+','+(shY+4)
+    +' Q'+(cx-waistW-2).toFixed(1)+','+(waistY-6).toFixed(1)+' '+(cx-waistW*0.98).toFixed(1)+','+waistY.toFixed(1)
+    +' Q'+(cx-hipW).toFixed(1)+','+(waistY+14).toFixed(1)+' '+(cx-hipW*0.95).toFixed(1)+','+(hipY+4)
+    +' Q'+cx+','+(hipY+12)+' '+(cx+hipW*0.95).toFixed(1)+','+(hipY+4)
+    +' Q'+(cx+hipW).toFixed(1)+','+(waistY+14).toFixed(1)+' '+(cx+waistW*0.98).toFixed(1)+','+waistY.toFixed(1)
+    +' Q'+(cx+waistW+2).toFixed(1)+','+(waistY-6).toFixed(1)+' '+(cx+sw*0.8).toFixed(1)+','+(shY+4)
+    +' Q'+cx+','+(shY-4)+' '+(cx-sw*0.8).toFixed(1)+','+(shY+4)+' Z" fill="'+skin+'"/>';
+  // ── garment by outfit ──
+  var DENIM='#5a7aa8';
+  var gc=(oOutfit==='denimjacket')?DENIM:gColor;
+  function sidePath(hemY){return 'M'+Lx.toFixed(1)+','+shY
+    +' Q'+(Lx-1).toFixed(1)+','+(shY+10)+' '+(cx-sw*0.82).toFixed(1)+','+(shY+18)
+    +' Q'+(cx-waistW-3).toFixed(1)+','+(waistY-8).toFixed(1)+' '+(cx-waistW).toFixed(1)+','+waistY.toFixed(1)
+    +' Q'+(cx-hipW-2).toFixed(1)+','+(waistY+14).toFixed(1)+' '+(cx-hipW).toFixed(1)+','+hemY
+    +' Q'+cx+','+(hemY+9)+' '+(cx+hipW).toFixed(1)+','+hemY
+    +' Q'+(cx+hipW+2).toFixed(1)+','+(waistY+14).toFixed(1)+' '+(cx+waistW).toFixed(1)+','+waistY.toFixed(1)
+    +' Q'+(cx+waistW+3).toFixed(1)+','+(waistY-8).toFixed(1)+' '+(cx+sw*0.82).toFixed(1)+','+(shY+18)
+    +' Q'+(Rx+1).toFixed(1)+','+(shY+10)+' '+Rx.toFixed(1)+','+shY;}
+  var crew=' Q'+(cx+9)+','+(shY-8)+' '+(cx+5)+','+(shY-5)+' Q'+cx+','+(shY-2)+' '+(cx-5)+','+(shY-5)+' Q'+(cx-9)+','+(shY-8)+' '+Lx.toFixed(1)+','+shY+' Z';
+  var scoop=' Q'+(cx+11)+','+(shY-7)+' '+(cx+7)+','+(shY-4)+' Q'+cx+','+(shY+3)+' '+(cx-7)+','+(shY-4)+' Q'+(cx-11)+','+(shY-7)+' '+Lx.toFixed(1)+','+shY+' Z';
+  var sleeveMode='short';
+  if(oOutfit==='tank')sleeveMode='none';
+  else if(oOutfit==='hoodie'||oOutfit==='denimjacket')sleeveMode='long';
+  if(oOutfit==='hoodie'){
+    s+='<path d="M'+(cx-22)+','+(shY+6)+' Q'+cx+','+(shY+26)+' '+(cx+22)+','+(shY+6)+' Q'+(cx+16)+','+(shY-15)+' '+cx+','+(shY-17)+' Q'+(cx-16)+','+(shY-15)+' '+(cx-22)+','+(shY+6)+' Z" fill="'+gc+'"/>';
+    s+='<path d="M'+(cx-14)+','+(shY+7)+' Q'+cx+','+(shY+19)+' '+(cx+14)+','+(shY+7)+' Q'+(cx+10)+','+(shY-8)+' '+cx+','+(shY-9)+' Q'+(cx-10)+','+(shY-8)+' '+(cx-14)+','+(shY+7)+' Z" fill="#00000030"/>';
+    s+='<path d="'+sidePath(hipY+8)+crew+'" fill="'+gc+'"/>';
+    s+='<path d="M'+(cx-18)+','+(hipY-16)+' L'+(cx+18)+','+(hipY-16)+' L'+(cx+15)+','+(hipY-1)+' L'+(cx-15)+','+(hipY-1)+' Z" fill="#0000001f"/>';
+    s+='<line x1="'+(cx-4)+'" y1="'+(shY-1)+'" x2="'+(cx-4)+'" y2="'+(shY+15)+'" stroke="'+CREAM+'" stroke-width="2.2" stroke-linecap="round"/><line x1="'+(cx+4)+'" y1="'+(shY-1)+'" x2="'+(cx+4)+'" y2="'+(shY+15)+'" stroke="'+CREAM+'" stroke-width="2.2" stroke-linecap="round"/>';
+  } else if(oOutfit==='denimjacket'){
+    var teeC='#dcd6c6',opening=sw*0.24,hemD=hipY+6,denD='#3f5c84';
+    s+='<path d="'+sidePath(hipY+4)+scoop+'" fill="'+teeC+'"/>';
+    s+='<path d="M'+Lx.toFixed(1)+','+shY+' Q'+(Lx-1).toFixed(1)+','+(shY+11)+' '+(cx-sw*0.9).toFixed(1)+','+(shY+20)+' L'+(cx-sw*0.9).toFixed(1)+','+hemD+' L'+(cx-opening-2).toFixed(1)+','+hemD+' L'+(cx-opening).toFixed(1)+','+(shY-4)+' Z" fill="'+gc+'"/>';
+    s+='<path d="M'+Rx.toFixed(1)+','+shY+' Q'+(Rx+1).toFixed(1)+','+(shY+11)+' '+(cx+sw*0.9).toFixed(1)+','+(shY+20)+' L'+(cx+sw*0.9).toFixed(1)+','+hemD+' L'+(cx+opening+2).toFixed(1)+','+hemD+' L'+(cx+opening).toFixed(1)+','+(shY-4)+' Z" fill="'+gc+'"/>';
+    s+='<path d="M'+(cx-opening).toFixed(1)+','+(shY-4)+' L'+(cx-6)+','+(shY-6)+' L'+(cx-11)+','+(shY+12)+' Z" fill="'+denD+'"/><path d="M'+(cx+opening).toFixed(1)+','+(shY-4)+' L'+(cx+6)+','+(shY-6)+' L'+(cx+11)+','+(shY+12)+' Z" fill="'+denD+'"/>';
+  } else if(oOutfit==='denimoveralls'){
+    var ovD='#3f5c84',ovStitch='#e3d49a',ovTee='#dcd6c6',ovBibW=sw*0.5;
+    s+='<path d="M'+(cx-sw*0.5).toFixed(1)+','+(shY-1)+' Q'+cx+','+(shY+8)+' '+(cx+sw*0.5).toFixed(1)+','+(shY-1)+' Q'+(cx+sw*0.42).toFixed(1)+','+(shY-6)+' '+cx+','+(shY-5)+' Q'+(cx-sw*0.42).toFixed(1)+','+(shY-6)+' '+(cx-sw*0.5).toFixed(1)+','+(shY-1)+' Z" fill="'+ovTee+'"/>';
+    s+='<path d="'+sidePath(hipY+4)+crew+'" fill="'+gc+'"/>';
+    s+='<path d="M'+(cx-ovBibW+1).toFixed(1)+','+(shY+3)+' L'+(cx-11)+','+(shY-5)+' L'+(cx-5)+','+(shY-5)+' L'+(cx-ovBibW+8).toFixed(1)+','+(shY+3)+' Z" fill="'+gc+'"/>';
+    s+='<path d="M'+(cx+ovBibW-1).toFixed(1)+','+(shY+3)+' L'+(cx+11)+','+(shY-5)+' L'+(cx+5)+','+(shY-5)+' L'+(cx+ovBibW-8).toFixed(1)+','+(shY+3)+' Z" fill="'+gc+'"/>';
+    s+='<rect x="'+(cx-8)+'" y="'+(shY+8)+'" width="16" height="12" rx="1.5" fill="none" stroke="'+ovStitch+'" stroke-width="1" opacity="0.7"/>';
+    s+='<circle cx="'+(cx-ovBibW+3).toFixed(1)+'" cy="'+(shY+5)+'" r="1.8" fill="'+ovStitch+'"/><circle cx="'+(cx+ovBibW-3).toFixed(1)+'" cy="'+(shY+5)+'" r="1.8" fill="'+ovStitch+'"/>';
+  } else if(oOutfit==='jersey'){
+    s+='<path d="'+sidePath(hipY+4)+crew+'" fill="'+gc+'"/>';
+    s+='<path d="M'+(cx-5)+','+(shY-5)+' Q'+cx+','+(shY-1)+' '+(cx+5)+','+(shY-5)+'" fill="none" stroke="'+GOLDL+'" stroke-width="2.6" stroke-linecap="round"/>';
+    s+='<text x="'+cx+'" y="'+(shY+34)+'" text-anchor="middle" font-family="DM Sans,sans-serif" font-weight="800" font-size="21" fill="'+CREAM+'">26</text>';
+  } else if(oOutfit==='tank'){
+    s+='<path d="'+sidePath(hipY+4)+scoop+'" fill="'+gc+'"/>';
+  } else {
+    s+='<path d="'+sidePath(hipY+4)+crew+'" fill="'+gc+'"/>';
+  }
+  // sleeves
+  function sleeveShort(p){var cap=lerp(p[0],p[1],0.5);return '<path d="M'+p[0][0].toFixed(1)+','+p[0][1]+' L'+cap[0].toFixed(1)+','+cap[1].toFixed(1)+'" stroke="'+gc+'" stroke-width="'+(armW+5)+'" fill="none" stroke-linecap="round"/>';}
+  function sleeveLong(p){return '<path d="'+toPath(p)+'" stroke="'+gc+'" stroke-width="'+(armW+4)+'" fill="none" stroke-linecap="round" stroke-linejoin="round"/>';}
+  if(sleeveMode==='short')s+=sleeveShort(arms.l)+sleeveShort(arms.r);
+  else if(sleeveMode==='long')s+=sleeveLong(arms.l)+sleeveLong(arms.r);
+  // hands — full palm (wider than the wrist) + thumb, hanging along the arm
+  function hand(p){
+    var e=p[p.length-1],b=p[p.length-2]||p[0];
+    var dx=e[0]-b[0],dy=e[1]-b[1],ln=Math.hypot(dx,dy)||1;var ux=dx/ln,uy=dy/ln;var px=-uy,py=ux;
+    var cxh=e[0]+ux*armW*0.42,cyh=e[1]+uy*armW*0.42;var ang=Math.atan2(uy,ux)*180/Math.PI;
+    var palm='<ellipse cx="'+cxh.toFixed(1)+'" cy="'+cyh.toFixed(1)+'" rx="'+(armW*0.66).toFixed(1)+'" ry="'+(armW*0.74).toFixed(1)+'" fill="'+skin+'" transform="rotate('+ang.toFixed(1)+' '+cxh.toFixed(1)+' '+cyh.toFixed(1)+')"/>';
+    var tx=cxh+px*armW*0.5,ty=cyh+py*armW*0.5;
+    var thumb='<ellipse cx="'+tx.toFixed(1)+'" cy="'+ty.toFixed(1)+'" rx="'+(armW*0.26).toFixed(1)+'" ry="'+(armW*0.38).toFixed(1)+'" fill="'+skin+'" transform="rotate('+ang.toFixed(1)+' '+tx.toFixed(1)+' '+ty.toFixed(1)+')"/>';
+    return thumb+palm;
+  }
+  s+=hand(arms.l)+hand(arms.r);
+  // back hair — length driven by slider (0..100)
+  if(oHairLen>25){
+    var drop=faceCy+8+(oHairLen/100)*52;
+    s+='<path d="M'+(cx-faceRx-4)+','+(faceCy-6)+' Q'+(cx-faceRx-10)+','+(drop-10).toFixed(1)+' '+(cx-12)+','+drop.toFixed(1)+' L'+(cx+12)+','+drop.toFixed(1)+' Q'+(cx+faceRx+10)+','+(drop-10).toFixed(1)+' '+(cx+faceRx+4)+','+(faceCy-6)+' Z" fill="'+hair+'"/>';
+  }
+  // neck (slim, visible above the collar)
+  s+='<rect x="'+(cx-5)+'" y="'+(faceCy+faceRy-7)+'" width="10" height="16" rx="4.5" fill="'+skin+'"/>';
+  s+='<path d="M'+(cx-5)+','+(faceCy+faceRy-7)+' Q'+cx+','+(faceCy+faceRy-3)+' '+(cx+5)+','+(faceCy+faceRy-7)+' L'+(cx+5)+','+(faceCy+faceRy-3)+' Q'+cx+','+(faceCy+faceRy+1)+' '+(cx-5)+','+(faceCy+faceRy-3)+' Z" fill="#00000018"/>';
+  // head + ears
+  s+='<ellipse cx="'+cx+'" cy="'+faceCy+'" rx="'+faceRx+'" ry="'+faceRy+'" fill="'+skin+'"/>';
+  s+='<circle cx="'+(cx-faceRx)+'" cy="'+(faceCy+2)+'" r="3.5" fill="'+skin+'"/><circle cx="'+(cx+faceRx)+'" cy="'+(faceCy+2)+'" r="3.5" fill="'+skin+'"/>';
+  // hair front — long fringe when slider is long, cropped when short
+  if(oHairLen>40){
+    s+='<path d="M'+(cx-faceRx-3)+','+(faceCy-2)+' Q'+(cx-faceRx-4)+','+(faceCy-faceRy-8)+' '+cx+','+(faceCy-faceRy-7)
+      +' Q'+(cx+faceRx+4)+','+(faceCy-faceRy-8)+' '+(cx+faceRx+3)+','+(faceCy-2)
+      +' Q'+(cx+faceRx-3)+','+(faceCy-12)+' '+(cx+5)+','+(faceCy-11)
+      +' Q'+cx+','+(faceCy-6)+' '+(cx-5)+','+(faceCy-11)
+      +' Q'+(cx-faceRx+3)+','+(faceCy-12)+' '+(cx-faceRx-3)+','+(faceCy-2)+' Z" fill="'+hair+'"/>';
+  }else{
+    s+='<path d="M'+(cx-faceRx-2)+','+(faceCy+1)+' Q'+(cx-faceRx-2)+','+(faceCy-faceRy-8)+' '+cx+','+(faceCy-faceRy-7)
+      +' Q'+(cx+faceRx+2)+','+(faceCy-faceRy-8)+' '+(cx+faceRx+2)+','+(faceCy+1)
+      +' Q'+(cx+faceRx)+','+(faceCy-7)+' '+(cx+faceRx-4)+','+(faceCy-8)
+      +' Q'+(cx+7)+','+(faceCy-12)+' '+cx+','+(faceCy-9)
+      +' Q'+(cx-7)+','+(faceCy-12)+' '+(cx-faceRx+4)+','+(faceCy-8)
+      +' Q'+(cx-faceRx)+','+(faceCy-7)+' '+(cx-faceRx-2)+','+(faceCy+1)+' Z" fill="'+hair+'"/>';
+  }
+  // face
+  s+='<circle cx="'+(cx-6)+'" cy="'+(faceCy+1)+'" r="2" fill="'+INK+'"/><circle cx="'+(cx+6)+'" cy="'+(faceCy+1)+'" r="2" fill="'+INK+'"/>';
+  var bw=masc?2.4:1.6,by=masc?4:5,by2=masc?5.5:7;
+  s+='<path d="M'+(cx-9)+','+(faceCy-by)+' Q'+(cx-6)+','+(faceCy-by2)+' '+(cx-3)+','+(faceCy-by)+'" stroke="'+hairD+'" stroke-width="'+bw+'" fill="none" stroke-linecap="round"/>';
+  s+='<path d="M'+(cx+3)+','+(faceCy-by)+' Q'+(cx+6)+','+(faceCy-by2)+' '+(cx+9)+','+(faceCy-by)+'" stroke="'+hairD+'" stroke-width="'+bw+'" fill="none" stroke-linecap="round"/>';
+  s+='<path d="M'+(cx-4)+','+(faceCy+9)+' Q'+cx+','+(faceCy+12)+' '+(cx+4)+','+(faceCy+9)+'" stroke="'+INK+'" stroke-width="1.8" fill="none" stroke-linecap="round"/>';
+  if(!masc){s+='<circle cx="'+(cx-10)+'" cy="'+(faceCy+6)+'" r="2.4" fill="#f0a9a0" opacity="0.5"/><circle cx="'+(cx+10)+'" cy="'+(faceCy+6)+'" r="2.4" fill="#f0a9a0" opacity="0.5"/>';}
+  // gold headband (Savage/Legend)
+  if(cfg.gold)s+='<path d="M'+(cx-faceRx-2)+','+(faceCy-10)+' Q'+cx+','+(faceCy-17)+' '+(cx+faceRx+2)+','+(faceCy-10)+'" stroke="'+GOLD+'" stroke-width="5" fill="none" stroke-linecap="round"/>';
+  // ── accessories ──
+  var topH=faceCy-faceRy, earH=faceCy+2;
+  function hasAcc(id){return oAcc&&oAcc.indexOf(id)>-1;}
+  if(hasAcc('shades')){
+    s+='<rect x="'+(cx-12.5)+'" y="'+(faceCy-3)+'" width="9.5" height="7" rx="3" fill="#15241c"/><rect x="'+(cx+3)+'" y="'+(faceCy-3)+'" width="9.5" height="7" rx="3" fill="#15241c"/>';
+    s+='<path d="M'+(cx-3)+','+(faceCy-1.5)+' Q'+cx+','+(faceCy-3.5)+' '+(cx+3)+','+(faceCy-1.5)+'" fill="none" stroke="#15241c" stroke-width="2"/>';
+  }
+  if(hasAcc('chain')){
+    s+='<path d="M'+(cx-11)+','+(faceCy+faceRy-1)+' Q'+cx+','+(faceCy+faceRy+12)+' '+(cx+11)+','+(faceCy+faceRy-1)+'" fill="none" stroke="'+GOLD+'" stroke-width="2.4"/><circle cx="'+cx+'" cy="'+(faceCy+faceRy+11)+'" r="2.6" fill="'+GOLDL+'"/>';
+  }
+  if(hasAcc('hoops')){
+    s+='<circle cx="'+(cx-faceRx)+'" cy="'+(earH+5)+'" r="3" fill="none" stroke="'+GOLD+'" stroke-width="1.7"/><circle cx="'+(cx+faceRx)+'" cy="'+(earH+5)+'" r="3" fill="none" stroke="'+GOLD+'" stroke-width="1.7"/>';
+  }
+  if(hasAcc('cap')){
+    var capC=(opts.team&&opts.team.primary)?opts.team.primary:GREEND;
+    var capBrim=(opts.team&&opts.team.secondary)?opts.team.secondary:capC;
+    s+='<path d="M'+(cx-faceRx-1)+','+(topH+7)+' Q'+cx+','+(topH-11)+' '+(cx+faceRx+1)+','+(topH+7)+' Z" fill="'+capC+'"/>';
+    s+='<ellipse cx="'+(cx-faceRx-5)+'" cy="'+(topH+9)+'" rx="12" ry="4.5" fill="'+capBrim+'"/>';
+    if(opts.team&&opts.team.abbr)s+='<text x="'+cx+'" y="'+(topH+2)+'" text-anchor="middle" font-family="DM Sans,sans-serif" font-weight="800" font-size="6.5" fill="'+capBrim+'">'+opts.team.abbr+'</text>';
+  }
+  if(hasAcc('cowboyhat')){
+    var tan='#a9763e',band='#5a3f22',W2=faceRx+11,by=topH+5;
+    s+='<path d="M'+(cx-W2)+','+(by-2)+' Q'+(cx-W2-1)+','+(by-6)+' '+(cx-W2+5)+','+(by-5)+' Q'+cx+','+(by-8)+' '+(cx+W2-5)+','+(by-5)+' Q'+(cx+W2+1)+','+(by-6)+' '+(cx+W2)+','+(by-2)+' Q'+cx+','+(by+9)+' '+(cx-W2)+','+(by-2)+' Z" fill="'+tan+'"/>';
+    s+='<path d="M'+(cx-11)+','+(by-1)+' L'+(cx-9)+','+(topH-13)+' Q'+(cx-6)+','+(topH-16)+' '+(cx-3.5)+','+(topH-13)+' Q'+cx+','+(topH-10)+' '+(cx+3.5)+','+(topH-13)+' Q'+(cx+6)+','+(topH-16)+' '+(cx+9)+','+(topH-13)+' L'+(cx+11)+','+(by-1)+' Q'+cx+','+(by+3)+' '+(cx-11)+','+(by-1)+' Z" fill="'+tan+'"/>';
+    s+='<path d="M'+(cx-10.5)+','+(by-2.5)+' Q'+cx+','+(by+1.5)+' '+(cx+10.5)+','+(by-2.5)+'" fill="none" stroke="'+band+'" stroke-width="3.2"/>';
+  }
+  if(hasAcc('bucket')){
+    s+='<path d="M'+(cx-faceRx-1)+','+(topH+9)+' Q'+cx+','+(topH-9)+' '+(cx+faceRx+1)+','+(topH+9)+' Z" fill="#d4c094"/>';
+    s+='<ellipse cx="'+cx+'" cy="'+(topH+10)+'" rx="'+(faceRx+9)+'" ry="4.5" fill="#cbb78a"/>';
+  }
+  if(hasAcc('headphones')){
+    s+='<path d="M'+(cx-faceRx-2)+','+(faceCy+1)+' Q'+cx+','+(topH-13)+' '+(cx+faceRx+2)+','+(faceCy+1)+'" fill="none" stroke="#20201f" stroke-width="3.4" stroke-linecap="round"/>';
+    s+='<rect x="'+(cx-faceRx-5.5)+'" y="'+(faceCy-4)+'" width="7" height="13" rx="3" fill="#20201f"/><rect x="'+(cx+faceRx-1.5)+'" y="'+(faceCy-4)+'" width="7" height="13" rx="3" fill="#20201f"/>';
+  }
+  if(hasAcc('earbuds')){
+    s+='<circle cx="'+(cx-faceRx-1)+'" cy="'+(earH+1)+'" r="2.4" fill="#fff"/><circle cx="'+(cx+faceRx+1)+'" cy="'+(earH+1)+'" r="2.4" fill="#fff"/>';
+  }
+  if(hasAcc('watch')){
+    var wL=arms.l[arms.l.length-1];
+    s+='<rect x="'+(wL[0]-4.5).toFixed(1)+'" y="'+(wL[1]-4.5).toFixed(1)+'" width="9" height="9" rx="2.4" fill="#1b2a23"/><rect x="'+(wL[0]-3).toFixed(1)+'" y="'+(wL[1]-3).toFixed(1)+'" width="6" height="6" rx="1.5" fill="'+GREENL+'"/>';
+  }
+  if(hasAcc('beanie')){
+    s+='<path d="M'+(cx-faceRx-2)+','+(faceCy-9)+' Q'+cx+','+(topH-9)+' '+(cx+faceRx+2)+','+(faceCy-9)+' Z" fill="#c2613a"/>';
+    s+='<rect x="'+(cx-faceRx-2)+'" y="'+(faceCy-13)+'" width="'+((faceRx+2)*2)+'" height="8" rx="4" fill="#9a4626"/><circle cx="'+cx+'" cy="'+(topH-9)+'" r="3.4" fill="#d4774e"/>';
+  }
+  // sparkles
+  if(cfg.aura>=2){var sp=[[44,78],[156,92],[50,150]];if(cfg.aura>=3)sp.push([150,150]);for(var pi=0;pi<sp.length;pi++){var px=sp[pi][0],py=sp[pi][1];s+='<path d="M'+px+','+(py-5)+' L'+(px+1.6)+','+py+' L'+(px+6)+','+(py+1)+' L'+(px+1.6)+','+(py+2)+' L'+px+','+(py+6)+' L'+(px-1.6)+','+(py+2)+' L'+(px-6)+','+(py+1)+' L'+(px-1.6)+','+py+' Z" fill="'+GOLDL+'" opacity="0.85"/>';}}
+  s+='</svg>';
+  return s;
+}
+function buildRAVG_OLD(lvl,skin,skinD,skinL,hair,hairD,hairH,gender,build,W,H){
   var isFem=gender==='F',cx=W/2;
   // Scale factor — all measurements designed at W=90, scale up proportionally
   var sc=W/90;
@@ -2077,6 +2498,7 @@ function goPage(p){
   var tab=document.getElementById('tab-'+p);if(tab)tab.classList.add('active');
   var bnt=document.getElementById('bnt-'+p);if(bnt)bnt.classList.add('active');
   if(p==='dashboard'){renderDashHero();injectVibe();}
+  if(p==='squad'){renderSquad();}
 }
 
 function goStep(n){
@@ -2091,6 +2513,9 @@ function goStep(n){
     var curvy=document.getElementById('avbCurvy');
     if(curvy)curvy.style.display=S.gender==='F'?'inline-block':'none';
     if(S.gender==='M'&&S.avBuild==='curvy'){S.avBuild='avg';setAvBuildUI('avg');}
+    var hls=document.getElementById('avHairLenSlider');if(hls&&S.avHairLen!=null)hls.value=S.avHairLen;
+    avBuildOutfitBtns();
+    avBuildExtra();
     renderAvatarPreview();
   }
 }
@@ -2229,6 +2654,116 @@ function renderAvatar(){
   }
 }
 
+var SQUAD_FRIENDS=[
+  {id:'sofia',name:'Sofia',gender:'F',skin:'#e6b389',hair:'#3a2a1c',hl:75,build:'avg',outfit:'tee',acc:['shades'],lvl:4,pet:'bunny',petAcc:'bow',week:2580,streak:23,online:true},
+  {id:'priya',name:'Priya',gender:'F',skin:'#a86a40',hair:'#241a12',hl:80,build:'avg',outfit:'tank',acc:['hoops'],lvl:4,pet:'cat',petAcc:'collar',week:2210,streak:17,online:true},
+  {id:'marcus',name:'Marcus',gender:'M',skin:'#7c4a28',hair:'#1a120c',hl:12,build:'avg',outfit:'jersey',acc:[],lvl:4,pet:'beagle',petAcc:'bandana',week:1840,streak:9,online:false},
+  {id:'dev',name:'Dev',gender:'M',skin:'#cf9568',hair:'#241a12',hl:12,build:'avg',outfit:'hoodie',acc:['beanie'],lvl:3,pet:'',petAcc:'',week:1610,streak:6,online:true},
+  {id:'jordan',name:'Jordan',gender:'M',skin:'#f2cda8',hair:'#8a6a3e',hl:12,build:'avg',outfit:'hoodie',acc:['cap'],lvl:2,pet:'',petAcc:'',week:1230,streak:4,online:false}
+];
+var TIER_ICON=['🥊','🥊','💪','🔥','👑'];
+var TIER_NAME=['','Rookie','Grinder','Savage','Legend'];
+var _cheered={};
+function squadFace(f,sz){
+  var svg=buildAvatarCfg(f,Math.round(sz*2.4));
+  var ring=f.lvl>=4?'#e6c265':f.lvl>=2?'#6fbf8d':'#9bb3a4';
+  return '<div style="width:'+sz+'px;height:'+sz+'px;border-radius:50%;overflow:hidden;position:relative;flex-shrink:0;background:radial-gradient(circle at 50% 28%,#23503a,#0d1c14);box-shadow:0 0 0 2.5px '+ring+',0 0 0 4px #f6f3ea"><div style="position:absolute;left:50%;top:'+(-sz*0.30)+'px;transform:translateX(-50%);width:'+(sz*2.4)+'px;height:'+(sz*2.4)+'px">'+svg+'</div></div>';
+}
+function renderSquad(){
+  var body=document.getElementById('squadBody'); if(!body)return;
+  var me={id:'me',name:(S.avatarName||'You'),gender:S.gender,skin:S.avSkinHex||'#D4956A',hair:S.avHairHex||'#8B4513',hl:S.avHairLen,build:S.avBuild||'avg',outfit:S.avOutfit,acc:S.avAcc,lvl:getLevel(S.points),pet:S.avPet,petAcc:S.avPetAcc,week:S.points,streak:(S.streak||7),online:true,isMe:true};
+  var board=SQUAD_FRIENDS.concat([me]).slice().sort(function(a,b){return b.week-a.week;});
+  var myRank=board.findIndex(function(x){return x.isMe;})+1;
+  var ahead=myRank>1?board[myRank-2]:null;
+  var h='';
+  // rank summary banner
+  h+='<div class="card" style="padding:16px 18px;margin-bottom:16px;background:linear-gradient(135deg,var(--g1),#1f4632);color:#fff;border:none">'
+    +'<div style="display:flex;align-items:center;justify-content:space-between;gap:12px">'
+    +'<div><div style="font-size:12px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:rgba(255,255,255,.6)">Your rank this week</div>'
+    +'<div style="font-family:\'Playfair Display\',serif;font-size:30px;font-weight:700;margin-top:2px">#'+myRank+' <span style="font-size:15px;font-weight:500;color:rgba(255,255,255,.65)">of '+board.length+'</span></div></div>'
+    +'<div style="text-align:right"><div style="font-size:26px;font-weight:800;color:#f3dd95">★ '+me.week.toLocaleString()+'</div>'
+    +'<div style="font-size:11.5px;color:rgba(255,255,255,.6)">🔥 '+me.streak+'-day streak</div></div></div>'
+    +(ahead?'<div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.14);font-size:13px;color:rgba(255,255,255,.85)">'+(ahead.week-me.week).toLocaleString()+' pts behind <strong>'+ahead.name+'</strong> — keep logging to catch up! 💪</div>':'<div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.14);font-size:13px;color:#f3dd95;font-weight:600">👑 You\'re leading the squad this week!</div>')
+    +'</div>';
+  // squad row
+  h+='<div class="card" style="padding:16px;margin-bottom:16px"><div style="display:flex;gap:14px;overflow-x:auto;padding-bottom:8px">';
+  SQUAD_FRIENDS.forEach(function(f){
+    h+='<button onclick="squadPeek(\''+f.id+'\')" style="background:none;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;flex-shrink:0;width:74px;font-family:inherit">'
+      +'<div style="position:relative">'+squadFace(f,58)+(f.online?'<span style="position:absolute;bottom:2px;right:2px;width:12px;height:12px;border-radius:50%;background:#48c66f;border:2px solid #fff"></span>':'')
+      +(f.lvl>=4&&f.pet?'<div style="position:absolute;bottom:-4px;left:-6px;width:26px;height:26px;border-radius:50%;background:#f6f3ea;box-shadow:0 1px 3px rgba(0,0,0,.2);overflow:hidden">'+buildPet(f.pet,26,f.petAcc):'')+(f.lvl>=4&&f.pet?'</div>':'')
+      +'</div><span style="font-size:12.5px;font-weight:600;color:var(--g1)">'+f.name+'</span><span style="font-size:10.5px;font-weight:700;color:#c0792f">🔥 '+f.streak+'</span></button>';
+  });
+  h+='<button onclick="squadInvite()" style="background:none;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;flex-shrink:0;width:74px;font-family:inherit"><div style="width:58px;height:58px;border-radius:50%;border:2px dashed var(--g3);background:var(--veg4);color:var(--g2);font-size:26px;display:flex;align-items:center;justify-content:center">＋</div><span style="font-size:12.5px;font-weight:600;color:var(--text3)">Invite</span></button>';
+  h+='</div>';
+  // leaderboard
+  h+='<div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border)"><div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px"><h3 style="font-size:15px;font-weight:700;color:var(--g1);margin:0">This week\'s leaderboard</h3><span style="font-size:11.5px;color:var(--text3)">Resets Monday</span></div>';
+  board.forEach(function(f,i){
+    var medal=['🥇','🥈','🥉'][i]||(i+1);
+    h+='<div '+(f.isMe?'':'onclick="squadPeek(\''+f.id+'\')" ')+'style="display:flex;align-items:center;gap:12px;padding:8px 12px;border-radius:12px;cursor:'+(f.isMe?'default':'pointer')+';margin-bottom:7px;background:'+(f.isMe?'var(--veg4)':'var(--card)')+';border:1px solid '+(f.isMe?'var(--g3)':'var(--border)')+'">'
+      +'<span style="width:22px;text-align:center;font-size:'+(i<3?'16':'13')+'px;font-weight:700;color:var(--text3)">'+medal+'</span>'
+      +squadFace(f,38)
+      +'<div style="flex:1;min-width:0"><div style="font-size:13.5px;font-weight:700;color:var(--g1)">'+(f.isMe?f.name+' (you)':f.name)+'</div><div style="font-size:11.5px;color:var(--text3)">'+TIER_ICON[f.lvl]+' '+TIER_NAME[f.lvl]+'</div></div>'
+      +'<div style="text-align:right"><div style="font-size:13.5px;font-weight:800;color:var(--g1)">'+f.week.toLocaleString()+'</div><div style="font-size:10px;color:var(--text3);text-transform:uppercase">pts</div></div>'
+      +(f.isMe?'':'<button onclick="event.stopPropagation();squadCheer(\''+f.id+'\',this)" style="width:34px;height:34px;border-radius:50%;cursor:pointer;flex-shrink:0;font-size:15px;border:1px solid '+(_cheered[f.id]?'var(--g2)':'var(--border)')+';background:'+(_cheered[f.id]?'var(--g2)':'#fff')+'">'+(_cheered[f.id]?'✓':'👏')+'</button>')
+      +'</div>';
+  });
+  h+='</div></div>';
+  // activity feed
+  var feed=[[SQUAD_FRIENDS[0],'hit Legend and adopted a Bunny 🐰','2h'],[SQUAD_FRIENDS[2],'logged a 9-day streak 🔥','5h'],[SQUAD_FRIENDS[1],'crushed her protein goal','8h'],[SQUAD_FRIENDS[3],'leveled up to Savage 🔥','1d']];
+  h+='<div class="card" style="padding:16px"><h3 style="font-size:15px;font-weight:700;color:var(--g1);margin:0 0 14px">Squad activity</h3>';
+  feed.forEach(function(a,i){
+    h+='<div style="display:flex;align-items:center;gap:11px;margin-bottom:14px">'+squadFace(a[0],40)
+      +'<div style="flex:1;min-width:0;font-size:12.5px;line-height:1.4;color:var(--text2)"><strong style="color:var(--g1)">'+a[0].name+'</strong> '+a[1]+' <span style="color:var(--text3)">· '+a[2]+'</span></div>'
+      +'<button onclick="squadCheer(\'feed'+i+'\',this)" style="width:30px;height:30px;border-radius:50%;cursor:pointer;flex-shrink:0;font-size:13px;border:1px solid '+(_cheered['feed'+i]?'var(--g2)':'var(--border)')+';background:'+(_cheered['feed'+i]?'var(--g2)':'#fff')+'">'+(_cheered['feed'+i]?'✓':'👏')+'</button></div>';
+  });
+  h+='</div>';
+  body.innerHTML=h;
+}
+function squadCheer(id,btn){ if(_cheered[id])return; _cheered[id]=true; if(btn){btn.style.background='var(--g2)';btn.textContent='✓';} squadToast('Cheer sent! 👏'); }
+function squadInvite(){
+  var code=((S.avatarName||'YOU').toUpperCase().replace(/[^A-Z]/g,'').slice(0,4)||'YOU')+'-'+Math.random().toString(36).slice(2,6).toUpperCase();
+  var link='peptidenourish.app/join/'+code;
+  var ov=document.createElement('div');ov.id='inviteOv';
+  ov.style.cssText='position:fixed;inset:0;z-index:9200;display:flex;align-items:center;justify-content:center;background:rgba(8,18,12,.66);backdrop-filter:blur(5px);padding:20px;font-family:"DM Sans",sans-serif';
+  ov.onclick=function(){ov.remove();};
+  // simple QR-ish grid (decorative placeholder)
+  var qr='';for(var i=0;i<169;i++){var on=(Math.random()>0.5)||i<13||i%13<2||i%13>10||i>155;qr+='<span style="background:'+(on?'#14281d':'transparent')+'"></span>';}
+  ov.innerHTML='<div onclick="event.stopPropagation()" style="width:340px;max-width:100%;background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.4)">'
+    +'<div style="background:linear-gradient(135deg,var(--g1),#1f4632);padding:20px;text-align:center;color:#fff"><div style="font-size:30px">👥</div><div style="font-family:\'Playfair Display\',serif;font-size:22px;font-weight:700;margin-top:4px">Invite to your Squad</div><div style="font-size:12.5px;color:rgba(255,255,255,.7);margin-top:2px">Train together, stay accountable</div></div>'
+    +'<div style="padding:20px">'
+    +'<div style="display:grid;grid-template-columns:repeat(13,1fr);width:130px;height:130px;margin:0 auto 16px;border:6px solid #fff;border-radius:10px;box-shadow:0 0 0 1px var(--border)" >'+qr+'</div>'
+    +'<div style="font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text3);margin-bottom:6px">Your invite link</div>'
+    +'<div style="display:flex;gap:8px;margin-bottom:14px"><input readonly value="'+link+'" style="flex:1;min-width:0;padding:11px 12px;border-radius:10px;border:1px solid var(--border);background:var(--card);font:inherit;font-size:13px;color:var(--g1)" onclick="this.select()"><button onclick="squadToast(\'Link copied!\');" style="padding:0 16px;border-radius:10px;border:none;background:var(--g2);color:#fff;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit">Copy</button></div>'
+    +'<div style="display:flex;gap:8px;margin-bottom:16px"><button onclick="squadToast(\'Opening Messages…\')" style="flex:1;padding:11px;border-radius:10px;border:1px solid var(--border);background:#fff;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit;color:var(--g1)">💬 Text it</button><button onclick="squadToast(\'Sharing…\')" style="flex:1;padding:11px;border-radius:10px;border:1px solid var(--border);background:#fff;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit;color:var(--g1)">📤 Share</button></div>'
+    +'<div style="border-top:1px solid var(--border);padding-top:14px"><div style="font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text3);margin-bottom:6px">Have a friend\'s code?</div>'
+    +'<div style="display:flex;gap:8px"><input placeholder="e.g. SOFIA-4K2P" style="flex:1;min-width:0;padding:11px 12px;border-radius:10px;border:1px solid var(--border);background:var(--card);font:inherit;font-size:13px;text-transform:uppercase"><button onclick="squadToast(\'Request sent! ⏳\');document.getElementById(\'inviteOv\').remove();" style="padding:0 16px;border-radius:10px;border:none;background:var(--g1);color:#fff;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit">Join</button></div></div>'
+    +'<button onclick="document.getElementById(\'inviteOv\').remove()" style="width:100%;margin-top:16px;padding:11px;border-radius:24px;border:none;background:var(--veg4);color:var(--g1);font-weight:700;font-size:13.5px;cursor:pointer;font-family:inherit">Done</button>'
+    +'</div></div>';
+  document.body.appendChild(ov);
+}
+function squadToast(msg){ var t=document.createElement('div'); t.textContent=msg; t.style.cssText='position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:var(--g1);color:#fff;padding:11px 20px;border-radius:24px;font-size:13.5px;font-weight:600;z-index:9000;box-shadow:0 10px 30px rgba(0,0,0,.3);font-family:"DM Sans",sans-serif'; document.body.appendChild(t); setTimeout(function(){t.remove();},1700); }
+function squadPeek(id){
+  var f=SQUAD_FRIENDS.filter(function(x){return x.id===id;})[0]; if(!f)return;
+  var av=buildAvatarCfg(f,300);
+  var petHtml=(f.lvl>=4&&f.pet)?'<div style="position:absolute;bottom:14px;right:18px;width:74px;height:74px">'+buildPet(f.pet,74,f.petAcc)+'</div>':'';
+  var ov=document.createElement('div');
+  ov.id='squadPeekOv';
+  ov.style.cssText='position:fixed;inset:0;z-index:9100;display:flex;align-items:center;justify-content:center;background:rgba(8,18,12,.66);backdrop-filter:blur(5px);padding:20px;font-family:"DM Sans",sans-serif';
+  ov.onclick=function(){ov.remove();};
+  ov.innerHTML='<div onclick="event.stopPropagation()" style="width:330px;max-width:100%;border-radius:22px;overflow:hidden;background:radial-gradient(120% 80% at 50% 8%,'+(f.lvl>=2?'#23503a':'#1d3a2a')+',#0d1c14);border:1.5px solid '+(f.lvl>=4?'#e6c265':'rgba(255,255,255,.14)')+';box-shadow:0 30px 90px rgba(0,0,0,.5)">'
+    +'<div style="display:flex;align-items:center;justify-content:space-between;padding:14px 18px 0"><span style="color:#fff;font-weight:700;font-size:14px">'+(f.online?'🟢 Online':'⚪ Offline')+'</span><span style="font-size:10.5px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:'+(f.lvl>=2?'#14281d':'#fff')+';background:'+(f.lvl>=2?'#e6c265':'rgba(255,255,255,.16)')+';padding:4px 9px;border-radius:20px">'+TIER_ICON[f.lvl]+' '+TIER_NAME[f.lvl]+'</span></div>'
+    +'<div style="position:relative;height:232px;display:flex;align-items:center;justify-content:center"><div style="width:200px;height:222px">'+av+'</div>'+petHtml+'</div>'
+    +'<div style="padding:0 20px 20px;text-align:center"><div style="font-family:\'Playfair Display\',serif;font-size:28px;font-weight:700;color:#fff">'+f.name+'</div>'
+    +'<div style="display:flex;gap:10px;margin-top:14px">'
+    +'<div style="flex:1;background:rgba(255,255,255,.08);border-radius:12px;padding:10px 4px"><div style="color:#fff;font-weight:800;font-size:14px">★ '+f.week.toLocaleString()+'</div><div style="color:rgba(255,255,255,.5);font-size:10px;text-transform:uppercase;margin-top:2px">this week</div></div>'
+    +'<div style="flex:1;background:rgba(255,255,255,.08);border-radius:12px;padding:10px 4px"><div style="color:#fff;font-weight:800;font-size:14px">🔥 '+f.streak+'</div><div style="color:rgba(255,255,255,.5);font-size:10px;text-transform:uppercase;margin-top:2px">streak</div></div>'
+    +'<div style="flex:1;background:rgba(255,255,255,.08);border-radius:12px;padding:10px 4px"><div style="color:#fff;font-weight:800;font-size:14px">🏆 '+f.lvl+'/4</div><div style="color:rgba(255,255,255,.5);font-size:10px;text-transform:uppercase;margin-top:2px">tier</div></div>'
+    +'</div>'
+    +'<button onclick="squadCheer(\''+f.id+'\');document.getElementById(\'squadPeekOv\').remove();" style="width:100%;margin-top:14px;padding:12px;border-radius:24px;border:none;cursor:pointer;font-family:inherit;font-size:13.5px;font-weight:700;background:linear-gradient(90deg,#2f8a5f,#e6c265);color:#fff">👏 Send a cheer</button>'
+    +'</div></div>';
+  document.body.appendChild(ov);
+}
+
 function renderDashHero(){
   var pts=S.points,lvl=getLevel(pts);
   var pP=LVL_THRESHOLDS[lvl-1],pN=LVL_NEXT[lvl-1];
@@ -2240,8 +2775,15 @@ function renderDashHero(){
   // Avatar SVG — bigger, centered, current level only
   var svgEl=document.getElementById('dashAvatarSvg');
   if(svgEl){
-    svgEl.innerHTML=buildRAVG(lvl,skin,avDk(skin,28),avLt(skin,18),hair,avDk(hair,24),avLt(hair,24),S.gender,S.avBuild||'lean',200,300);
-    svgEl.style.cssText='width:200px;height:300px;display:block;margin:0 auto';
+    var avHtml=buildRAVG(lvl,skin,avDk(skin,28),avLt(skin,18),hair,avDk(hair,24),avLt(hair,24),S.gender,S.avBuild||'lean',200,300);
+    if(lvl>=4 && S.avPet){
+      svgEl.innerHTML='<div style="position:relative;width:200px;margin:0 auto">'+avHtml
+        +'<div style="position:absolute;right:-18px;bottom:6px;width:78px;height:78px">'+buildPet(S.avPet,78,S.avPetAcc||null)+'</div></div>';
+      svgEl.style.cssText='display:block;margin:0 auto';
+    }else{
+      svgEl.innerHTML=avHtml;
+      svgEl.style.cssText='width:200px;height:300px;display:block;margin:0 auto';
+    }
   }
 
   // Apply random animation variant
@@ -2296,6 +2838,42 @@ var tapMessages=[
   '🌅 New day, new gains. Let\'s make it count!',
 ];
 var _tapIdx=0;
+function openShareCard(){
+  var lvl=getLevel(S.points),skin=S.avSkinHex||'#D4956A',hair=S.avHairHex||'#8B4513';
+  var av=buildRAVG_NEW(lvl,skin,hair,S.gender,S.avBuild||'avg',300,{hairLen:S.avHairLen,outfit:S.avOutfit,acc:S.avAcc,team:(lvl>=3&&S.avTeam)?AV_TEAMS.filter(function(t){return t.id===S.avTeam;})[0]:null,monogram:(S.avatarName||'L').charAt(0)});
+  var pet=(lvl>=4&&S.avPet)?'<div style="position:absolute;bottom:54px;right:24px;width:80px;height:80px">'+buildPet(S.avPet,80,S.avPetAcc)+'</div>':'';
+  var tierName=['','Rookie','Grinder','Savage','Legend'][lvl],tierIcon=['','🥊','💪','🔥','👑'][lvl];
+  var nm=(S.avatarName||'My Avatar');
+  var ov=document.createElement('div'); ov.id='shareCardOv';
+  ov.style.cssText='position:fixed;inset:0;z-index:9300;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;background:rgba(8,18,12,.7);backdrop-filter:blur(6px);padding:20px;font-family:"DM Sans",sans-serif';
+  ov.onclick=function(){ov.remove();};
+  ov.innerHTML='<div id="shareCardArt" onclick="event.stopPropagation()" style="width:320px;border-radius:24px;overflow:hidden;background:radial-gradient(125% 80% at 50% 6%,'+(lvl>=2?'#23503a':'#1d3a2a')+',#0b1810);box-shadow:0 30px 90px rgba(0,0,0,.55);position:relative">'
+    +'<div style="padding:18px 20px 0;display:flex;align-items:center;justify-content:space-between"><div style="display:flex;align-items:center;gap:6px;color:#fff;font-family:\'Playfair Display\',serif;font-size:17px;font-weight:700">🌿 PeptideNourish</div><span style="font-size:10.5px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:'+(lvl>=2?'#14281d':'#fff')+';background:'+(lvl>=2?'#e6c265':'rgba(255,255,255,.16)')+';padding:4px 9px;border-radius:20px">'+tierIcon+' '+tierName+'</span></div>'
+    +'<div style="position:relative;height:264px;display:flex;align-items:center;justify-content:center"><div style="width:210px;height:234px">'+av+'</div>'+pet+'</div>'
+    +'<div style="padding:0 22px 22px;text-align:center"><div style="font-family:\'Playfair Display\',serif;font-size:30px;font-weight:700;color:#fff">'+nm+'</div>'
+    +'<div style="color:rgba(255,255,255,.55);font-size:13px;margin-top:2px">'+(lvl>=4&&S.avPet?'Legend + companion':'Level '+lvl+' of 4')+'</div>'
+    +'<div style="display:flex;gap:10px;margin-top:16px">'
+    +'<div style="flex:1;background:rgba(255,255,255,.08);border-radius:12px;padding:11px 4px"><div style="color:#fff;font-weight:800;font-size:15px">★ '+S.points.toLocaleString()+'</div><div style="color:rgba(255,255,255,.5);font-size:9.5px;text-transform:uppercase;letter-spacing:.5px;margin-top:3px">points</div></div>'
+    +'<div style="flex:1;background:rgba(255,255,255,.08);border-radius:12px;padding:11px 4px"><div style="color:#fff;font-weight:800;font-size:15px">🔥 '+(S.streak||7)+'</div><div style="color:rgba(255,255,255,.5);font-size:9.5px;text-transform:uppercase;letter-spacing:.5px;margin-top:3px">day streak</div></div>'
+    +'<div style="flex:1;background:rgba(255,255,255,.08);border-radius:12px;padding:11px 4px"><div style="color:#fff;font-weight:800;font-size:15px">🏆 '+lvl+'/4</div><div style="color:rgba(255,255,255,.5);font-size:9.5px;text-transform:uppercase;letter-spacing:.5px;margin-top:3px">tier</div></div>'
+    +'</div></div></div>'
+    +'<div onclick="event.stopPropagation()" style="display:flex;gap:10px"><button onclick="shareCardDownload()" style="padding:12px 22px;border-radius:24px;border:none;cursor:pointer;font-family:inherit;font-size:14px;font-weight:700;background:linear-gradient(90deg,#2f8a5f,#e6c265);color:#fff">⬇ Save image</button><button onclick="document.getElementById(\'shareCardOv\').remove()" style="padding:12px 22px;border-radius:24px;cursor:pointer;font-family:inherit;font-size:14px;font-weight:700;background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25)">Close</button></div>';
+  document.body.appendChild(ov);
+}
+function shareCardDownload(){
+  var art=document.getElementById('shareCardArt');
+  var svgs=art.querySelectorAll('svg');
+  // Serialize the card to an SVG-wrapped foreignObject for export
+  var w=art.offsetWidth,h=art.offsetHeight;
+  try{
+    var data='<svg xmlns="http://www.w3.org/2000/svg" width="'+(w*2)+'" height="'+(h*2)+'" viewBox="0 0 '+w+' '+h+'"><foreignObject width="100%" height="100%"><div xmlns="http://www.w3.org/1999/xhtml">'+art.outerHTML+'</div></foreignObject></svg>';
+    var blob=new Blob([data],{type:'image/svg+xml'});
+    var url=URL.createObjectURL(blob);
+    var a=document.createElement('a');a.href=url;a.download='peptidenourish-card.svg';a.click();
+    setTimeout(function(){URL.revokeObjectURL(url);},2000);
+    squadToast&&squadToast('Card saved! Share it anywhere 📸');
+  }catch(e){ alert('Save not supported in this preview — works in the live app.'); }
+}
 function tapAvatar(){
   var anim=document.getElementById('dahAvatarAnim');
   if(!anim)return;
@@ -2330,15 +2908,15 @@ function buildNudges(){
   else if(todayCardio>0){nudges.push({type:'good',icon:'🏃',text:todayCardio+' min cardio logged today. '+aname+' is getting stronger!'});}
   if(L.liftWeek===0){nudges.push({type:'warn',icon:'💪',text:'No lifting sessions logged yet this week. Resistance training is the #1 way to protect muscle while on GLP-1 — even 2 sessions/week makes a real difference.'});}
   else if(L.liftWeek>=3){nudges.push({type:'good',icon:'💪',text:L.liftWeek+' lifting sessions this week — excellent muscle preservation on your protocol.'});}
-  if(!L.pepLoggedYest&&S.peptides.length>0){nudges.push({type:'alert',icon:'💉',text:'Peptide log was missed yesterday. Tap Log ✓ below to keep '+aname+'\'s streak alive.'});}
-  else if(S.peptides.length>0){nudges.push({type:'good',icon:'💉',text:'Peptide streak is going strong! Tap Log ✓ to record today\'s doses.'});}
+  if(!L.pepLoggedYest&&S.peptides.length>0){nudges.push({type:'alert',icon:'✨',text:'Peptide log was missed yesterday. Tap Log ✓ below to keep '+aname+'\'s streak alive.'});}
+  else if(S.peptides.length>0){nudges.push({type:'good',icon:'✨',text:'Peptide streak is going strong! Tap Log ✓ to record today\'s doses.'});}
   if(L.sleepCheckIn<=1){nudges.push({type:'warn',icon:'🌙',text:'Sleep was rough lately. Poor sleep raises cortisol and blunts GH release — try magnesium glycinate 300mg tonight.'});}
   if(L.energyCheckIn<=1){nudges.push({type:'warn',icon:'⚡',text:'Energy has been low. Check electrolytes and make sure you\'re eating enough — GLP-1 appetite suppression can sneak up on you.'});}
   if(L.windowHrsYest>=8){nudges.push({type:'good',icon:'🕐',text:'Great eating window yesterday ('+L.windowHrsYest+' hrs). Consistent meal timing helps your body sync with your protocol.'});}
   nudges=nudges.slice(0,4);
   nl.innerHTML=nudges.map(function(n){
-    var iconHtml=n.icon==='💉'
-      ?'<span class="inj-badge" style="width:24px;height:24px;font-size:14px;border-radius:6px;flex-shrink:0">💉</span>'
+    var iconHtml=n.icon==='✨'
+      ?'<span class="inj-badge" style="width:24px;height:24px;font-size:14px;border-radius:6px;flex-shrink:0">✨</span>'
       :'<span class="nudge-icon">'+n.icon+'</span>';
     return'<div class="nudge '+n.type+'">'+iconHtml+'<span>'+n.text+'</span></div>';
   }).join('');
@@ -2407,7 +2985,7 @@ function togglePep(pep){
   if(chk)chk.textContent=sel?'✓':'';
   renderSelPeps();
 }
-function renderSelPeps(){var w=document.getElementById('selPepsWrap'),l=document.getElementById('selPepsList');if(!S.peptides.length){w.style.display='none';return;}w.style.display='block';l.innerHTML=S.peptides.map(function(p){return'<div class="sel-pep-chip">'+p+'</div>';}).join('');}
+function renderSelPeps(){var w=document.getElementById('selPepsWrap'),l=document.getElementById('selPepsList');if(!S.peptides.length){w.style.display='none';return;}w.style.display='block';l.innerHTML=S.peptides.map(function(p){return'<div class="sel-pep-chip">'+p+'<button class="pep-recon-btn" title="Reconstitution instructions" onclick="showRecon(\''+p.replace(/'/g,"\\'")+'\')">🧪</button></div>';}).join('');}
 function buildGoals(){document.getElementById('goalsGrid').innerHTML=goalsData.map(function(g){return'<button class="goal-btn" id="goal_'+g.id+'" onclick="toggleGoal(\''+g.id+'\')" ><span class="goal-icon">'+g.icon+'</span>'+g.label+'</button>';}).join('');}
 function toggleGoal(id){var idx=S.goals.indexOf(id);if(idx>-1)S.goals.splice(idx,1);else S.goals.push(id);document.getElementById('goal_'+id).classList.toggle('sel',S.goals.indexOf(id)>-1);}
 
@@ -2426,7 +3004,7 @@ function updateDashPeps(){
       :'Only increase your dose if you\'re not experiencing appetite suppression. Titrating slowly minimizes side effects like nausea and fatigue, and — critically — helps preserve lean muscle mass by giving your body time to adjust. Patience here pays off.';
     wrap.style.display='block';
     wrap.innerHTML='<div class="glp-note">'
-      +'<div class="glp-note-title"><span class="inj-badge" style="font-size:14px;width:24px;height:24px;border-radius:6px;vertical-align:middle;display:inline-flex;margin-right:6px">💉</span>'+glpName+' — log your weekly dose:</div>'
+      +'<div class="glp-note-title"><span class="inj-badge" style="font-size:14px;width:24px;height:24px;border-radius:6px;vertical-align:middle;display:inline-flex;margin-right:6px">✨</span>'+glpName+' — log your weekly dose:</div>'
       +'<div class="dose-row">'
       +'<label style="font-size:13px;color:#7a5c00;font-weight:500">Dose this week</label>'
       +'<input class="dose-input" type="number" id="glpDose" placeholder="'+dosePlaceholder+'" step="'+doseStep+'" min="0">'
@@ -2442,7 +3020,40 @@ function updateDashPeps(){
   // GLP peptides are logged in the GLP section above — exclude from the chip row to avoid duplicates
   var nonGlp=S.peptides.filter(function(p){return glpPeps.indexOf(p)<0;});
   if(!nonGlp.length){el.innerHTML='';return;}
-  el.innerHTML=nonGlp.map(function(p){return'<div class="pep-chip"><span class="inj-badge">💉</span>'+p+'<button class="pep-log-btn" id="logbtn_'+p.replace(/[ \-]/g,'_')+'" onclick="logPeptide(\''+p+'\')">Log ✓</button></div>';}).join('');
+  el.innerHTML=nonGlp.map(function(p){return'<div class="pep-chip"><span class="inj-badge">✨</span>'+p+'<button class="pep-log-btn" id="logbtn_'+p.replace(/[ \-]/g,'_')+'" onclick="logPeptide(\''+p+'\')">Log ✓</button></div>';}).join('');
+}
+/* ── Reconstitution instructions (per peptide, on demand) ── */
+var RECON_LIB={
+  'BPC-157':{vial:5,bac:2,dose:250,steps:['Wipe both the bacteriostatic-water vial and the peptide vial stoppers with an alcohol swab.','Draw 2 mL of bacteriostatic water into the syringe.','Inject the water slowly down the inside wall of the peptide vial — never spray directly onto the powder.','Swirl gently (never shake) until fully dissolved and clear.','Refrigerate; use within 30 days.']},
+  'TB-500':{vial:5,bac:2.5,dose:500,steps:['Swab both vial stoppers with alcohol and let dry.','Draw 2.5 mL of bacteriostatic water.','Add the water gently to the vial wall, letting it run down onto the powder.','Roll the vial between your palms until clear — do not shake.','Refrigerate; use within 4 weeks.']},
+  'Ipamorelin':{vial:5,bac:2,dose:200,steps:['Sanitize both stoppers with an alcohol swab.','Draw 2 mL of bacteriostatic water.','Slowly inject the water against the glass wall of the peptide vial.','Swirl gently until dissolved — avoid foaming.','Keep refrigerated and protected from light.']},
+  'CJC-1295':{vial:5,bac:2,dose:300,steps:['Clean both vial tops with alcohol and allow to dry.','Draw up 2 mL of bacteriostatic water.','Direct the stream onto the vial wall, not the powder.','Gently swirl until completely clear.','Store in the fridge; discard after 30 days.']},
+  'Semaglutide':{vial:3,bac:1.5,dose:250,steps:['Swab the stoppers of both vials with alcohol.','Draw 1.5 mL of bacteriostatic water into the syringe.','Add the water slowly along the inside of the peptide vial.','Swirl — do not shake — until fully dissolved.','Refrigerate; follow your provider\'s weekly titration schedule.']},
+  'Tirzepatide':{vial:5,bac:2,dose:2500,steps:['Swab both vial stoppers with alcohol.','Draw 2 mL of bacteriostatic water.','Run the water gently down the vial wall onto the powder.','Swirl slowly until clear — never shake.','Refrigerate; use within 4 weeks.']}
+};
+function showRecon(pep){
+  var d=RECON_LIB[pep];
+  var ov=document.createElement('div');ov.id='reconOv';
+  ov.style.cssText='position:fixed;inset:0;z-index:9400;display:flex;align-items:center;justify-content:center;background:rgba(8,18,12,.66);backdrop-filter:blur(5px);padding:20px;font-family:"DM Sans",sans-serif';
+  ov.onclick=function(){ov.remove();};
+  var body;
+  if(!d){
+    body='<p style="font-size:13.5px;color:var(--text2);line-height:1.5">Reconstitution details for <strong>'+pep+'</strong> aren\'t loaded yet. General method: swab both vial stoppers, draw your bacteriostatic water, run it slowly down the vial wall onto the powder, and swirl gently (never shake) until clear. Refrigerate and confirm dosing with your provider.</p>';
+  } else {
+    var conc=(d.vial*1000)/d.bac;var ml=d.dose/conc;var units=ml*100;var perVial=Math.floor((d.vial*1000)/d.dose);
+    body='<div style="display:flex;flex-direction:column;gap:14px"><div><div style="font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text3);margin-bottom:10px">Steps</div><ol style="margin:0;padding:0;list-style:none">'
+      +d.steps.map(function(s,i){return '<li style="display:flex;gap:10px;margin-bottom:9px"><span style="flex-shrink:0;width:20px;height:20px;border-radius:50%;background:var(--veg4);color:var(--g2);font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center">'+(i+1)+'</span><span style="font-size:12.5px;line-height:1.45;color:var(--text2)">'+s+'</span></li>';}).join('')
+      +'</ol></div>'
+      +'<div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px"><div style="font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--text3);margin-bottom:10px">Dose math · '+d.vial+'mg vial + '+d.bac+'mL water</div><div style="display:flex;gap:8px">'
+      +'<div style="flex:1;text-align:center;background:var(--g2);color:#fff;border-radius:9px;padding:10px 4px"><div style="font-size:19px;font-weight:800">'+units.toFixed(0)+'</div><div style="font-size:9.5px;opacity:.85;text-transform:uppercase;margin-top:2px">units</div></div>'
+      +'<div style="flex:1;text-align:center;background:var(--veg4);border-radius:9px;padding:10px 4px"><div style="font-size:19px;font-weight:800;color:var(--g1)">'+ml.toFixed(2)+'</div><div style="font-size:9.5px;color:var(--text3);text-transform:uppercase;margin-top:2px">mL/dose</div></div>'
+      +'<div style="flex:1;text-align:center;background:var(--veg4);border-radius:9px;padding:10px 4px"><div style="font-size:19px;font-weight:800;color:var(--g1)">'+perVial+'</div><div style="font-size:9.5px;color:var(--text3);text-transform:uppercase;margin-top:2px">doses</div></div>'
+      +'</div><div style="font-size:10.5px;color:var(--text3);margin-top:9px;line-height:1.4">For a '+d.dose+' mcg dose on a U-100 insulin syringe (100 units = 1 mL). Always confirm with your provider.</div></div>';
+  }
+  ov.innerHTML='<div onclick="event.stopPropagation()" style="width:360px;max-width:100%;max-height:84vh;overflow:auto;background:#fff;border-radius:18px;box-shadow:0 30px 80px rgba(0,0,0,.4)">'
+    +'<div style="display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid var(--border)"><div style="display:flex;align-items:center;gap:8px"><span style="font-size:18px">🧪</span><span style="font-family:\'Playfair Display\',serif;font-size:19px;font-weight:700;color:var(--g1)">'+pep+'</span></div><button onclick="document.getElementById(\'reconOv\').remove()" style="border:none;background:var(--veg4);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:15px;color:var(--text2)">✕</button></div>'
+    +'<div style="padding:18px">'+body+'</div></div>';
+  document.body.appendChild(ov);
 }
 // ─── WHY IT MATTERS POPUPS ─────────────────
 function showWhyMatters(section){
@@ -2482,7 +3093,7 @@ function showWhyMatters(section){
 <p style="margin-bottom:12px">Most people think peptides do the work and exercise is optional. It's the opposite. <strong>Exercise is what turns your peptide protocol from good to extraordinary.</strong> Here's why:</p>
 
 <div style="background:var(--veg4);border-radius:12px;padding:14px 16px;margin-bottom:14px;border-left:4px solid var(--g3)">
-  <div style="font-weight:700;color:var(--g1);margin-bottom:8px"><span style="display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;background:#dc2626;border-radius:6px;font-size:14px;margin-right:6px;vertical-align:middle;box-shadow:0 2px 6px rgba(220,38,38,.35)">💉</span> Peptide + Exercise Synergy</div>
+  <div style="font-weight:700;color:var(--g1);margin-bottom:8px"><span style="display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;background:var(--g3);border-radius:6px;font-size:14px;margin-right:6px;vertical-align:middle;box-shadow:0 2px 6px rgba(111,191,141,.3)">✨</span> Peptide + Exercise Synergy</div>
   <ul style="font-size:13px;list-style:none;line-height:1.9">
     <li>🏃 <strong>Cardio</strong> naturally boosts GLP-1 secretion — making your GLP-1 peptide work even harder</li>
     <li>💪 <strong>Resistance training</strong> is the only way to preserve and build muscle on a calorie deficit — no peptide can replace this</li>
@@ -2825,7 +3436,25 @@ function downloadRecipes(){
   var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='PeptideNourish_Weekly_Recipes.md';a.click();
 }
 
-function logPoints(n,msg){S.points+=n;renderAvatar();renderDashHero();var t=document.createElement('div');t.className='pts-toast';t.innerHTML='⭐ '+msg;document.body.appendChild(t);setTimeout(function(){if(t.parentNode)t.parentNode.removeChild(t);},2800);if(S.profileDone){checkMilestones();saveState();}}
+function logPoints(n,msg){var _lvBefore=getLevel(S.points);S.points+=n;var _lvAfter=getLevel(S.points);renderAvatar();renderDashHero();var t=document.createElement('div');t.className='pts-toast';t.innerHTML='⭐ '+msg;document.body.appendChild(t);setTimeout(function(){if(t.parentNode)t.parentNode.removeChild(t);},2800);if(_lvAfter>_lvBefore){celebrateLevelUp(_lvAfter);}if(S.profileDone){checkMilestones();saveState();}}
+var TIER_NM=['','Rookie','Grinder','Savage','Legend'];var TIER_IC=['','🥊','💪','🔥','👑'];
+function celebrateLevelUp(lvl){
+  var legend=(lvl>=4);
+  var ov=document.createElement('div');ov.id='celebrateOv';
+  ov.style.cssText='position:fixed;inset:0;z-index:9600;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 40%,rgba(20,40,29,.82),rgba(8,16,12,.94));backdrop-filter:blur(4px);font-family:"DM Sans",sans-serif;opacity:0;transition:opacity .25s';
+  // confetti
+  var conf='';for(var i=0;i<40;i++){var c=['#e6c265','#6fbf8d','#2f8a5f','#f3dd95','#fff'][i%5];var lft=Math.random()*100,dur=(1.8+Math.random()*1.6).toFixed(2),del=(Math.random()*0.6).toFixed(2),sz=(6+Math.random()*7).toFixed(0);conf+='<span style="position:absolute;top:-20px;left:'+lft.toFixed(1)+'%;width:'+sz+'px;height:'+(sz*0.6).toFixed(0)+'px;background:'+c+';border-radius:2px;animation:confFall '+dur+'s '+del+'s ease-in forwards;opacity:.9"></span>';}
+  var skin=S.avSkinHex||'#D4956A',hair=S.avHairHex||'#8B4513';
+  var av=buildRAVG(lvl,skin,avDk(skin,28),avLt(skin,18),hair,avDk(hair,24),avLt(hair,24),S.gender,S.avBuild||'avg',220,300);
+  ov.innerHTML='<div style="position:absolute;inset:0;overflow:hidden;pointer-events:none">'+conf+'</div>'
+    +'<div style="color:'+(legend?'#f3dd95':'#6fbf8d')+';font-size:13px;font-weight:800;letter-spacing:3px;text-transform:uppercase;animation:celPop .5s ease">Level Up</div>'
+    +'<div style="font-family:\'Playfair Display\',serif;font-size:38px;font-weight:700;color:#fff;margin:4px 0 10px;animation:celPop .5s .05s ease both">'+TIER_NM[lvl]+' '+TIER_IC[lvl]+'</div>'
+    +'<div style="width:200px;height:262px;animation:celRise .6s .1s ease both">'+av+'</div>'
+    +'<div style="color:rgba(255,255,255,.85);font-size:14px;margin-top:8px;max-width:280px;text-align:center;animation:celPop .5s .2s ease both">'+(legend?'You hit Legend! A pet companion is now unlocked 🐾':'New gear & poses unlocked. Keep it going!')+'</div>'
+    +'<button onclick="document.getElementById(\'celebrateOv\').remove()" style="margin-top:20px;padding:12px 28px;border-radius:24px;border:none;cursor:pointer;font-family:inherit;font-size:15px;font-weight:700;background:linear-gradient(90deg,#2f8a5f,#e6c265);color:#fff;animation:celPop .5s .3s ease both">'+(legend?'Adopt my pet 🎉':'Awesome →')+'</button>';
+  document.body.appendChild(ov);requestAnimationFrame(function(){ov.style.opacity='1';});
+  if(legend){var b=ov.querySelector('button');b.onclick=function(){ov.remove();if(typeof goPage==='function')goPage('profile');if(typeof goStep==='function')goStep(2);};}
+}
 function toggleHistory(id){document.getElementById(id).classList.toggle('open');}
 function showPopup(icon,title,text){document.getElementById('popIcon').textContent=icon;document.getElementById('popTitle').textContent=title;document.getElementById('popText').innerHTML=text;document.getElementById('popupOverlay').style.display='flex';}
 function closePopup(){document.getElementById('popupOverlay').style.display='none';}
@@ -2846,6 +3475,1437 @@ function signOut(){
 }
 
 // init() is called from the auth gate (DOMContentLoaded) or launchApp()
+
+/* ── React avatar engine bridge (overrides vanilla buildRAVG/buildPet) ── */
+(function(){var _host,_root;var _bm={lean:0.5,avg:1,curvy:1.5,heavy:2};
+function _toStr(el){if(!window.ReactDOM||!window.React)return null;if(!_host){_host=document.createElement("div");_host.style.cssText="position:absolute;left:-9999px;top:0;width:240px;height:340px";document.body.appendChild(_host);_root=ReactDOM.createRoot(_host);}ReactDOM.flushSync(function(){_root.render(el);});return _host.innerHTML;}
+var _vanillaRAVG=window.buildRAVG,_vanillaPet=window.buildPet;
+window.buildAvatarCfg=function(cfg,H){
+  if(!window.RefinedHumanAvatar||!window.ReactDOM){return buildRAVG_NEW(cfg.lvl,cfg.skin,cfg.hair,cfg.gender,cfg.build,H,{hairLen:cfg.hl,outfit:cfg.outfit,acc:cfg.acc});}
+  var props={level:(cfg.lvl||1)-1,skin:cfg.skin,hair:cfg.hair,build:(_bm[cfg.build]||1),body:(cfg.gender==="M"?"masc":"fem"),hairLen:(cfg.hl!=null?cfg.hl:(cfg.gender==="M"?15:55)),outfit:cfg.outfit||"tee",accessories:(cfg.acc||[])};
+  return _toStr(React.createElement(window.RefinedHumanAvatar,props))||buildRAVG_NEW(cfg.lvl,cfg.skin,cfg.hair,cfg.gender,cfg.build,H,{hairLen:cfg.hl,outfit:cfg.outfit,acc:cfg.acc});
+};
+window.buildRAVG=function(lvl,skin,skinD,skinL,hair,hairD,hairH,gender,build,W,H){var team=(lvl>=3&&S.avTeam)?AV_TEAMS.filter(function(t){return t.id===S.avTeam;})[0]:null;
+  if(!window.RefinedHumanAvatar||!window.ReactDOM){return _vanillaRAVG(lvl,skin,skinD,skinL,hair,hairD,hairH,gender,build,W,H);}
+  var props={level:(lvl||1)-1,skin:skin,hair:hair,build:(_bm[build]||1),body:(gender==="M"?"masc":"fem"),hairLen:(S.avHairLen!=null?S.avHairLen:(gender==="M"?15:55)),outfit:S.avOutfit,accessories:(S.avAcc||[]),team:team,monogram:(S.avatarName||"L").charAt(0)};
+  var out=_toStr(React.createElement(window.RefinedHumanAvatar,props));return out||_vanillaRAVG(lvl,skin,skinD,skinL,hair,hairD,hairH,gender,build,W,H);};
+window.buildPet=function(id,size,acc){if(!window.PetCompanion||!window.ReactDOM){return _vanillaPet?_vanillaPet(id,size,acc):"";}var out=_toStr(React.createElement(window.PetCompanion,{id:id,size:size,accessory:acc||null}));return out||(_vanillaPet?_vanillaPet(id,size,acc):"");};
+window.__avReady=function(){try{if(typeof renderDashHero==="function")renderDashHero();if(typeof renderAvatarPreview==="function")renderAvatarPreview();var sq=document.getElementById("page-squad");if(sq&&sq.classList.contains("active")&&typeof renderSquad==="function")renderSquad();}catch(e){}};
+})();
+</script>
+
+<!-- AVATAR ENGINE (original Showroom code) -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" data-presets="react" id="avatarEngine">
+/* ============================================================
+   PeptideNourish — Avatar art explorations
+   3 styles × 4 level stages (Rookie → Grinder → Savage → Legend)
+   Exports to window: CapsuleAvatar, PixelAvatar, SproutAvatar, AvatarCard, AV_LEVELS
+   ============================================================ */
+
+const AV = {
+  ink:    '#10241a',
+  green:  '#2f8a5f',
+  greenD: '#1c5a3c',
+  greenL: '#6fbf8d',
+  sage:   '#9bb3a4',
+  gold:   '#e6c265',
+  goldD:  '#c79b3a',
+  goldL:  '#f3dd95',
+  cream:  '#f6f3ea',
+  soil:   '#6a513a',
+};
+
+const AV_LEVELS = [
+  { n: 1, name: 'Rookie',  pts: '0 pts',     perk: 'Where every journey begins.' },
+  { n: 2, name: 'Grinder', pts: '500 pts',   perk: 'Real definition starts to show.' },
+  { n: 3, name: 'Savage',  pts: '2,000 pts', perk: 'Gold glow. Visible strength. Raw power.' },
+  { n: 4, name: 'Legend',  pts: '5,000 pts', perk: 'Crown, peak form, full glow. Earned.' },
+];
+
+/* ----------------------------------------------------------------
+   STYLE 1 — Capsule Athlete
+   A figure built from rounded "capsule" strokes (a nod to the
+   peptide pill). Gains mass, gold, aura + a crown as it levels.
+---------------------------------------------------------------- */
+function CapsuleAvatar({ level = 0 }) {
+  const uid = React.useId().replace(/[:]/g, '');
+  const cfg = [
+    { color: AV.sage,   limb: 15, head: 19, sh: 30, pose: 'down',    aura: 0, gold: false, crown: false, glow: false },
+    { color: AV.green,  limb: 19, head: 20, sh: 42, pose: 'flex',    aura: 1, gold: false, crown: false, glow: false },
+    { color: AV.greenD, limb: 24, head: 21, sh: 54, pose: 'double',  aura: 2, gold: true,  crown: false, glow: true  },
+    { color: `url(#${uid}-body)`, limb: 27, head: 22, sh: 62, pose: 'victory', aura: 3, gold: true, crown: true, glow: true },
+  ][level];
+
+  const cx = 100, sy = 96, hipY = 150;
+  const lsx = cx - cfg.sh, rsx = cx + cfg.sh;
+  const headY = sy - 16 - cfg.head;
+
+  // arm paths per pose
+  let armL, armR;
+  if (cfg.pose === 'down') {
+    armL = `M${lsx},${sy} L${lsx - 4},${sy + 52}`;
+    armR = `M${rsx},${sy} L${rsx + 4},${sy + 52}`;
+  } else if (cfg.pose === 'flex') {
+    armL = `M${lsx},${sy} L${lsx - 16},${sy + 30} L${lsx - 2},${sy + 6}`;
+    armR = `M${rsx},${sy} L${rsx + 16},${sy + 30} L${rsx + 2},${sy + 6}`;
+  } else if (cfg.pose === 'double') {
+    armL = `M${lsx},${sy} L${lsx - 22},${sy + 16} L${lsx - 8},${sy - 16}`;
+    armR = `M${rsx},${sy} L${rsx + 22},${sy + 16} L${rsx + 8},${sy - 16}`;
+  } else { // victory
+    armL = `M${lsx},${sy} L${lsx - 18},${sy - 44}`;
+    armR = `M${rsx},${sy} L${rsx + 18},${sy - 44}`;
+  }
+  const handL = cfg.pose === 'down' ? [lsx - 4, sy + 52] : cfg.pose === 'flex' ? [lsx - 2, sy + 6] : cfg.pose === 'double' ? [lsx - 8, sy - 16] : [lsx - 18, sy - 44];
+  const handR = cfg.pose === 'down' ? [rsx + 4, sy + 52] : cfg.pose === 'flex' ? [rsx + 2, sy + 6] : cfg.pose === 'double' ? [rsx + 8, sy - 16] : [rsx + 18, sy - 44];
+
+  const stroke = { stroke: cfg.color, strokeWidth: cfg.limb, strokeLinecap: 'round', strokeLinejoin: 'round', fill: 'none' };
+
+  return (
+    <svg viewBox="0 0 200 224" width="100%" height="100%" style={{ display: 'block' }}>
+      <defs>
+        <linearGradient id={`${uid}-body`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor={AV.goldL} />
+          <stop offset="55%" stopColor={AV.gold} />
+          <stop offset="100%" stopColor={AV.green} />
+        </linearGradient>
+        <filter id={`${uid}-glow`} x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="6" result="b" />
+          <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+        <radialGradient id={`${uid}-aura`} cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stopColor={cfg.gold ? AV.goldL : AV.greenL} stopOpacity="0.55" />
+          <stop offset="70%" stopColor={cfg.gold ? AV.gold : AV.green} stopOpacity="0.12" />
+          <stop offset="100%" stopColor={AV.green} stopOpacity="0" />
+        </radialGradient>
+      </defs>
+
+      {/* aura rings */}
+      {cfg.aura >= 1 && <circle cx={cx} cy={sy + 4} r={86} fill={`url(#${uid}-aura)`} />}
+      {cfg.aura >= 2 && [70, 92].map((r, i) => (
+        <circle key={i} cx={cx} cy={sy + 4} r={r} fill="none" stroke={cfg.gold ? AV.gold : AV.greenL} strokeOpacity={0.25 - i * 0.08} strokeWidth="2" />
+      ))}
+      {/* legend beams */}
+      {cfg.aura >= 3 && [...Array(12)].map((_, i) => {
+        const a = (i / 12) * Math.PI * 2, r0 = 96, r1 = 116;
+        return <line key={i} x1={cx + Math.cos(a) * r0} y1={sy + 4 + Math.sin(a) * r0} x2={cx + Math.cos(a) * r1} y2={sy + 4 + Math.sin(a) * r1} stroke={AV.gold} strokeOpacity="0.5" strokeWidth="2" strokeLinecap="round" />;
+      })}
+
+      {/* ground shadow */}
+      <ellipse cx={cx} cy={212} rx={cfg.sh * 0.8 + 18} ry="9" fill="#000" opacity="0.12" />
+
+      <g filter={cfg.glow ? `url(#${uid}-glow)` : undefined}>
+        {/* legs */}
+        <path d={`M${cx - 3},${hipY} L${cx - 22},${204}`} {...stroke} />
+        <path d={`M${cx + 3},${hipY} L${cx + 22},${204}`} {...stroke} />
+        {/* torso */}
+        <path d={`M${cx},${sy + 2} L${cx},${hipY}`} {...stroke} />
+        {/* shoulders */}
+        <path d={`M${lsx},${sy} L${rsx},${sy}`} {...stroke} />
+        {/* arms */}
+        <path d={armL} {...stroke} />
+        <path d={armR} {...stroke} />
+        {/* head */}
+        <circle cx={cx} cy={headY} r={cfg.head} fill={cfg.color} />
+
+        {/* gold gloves / belt */}
+        {cfg.gold && <>
+          <circle cx={handL[0]} cy={handL[1]} r={cfg.limb * 0.62} fill={AV.gold} />
+          <circle cx={handR[0]} cy={handR[1]} r={cfg.limb * 0.62} fill={AV.gold} />
+          <rect x={cx - cfg.sh * 0.42} y={hipY - 12} width={cfg.sh * 0.84} height="11" rx="5" fill={AV.gold} />
+        </>}
+      </g>
+
+      {/* crown */}
+      {cfg.crown && <g>
+        <path d={`M${cx - 22},${headY - cfg.head - 2} L${cx - 12},${headY - cfg.head - 20} L${cx},${headY - cfg.head - 6} L${cx + 12},${headY - cfg.head - 20} L${cx + 22},${headY - cfg.head - 2} Z`} fill={AV.gold} stroke={AV.goldD} strokeWidth="1.5" strokeLinejoin="round" />
+        {[-12, 0, 12].map((dx, i) => <circle key={i} cx={cx + dx} cy={headY - cfg.head - (i === 1 ? 8 : 20)} r="3" fill={AV.goldL} />)}
+      </g>}
+
+      {/* sparkle particles */}
+      {cfg.aura >= 2 && [[40, 70], [160, 84], [56, 150], [150, 150], [44, 40]].slice(0, cfg.aura >= 3 ? 5 : 3).map((p, i) => (
+        <path key={i} d={`M${p[0]},${p[1] - 6} L${p[0] + 2},${p[1]} L${p[0] + 8},${p[1] + 1} L${p[0] + 2},${p[1] + 2} L${p[0]},${p[1] + 8} L${p[0] - 2},${p[1] + 2} L${p[0] - 8},${p[1] + 1} L${p[0] - 2},${p[1]} Z`} fill={AV.goldL} opacity="0.85" />
+      ))}
+    </svg>
+  );
+}
+
+/* ----------------------------------------------------------------
+   STYLE 2 — Pixel Champion  (retro game sprite)
+---------------------------------------------------------------- */
+const PX_MAPS = [
+  [ // Rookie
+    "            ",
+    "            ",
+    "    hhhh    ",
+    "   hhhhhh   ",
+    "   ssssss   ",
+    "   slssls   ",
+    "   ssssss   ",
+    "    ssss    ",
+    "    bbbb    ",
+    "   bbbbbb   ",
+    "  sbbbbbbs  ",
+    "  sbbbbbbs  ",
+    "   bbbbbb   ",
+    "   pppppp   ",
+    "   pp  pp   ",
+    "   kk  kk   ",
+  ],
+  [ // Grinder
+    "            ",
+    "            ",
+    "    hhhh    ",
+    "   hhhhhh   ",
+    "   gggggg   ",
+    "   slssls   ",
+    "   ssssss   ",
+    "    ssss    ",
+    "    bbbb    ",
+    "  sbbbbbbs  ",
+    "  sbbbbbbs  ",
+    "  sbbbbbbs  ",
+    "   bbbbbb   ",
+    "   pppppp   ",
+    "   pp  pp   ",
+    "   kk  kk   ",
+  ],
+  [ // Savage
+    "            ",
+    "            ",
+    "    hhhh    ",
+    "   hhhhhh   ",
+    "   gggggg   ",
+    "   slssls   ",
+    "   ssssss   ",
+    "    ssss    ",
+    "    bbbb    ",
+    "  gbbbbbbg  ",
+    " fsbbbbbbsf ",
+    " fsbbbbbbsf ",
+    "   bbbbbb   ",
+    "   pppppp   ",
+    "   pp  pp   ",
+    "   kk  kk   ",
+  ],
+  [ // Legend
+    "   G GG G   ",
+    "   GGGGGG   ",
+    "    hhhh    ",
+    "   hhhhhh   ",
+    "   gggggg   ",
+    "   slssls   ",
+    "   ssssss   ",
+    "    ssss    ",
+    "    bbbb    ",
+    "  GbbbbbbG  ",
+    " fsbbbbbbsf ",
+    " fsbbbbbbsf ",
+    "   bbbbbb   ",
+    "   gggggg   ",
+    "   pp  pp   ",
+    "   kk  kk   ",
+  ],
+];
+
+const PX_PAL = [
+  { b: AV.sage,   accentGlow: false },
+  { b: AV.green,  accentGlow: false },
+  { b: AV.greenD, accentGlow: true  },
+  { b: AV.gold,   accentGlow: true  },
+];
+
+function PixelAvatar({ level = 0 }) {
+  const uid = React.useId().replace(/[:]/g, '');
+  const map = PX_MAPS[level];
+  const pal = PX_PAL[level];
+  const colors = {
+    h: '#4a3526', s: '#e8b187', l: '#10241a', p: '#2b3a33', k: '#16261d',
+    b: pal.b, g: AV.gold, G: AV.goldL, f: '#ea8b3a',
+  };
+  const cell = 11, W = 12, H = 16;
+  const rects = [];
+  map.forEach((row, y) => {
+    for (let x = 0; x < W; x++) {
+      const ch = row[x];
+      if (!ch || ch === ' ') continue;
+      rects.push(<rect key={`${x}-${y}`} x={x * cell} y={y * cell} width={cell + 0.4} height={cell + 0.4} fill={colors[ch]} />);
+    }
+  });
+
+  return (
+    <svg viewBox={`-6 -6 ${W * cell + 12} ${H * cell + 12}`} width="100%" height="100%" style={{ display: 'block', imageRendering: 'pixelated', shapeRendering: 'crispEdges' }}>
+      <defs>
+        <filter id={`${uid}-pglow`} x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="3.4" result="b" />
+          <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+      </defs>
+      {/* aura blocks for higher tiers */}
+      {pal.accentGlow && [...Array(level >= 3 ? 7 : 4)].map((_, i) => {
+        const ax = [0, 11, 1, 10, 2, 9, 5][i] * cell;
+        const ay = [4, 6, 13, 12, 1, 2, -1][i] * cell;
+        return <rect key={i} x={ax} y={ay} width={cell} height={cell} fill={level >= 3 ? AV.goldL : AV.greenL} opacity="0.5" />;
+      })}
+      <ellipse cx={W * cell / 2} cy={H * cell + 1} rx={W * cell * 0.34} ry="5" fill="#000" opacity="0.13" />
+      <g filter={pal.accentGlow ? `url(#${uid}-pglow)` : undefined}>{rects}</g>
+    </svg>
+  );
+}
+
+/* ----------------------------------------------------------------
+   STYLE 3 — Sprout  (a plant-being that literally grows)
+---------------------------------------------------------------- */
+function leafPath(len, w) {
+  return `M0,0 C${len * 0.28},${-w} ${len * 0.72},${-w} ${len},0 C${len * 0.72},${w} ${len * 0.28},${w} 0,0 Z`;
+}
+function Leaf({ x, y, angle, len, w, fill, vein = '#1c5a3c', flip = 1 }) {
+  return (
+    <g transform={`translate(${x},${y}) rotate(${angle}) scale(1,${flip})`}>
+      <path d={leafPath(len, w)} fill={fill} />
+      <path d={`M2,0 L${len - 3},0`} stroke={vein} strokeOpacity="0.4" strokeWidth="1.5" fill="none" />
+    </g>
+  );
+}
+function SproutFace({ x, y, r, mood = 'happy' }) {
+  return (
+    <g transform={`translate(${x},${y})`}>
+      <circle cx={-r * 0.34} cy={-r * 0.1} r={r * 0.13} fill={AV.ink} />
+      <circle cx={r * 0.34} cy={-r * 0.1} r={r * 0.13} fill={AV.ink} />
+      {mood === 'happy'
+        ? <path d={`M${-r * 0.32},${r * 0.28} Q0,${r * 0.6} ${r * 0.32},${r * 0.28}`} stroke={AV.ink} strokeWidth="2.4" fill="none" strokeLinecap="round" />
+        : <path d={`M${-r * 0.3},${r * 0.4} Q0,${r * 0.18} ${r * 0.3},${r * 0.4}`} stroke={AV.ink} strokeWidth="2.6" fill="none" strokeLinecap="round" />}
+      {/* cheeks */}
+      <circle cx={-r * 0.62} cy={r * 0.22} r={r * 0.1} fill="#f0a9a0" opacity="0.6" />
+      <circle cx={r * 0.62} cy={r * 0.22} r={r * 0.1} fill="#f0a9a0" opacity="0.6" />
+    </g>
+  );
+}
+
+function SproutAvatar({ level = 0 }) {
+  const uid = React.useId().replace(/[:]/g, '');
+  const cx = 100, ground = 196;
+  const cfg = [
+    { stemTop: 150, stemW: 8,  headR: 16, leafFill: '#9cc7a3', mood: 'happy',   aura: 0, gold: false, crown: false, glow: false },
+    { stemTop: 124, stemW: 11, headR: 19, leafFill: '#5aa86d', mood: 'happy',   aura: 1, gold: false, crown: false, glow: false },
+    { stemTop: 104, stemW: 15, headR: 21, leafFill: AV.green,  mood: 'determined', aura: 2, gold: true, crown: false, glow: true },
+    { stemTop: 92,  stemW: 18, headR: 23, leafFill: `url(#${uid}-leaf)`, mood: 'happy', aura: 3, gold: true, crown: true, glow: true },
+  ][level];
+  const headY = cfg.stemTop - cfg.headR + 4;
+
+  return (
+    <svg viewBox="0 0 200 224" width="100%" height="100%" style={{ display: 'block' }}>
+      <defs>
+        <linearGradient id={`${uid}-leaf`} x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor={AV.green} />
+          <stop offset="100%" stopColor={AV.goldL} />
+        </linearGradient>
+        <radialGradient id={`${uid}-saura`} cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stopColor={cfg.gold ? AV.goldL : AV.greenL} stopOpacity="0.5" />
+          <stop offset="100%" stopColor={AV.green} stopOpacity="0" />
+        </radialGradient>
+        <filter id={`${uid}-sglow`} x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="5" result="b" />
+          <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+      </defs>
+
+      {cfg.aura >= 1 && <circle cx={cx} cy={headY} r={84} fill={`url(#${uid}-saura)`} />}
+      {cfg.aura >= 3 && [...Array(10)].map((_, i) => {
+        const a = (i / 10) * Math.PI * 2;
+        return <circle key={i} cx={cx + Math.cos(a) * 96} cy={headY + Math.sin(a) * 96} r="3" fill={AV.gold} opacity="0.6" />;
+      })}
+
+      {/* soil mound */}
+      <ellipse cx={cx} cy={ground + 8} rx="56" ry="13" fill="#000" opacity="0.1" />
+      <path d={`M${cx - 50},${ground} Q${cx},${ground - 16} ${cx + 50},${ground} Q${cx},${ground + 18} ${cx - 50},${ground} Z`} fill={AV.soil} />
+      <path d={`M${cx - 50},${ground} Q${cx},${ground - 16} ${cx + 50},${ground}`} fill="none" stroke="#7d6048" strokeWidth="3" />
+
+      <g filter={cfg.glow ? `url(#${uid}-sglow)` : undefined}>
+        {/* stem */}
+        <path d={`M${cx},${ground} L${cx},${cfg.stemTop}`} stroke={AV.green} strokeWidth={cfg.stemW} strokeLinecap="round" fill="none" />
+
+        {/* lower leaves (arms) */}
+        {level === 0 && <>
+          <Leaf x={cx - 4} y={ground - 22} angle={170} len={26} w={11} fill={cfg.leafFill} />
+          <Leaf x={cx + 4} y={ground - 30} angle={20} len={28} w={12} fill={cfg.leafFill} flip={-1} />
+        </>}
+        {level >= 1 && <>
+          <Leaf x={cx - 5} y={cfg.stemTop + 34} angle={205} len={40} w={16} fill={cfg.leafFill} />
+          <Leaf x={cx + 5} y={cfg.stemTop + 34} angle={-25} len={40} w={16} fill={cfg.leafFill} flip={-1} />
+          <Leaf x={cx - 4} y={ground - 30} angle={185} len={26} w={11} fill={cfg.leafFill} />
+          <Leaf x={cx + 4} y={ground - 30} angle={-5} len={26} w={11} fill={cfg.leafFill} flip={-1} />
+        </>}
+        {/* flexed muscle leaves for savage/legend */}
+        {level >= 2 && <>
+          <Leaf x={cx - 6} y={cfg.stemTop + 30} angle={232} len={48} w={22} fill={cfg.leafFill} />
+          <Leaf x={cx + 6} y={cfg.stemTop + 30} angle={-52} len={48} w={22} fill={cfg.leafFill} flip={-1} />
+        </>}
+
+        {/* head bud */}
+        <circle cx={cx} cy={headY} r={cfg.headR} fill={cfg.leafFill} />
+        {/* sprout tip leaves on head */}
+        {level < 3 && <>
+          <Leaf x={cx} y={headY - cfg.headR + 2} angle={-110} len={cfg.headR * 0.9} w={cfg.headR * 0.42} fill={AV.greenL} />
+          <Leaf x={cx} y={headY - cfg.headR + 2} angle={-70} len={cfg.headR * 0.9} w={cfg.headR * 0.42} fill={AV.greenL} flip={-1} />
+        </>}
+        <SproutFace x={cx} y={headY} r={cfg.headR} mood={cfg.mood} />
+      </g>
+
+      {/* gold pollen */}
+      {cfg.aura >= 2 && [[46, 96], [156, 110], [60, 60], [150, 64]].map((p, i) => (
+        <circle key={i} cx={p[0]} cy={p[1]} r="3.5" fill={AV.gold} opacity="0.85" />
+      ))}
+
+      {/* crown of petals (legend) */}
+      {cfg.crown && [...Array(8)].map((_, i) => {
+        const a = (i / 8) * Math.PI * 2 - Math.PI / 2;
+        const r = cfg.headR + 12;
+        return <ellipse key={i} cx={cx + Math.cos(a) * r} cy={headY + Math.sin(a) * r} rx="9" ry="5" fill={i % 2 ? AV.goldL : AV.gold} transform={`rotate(${(a * 180) / Math.PI} ${cx + Math.cos(a) * r} ${headY + Math.sin(a) * r})`} />;
+      })}
+      {cfg.crown && <circle cx={cx} cy={headY} r={cfg.headR + 2} fill="none" stroke={AV.goldL} strokeWidth="2" opacity="0.6" />}
+    </svg>
+  );
+}
+
+/* ----------------------------------------------------------------
+   AvatarCard — the "level-up" presentation frame
+---------------------------------------------------------------- */
+function AvatarCard({ Comp, level }) {
+  const meta = AV_LEVELS[level];
+  const isGold = level >= 2;
+  const accent = level === 0 ? AV.sage : level === 1 ? AV.greenL : isGold ? AV.gold : AV.green;
+  return (
+    <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', fontFamily: '"DM Sans", system-ui, sans-serif', background: AV.cream }}>
+      {/* stage */}
+      <div style={{ position: 'relative', height: 252, overflow: 'hidden',
+        background: `radial-gradient(120% 90% at 50% 18%, ${isGold ? '#1f4632' : '#1d3a2a'} 0%, #0f2017 78%)` }}>
+        {/* level chip */}
+        <div style={{ position: 'absolute', top: 12, left: 12, display: 'flex', alignItems: 'center', gap: 6, zIndex: 2 }}>
+          <div style={{ width: 26, height: 26, borderRadius: '50%', background: 'rgba(255,255,255,0.1)', border: `1.5px solid ${accent}`,
+            display: 'flex', alignItems: 'center', justifyContent: 'center', color: accent, fontSize: 12, fontWeight: 700 }}>{meta.n}</div>
+          <span style={{ color: 'rgba(255,255,255,0.55)', fontSize: 10, fontWeight: 600, letterSpacing: 1.4, textTransform: 'uppercase' }}>Level</span>
+        </div>
+        <div style={{ position: 'absolute', top: 14, right: 14, color: accent, fontSize: 11, fontWeight: 700, letterSpacing: 0.3, zIndex: 2 }}>★ {meta.pts}</div>
+        {/* platform */}
+        <div style={{ position: 'absolute', bottom: 14, left: '50%', transform: 'translateX(-50%)', width: 150, height: 26, borderRadius: '50%',
+          background: `radial-gradient(50% 60% at 50% 40%, ${accent}33, transparent 72%)` }} />
+        {/* avatar */}
+        <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', paddingBottom: 6 }}>
+          <div style={{ width: 196, height: 218 }}><Comp level={level} /></div>
+        </div>
+      </div>
+      {/* info */}
+      <div style={{ flex: 1, padding: '16px 18px 18px', display: 'flex', flexDirection: 'column', gap: 7 }}>
+        <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}>
+          <span style={{ fontSize: 22, fontWeight: 800, letterSpacing: -0.4, color: AV.ink }}>{meta.name}</span>
+          <span style={{ fontSize: 11, fontWeight: 700, color: accent === AV.greenL ? AV.green : accent === AV.sage ? '#7a8c80' : accent, textTransform: 'uppercase', letterSpacing: 0.6 }}>Lv {meta.n}</span>
+        </div>
+        <p style={{ margin: 0, fontSize: 12.5, lineHeight: 1.45, color: '#4d5a52', textWrap: 'pretty' }}>{meta.perk}</p>
+        <div style={{ marginTop: 'auto', height: 6, borderRadius: 3, background: '#e6e2d6', overflow: 'hidden' }}>
+          <div style={{ width: `${[12, 38, 70, 100][level]}%`, height: '100%', borderRadius: 3,
+            background: isGold ? `linear-gradient(90deg, ${AV.green}, ${AV.gold})` : AV.green }} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* trendy accessory layer — positioned off the head/face coords */
+function Accessory({ id, cx, faceCy, faceRx, faceRy, handL = [0, 0], handR = [0, 0], armL = null, armR = null, hipY = 142, sw = 25, shY = 92, skin = '#e0aa80', team = null, monogram = 'A' }) {
+  const top = faceCy - faceRy, ear = faceCy + 2, G = '#e6c265', GL = '#f3dd95';
+  if (id === 'shades') return (
+    <g>
+      <rect x={cx - 12.5} y={faceCy - 3} width="9.5" height="7" rx="3" fill="#15241c" />
+      <rect x={cx + 3} y={faceCy - 3} width="9.5" height="7" rx="3" fill="#15241c" />
+      <path d={`M${cx - 3},${faceCy - 1.5} Q${cx},${faceCy - 3.5} ${cx + 3},${faceCy - 1.5}`} fill="none" stroke="#15241c" strokeWidth="2" />
+      <line x1={cx - 12.5} y1={faceCy - 2} x2={cx - faceRx} y2={faceCy - 1} stroke="#15241c" strokeWidth="2" strokeLinecap="round" />
+      <line x1={cx + 12.5} y1={faceCy - 2} x2={cx + faceRx} y2={faceCy - 1} stroke="#15241c" strokeWidth="2" strokeLinecap="round" />
+      <line x1={cx - 10.5} y1={faceCy - 1} x2={cx - 8.5} y2={faceCy + 2.5} stroke="#fff" strokeOpacity="0.35" strokeWidth="1.6" strokeLinecap="round" />
+    </g>
+  );
+  if (id === 'cap') {
+    const base = team ? team.primary : '#1f3a2c';
+    const accent = team ? team.secondary : '#2c5440';
+    const by = faceCy - 9;            // brim sits at the forehead, above the eyes
+    return (
+      <g>
+        {/* crown covering the head */}
+        <path d={`M${cx - faceRx - 2},${by} Q${cx - faceRx - 3},${top - 8} ${cx},${top - 11} Q${cx + faceRx + 3},${top - 8} ${cx + faceRx + 2},${by} Z`} fill={base} />
+        {/* front panel seam + button */}
+        <path d={`M${cx},${by - 1} L${cx},${top - 10}`} fill="none" stroke={accent} strokeWidth="0.8" opacity="0.4" />
+        <circle cx={cx} cy={top - 11} r="2" fill={accent} />
+        {/* curved brim pointing forward-left */}
+        <path d={`M${cx - faceRx - 2},${by - 1} Q${cx - faceRx - 13},${by - 1} ${cx - faceRx - 16},${by + 4}
+          Q${cx - 4},${by + 7} ${cx + faceRx - 2},${by + 3} Q${cx + faceRx + 2},${by - 1} ${cx - faceRx - 2},${by - 1} Z`} fill={accent} />
+        {/* team mark on the front */}
+        {team && <text x={cx} y={top - 0.5} textAnchor="middle" fontFamily="'DM Sans', system-ui, sans-serif" fontSize="7.5" fontWeight="800" fill={accent}>{team.abbr}</text>}
+      </g>
+    );
+  }
+  if (id === 'beanie') {
+    const c = '#c2613a', cd = '#a44e2c', cuff = '#9a4626';
+    const by = faceCy - 9;            // cuff sits at the forehead, covering the head
+    return (
+      <g>
+        {/* knit dome covering the whole head */}
+        <path d={`M${cx - faceRx - 2},${by} Q${cx - faceRx - 3},${top - 9} ${cx},${top - 12} Q${cx + faceRx + 3},${top - 9} ${cx + faceRx + 2},${by} Z`} fill={c} />
+        {/* knit ribs */}
+        <path d={`M${cx - faceRx + 2},${by - 1} Q${cx - faceRx + 1},${top - 4} ${cx - 6},${top - 9}`} fill="none" stroke={cd} strokeWidth="1.2" opacity="0.55" />
+        <path d={`M${cx},${by} L${cx},${top - 12}`} fill="none" stroke={cd} strokeWidth="1.2" opacity="0.55" />
+        <path d={`M${cx + faceRx - 2},${by - 1} Q${cx + faceRx - 1},${top - 4} ${cx + 6},${top - 9}`} fill="none" stroke={cd} strokeWidth="1.2" opacity="0.55" />
+        {/* folded cuff */}
+        <rect x={cx - faceRx - 2} y={by - 4} width={(faceRx + 2) * 2} height="8" rx="4" fill={cuff} />
+        {/* pom */}
+        <circle cx={cx} cy={top - 12} r="3.4" fill="#d4774e" />
+      </g>
+    );
+  }
+  if (id === 'bucket') {
+    const c = '#cdb079', cd = '#b2965f';
+    const by = faceCy - 11;           // brim sits at mid-forehead, above the eyes
+    return (
+      <g>
+        {/* crown covering the top of the head + hair */}
+        <path d={`M${cx - faceRx - 2},${by} Q${cx - faceRx - 3},${top - 7} ${cx},${top - 10} Q${cx + faceRx + 3},${top - 7} ${cx + faceRx + 2},${by} Z`} fill={c} />
+        {/* hat band */}
+        <path d={`M${cx - faceRx - 1},${by - 1} Q${cx},${by + 3} ${cx + faceRx + 1},${by - 1}`} fill="none" stroke={cd} strokeWidth="3" />
+        {/* downturned brim */}
+        <path d={`M${cx - faceRx - 9},${by} Q${cx - faceRx - 9},${by + 7} ${cx - faceRx - 2},${by + 7}
+          Q${cx},${by + 9} ${cx + faceRx + 2},${by + 7} Q${cx + faceRx + 9},${by + 7} ${cx + faceRx + 9},${by}
+          Q${cx},${by + 4} ${cx - faceRx - 9},${by} Z`} fill={cd} />
+      </g>
+    );
+  }
+  if (id === 'chain') return (
+    <g>
+      <path d={`M${cx - 11},${faceCy + faceRy - 1} Q${cx},${faceCy + faceRy + 12} ${cx + 11},${faceCy + faceRy - 1}`} fill="none" stroke={G} strokeWidth="2.4" />
+      <circle cx={cx} cy={faceCy + faceRy + 11} r="2.6" fill={GL} />
+    </g>
+  );
+  if (id === 'earbuds') return (
+    <g>
+      <circle cx={cx - faceRx - 1} cy={ear + 1} r="2.4" fill="#fff" /><rect x={cx - faceRx - 2.2} y={ear + 2} width="2.2" height="5" rx="1.1" fill="#fff" />
+      <circle cx={cx + faceRx + 1} cy={ear + 1} r="2.4" fill="#fff" /><rect x={cx + faceRx} y={ear + 2} width="2.2" height="5" rx="1.1" fill="#fff" />
+    </g>
+  );
+  if (id === 'hoops') return (
+    <g>
+      <circle cx={cx - faceRx} cy={ear + 5} r="3" fill="none" stroke={G} strokeWidth="1.7" />
+      <circle cx={cx + faceRx} cy={ear + 5} r="3" fill="none" stroke={G} strokeWidth="1.7" />
+    </g>
+  );
+  if (id === 'headphones') return (
+    <g>
+      <path d={`M${cx - faceRx - 2},${faceCy + 1} Q${cx},${top - 13} ${cx + faceRx + 2},${faceCy + 1}`} fill="none" stroke="#20201f" strokeWidth="3.4" strokeLinecap="round" />
+      <rect x={cx - faceRx - 5.5} y={faceCy - 4} width="7" height="13" rx="3" fill="#20201f" />
+      <rect x={cx + faceRx - 1.5} y={faceCy - 4} width="7" height="13" rx="3" fill="#20201f" />
+      <rect x={cx - faceRx - 4.5} y={faceCy - 2} width="3" height="9" rx="1.5" fill="#3a8f63" />
+      <rect x={cx + faceRx + 0.5} y={faceCy - 2} width="3" height="9" rx="1.5" fill="#3a8f63" />
+    </g>
+  );
+  if (id === 'watch') {
+    // sit on the wrist — a bit up the forearm from the hand toward the elbow
+    const hand = handL, elbow = armL && armL.length >= 2 ? armL[armL.length - 2] : [hand[0], hand[1] - 20];
+    const wx = hand[0] + (elbow[0] - hand[0]) * 0.28, wy = hand[1] + (elbow[1] - hand[1]) * 0.28;
+    const ang = (Math.atan2(hand[1] - elbow[1], hand[0] - elbow[0]) * 180) / Math.PI;
+    return (
+      <g transform={`rotate(${ang} ${wx} ${wy})`}>
+        <rect x={wx - 4.5} y={wy - 5.5} width="9" height="4" rx="1.5" fill="#15201a" />
+        <rect x={wx - 4.5} y={wy + 1.5} width="9" height="4" rx="1.5" fill="#15201a" />
+        <rect x={wx - 5} y={wy - 4.5} width="10" height="9" rx="2.6" fill="#1b2a23" />
+        <rect x={wx - 3.5} y={wy - 3} width="7" height="6" rx="1.5" fill="#3a8f63" />
+      </g>
+    );
+  }
+  if (id === 'purse') {
+    // crossbody — strap up over the shoulder, bag at the hip
+    const shoulder = [cx - sw * 0.82, shY - 4], bag = [cx + sw * 0.46, hipY - 6];
+    return (
+      <g>
+        <path d={`M${shoulder[0]},${shoulder[1]} Q${cx - 2},${shY + 18} ${bag[0]},${bag[1]}`} stroke="#8a5a39" strokeWidth="3" fill="none" strokeLinecap="round" />
+        <rect x={bag[0] - 9} y={bag[1]} width="18" height="14" rx="3" fill="#b06a3e" />
+        <rect x={bag[0] - 9} y={bag[1]} width="18" height="4.5" rx="2.2" fill="#9a572f" />
+        <circle cx={bag[0]} cy={bag[1] + 4.5} r="1.7" fill="#e6c265" />
+      </g>
+    );
+  }
+  if (id === 'kicks') return null;   // sneakers are drawn in the body (default footwear)
+  if (id === 'cowboyhat') {
+    const tan = '#a9763e', tanD = '#7e5628', band = '#5a3f22';
+    const by = faceCy - 7;             // sits low, down on the head at the brow
+    const W = faceRx + 17;             // wide brim
+    const cw = faceRx + 2;             // crown half-width — covers the head
+    return (
+      <g>
+        {/* wide curved brim with upturned sides */}
+        <path d={`M${cx - W},${by - 1} Q${cx - W - 2},${by - 8} ${cx - W + 7},${by - 7}
+          Q${cx},${by - 11} ${cx + W - 7},${by - 7} Q${cx + W + 2},${by - 8} ${cx + W},${by - 1}
+          Q${cx},${by + 12} ${cx - W},${by - 1} Z`} fill={tan} />
+        {/* tall crown with cattleman crease, covering the head */}
+        <path d={`M${cx - cw},${by - 2} Q${cx - cw - 1},${top - 16} ${cx - 6},${top - 18}
+          Q${cx},${top - 13} ${cx + 6},${top - 18} Q${cx + cw + 1},${top - 16} ${cx + cw},${by - 2}
+          Q${cx},${by + 2} ${cx - cw},${by - 2} Z`} fill={tan} />
+        {/* hat band */}
+        <path d={`M${cx - cw + 1},${by - 3} Q${cx},${by + 1} ${cx + cw - 1},${by - 3}`} fill="none" stroke={band} strokeWidth="3.6" />
+        <path d={`M${cx - 4},${by - 2.5} l4,-4 l4,4 Z`} fill="#e6c265" />
+        {/* brim front shading */}
+        <path d={`M${cx - W},${by - 1} Q${cx},${by + 12} ${cx + W},${by - 1}`} fill="none" stroke={tanD} strokeWidth="1.3" strokeOpacity="0.5" />
+      </g>
+    );
+  }
+  if (id === 'cowboyboots') return null;   // drawn in the body for gender-aware layering
+  if (id === 'boattote') {
+    // L.L.Bean-inspired Boat & Tote — large, sitting on the floor beside her
+    const canvas = '#e7dcc2', navy = '#27395c', navyD = '#1c2b46';
+    const bw = 34, bh = 42, bx = cx + 46, byTop = 168, byBot = 168 + 42;
+    return (
+      <g>
+        {/* ground shadow */}
+        <ellipse cx={bx} cy={byBot + 4} rx={bw * 0.55} ry="4" fill="#000" opacity="0.13" />
+        {/* handles */}
+        <path d={`M${bx - 9},${byTop + 2} Q${bx - 10},${byTop - 17} ${bx},${byTop - 17} Q${bx + 10},${byTop - 17} ${bx + 9},${byTop + 2}`} fill="none" stroke={navy} strokeWidth="3.4" strokeLinecap="round" />
+        {/* canvas body (tapered) */}
+        <path d={`M${bx - bw / 2},${byTop} L${bx + bw / 2},${byTop} L${bx + bw / 2 - 3},${byBot} Q${bx},${byBot + 3} ${bx - bw / 2 + 3},${byBot} Z`} fill={canvas} />
+        {/* navy top band */}
+        <rect x={bx - bw / 2} y={byTop} width={bw} height="8" fill={navy} />
+        {/* navy reinforced base */}
+        <path d={`M${bx - bw / 2 + 3},${byBot} Q${bx},${byBot + 3} ${bx + bw / 2 - 3},${byBot} L${bx + bw / 2 - 5},${byBot - 6} L${bx - bw / 2 + 5},${byBot - 6} Z`} fill={navyD} opacity="0.85" />
+        {/* canvas seams */}
+        <line x1={bx - bw / 4} y1={byTop + 11} x2={bx - bw / 4} y2={byBot - 7} stroke={navyD} strokeWidth="0.7" opacity="0.22" />
+        <line x1={bx + bw / 4} y1={byTop + 11} x2={bx + bw / 4} y2={byBot - 7} stroke={navyD} strokeWidth="0.7" opacity="0.22" />
+        {/* personalized monogram */}
+        <text x={bx} y={byTop + bh * 0.64} textAnchor="middle" fontFamily="'Newsreader', serif" fontSize="16" fontWeight="600" fill={navy}>{monogram}</text>
+      </g>
+    );
+  }
+  if (id === 'yeticooler') {
+    // large hard cooler sitting on the floor beside her
+    const tan = '#cdb88f', tanD = '#b09a6b', latch = '#5f6b62', grip = '#6f7a72';
+    const cw = 46, ch = 31, bx = cx - 48, byBot = 210, byTop = 179;
+    return (
+      <g>
+        {/* ground shadow */}
+        <ellipse cx={bx} cy={byBot + 4} rx={cw * 0.55} ry="4" fill="#000" opacity="0.13" />
+        {/* body */}
+        <rect x={bx - cw / 2} y={byTop} width={cw} height={ch} rx="5.5" fill={tan} />
+        {/* lid */}
+        <rect x={bx - cw / 2} y={byTop} width={cw} height="9.5" rx="5" fill={tanD} />
+        <line x1={bx - cw / 2 + 1} y1={byTop + 9.5} x2={bx + cw / 2 - 1} y2={byTop + 9.5} stroke="#9a875e" strokeWidth="1" />
+        {/* T-latches */}
+        <rect x={bx - 13} y={byTop + 5} width="6.5" height="12" rx="2.6" fill={latch} />
+        <rect x={bx + 6.5} y={byTop + 5} width="6.5" height="12" rx="2.6" fill={latch} />
+        {/* side handle */}
+        <path d={`M${bx - cw / 2 - 2},${byTop + 15} q-4,4.5 0,10`} fill="none" stroke={grip} strokeWidth="3.2" strokeLinecap="round" />
+        {/* YETI wordmark */}
+        <text x={bx} y={byTop + ch * 0.76} textAnchor="middle" fontFamily="'DM Sans', system-ui, sans-serif" fontSize="9.5" fontWeight="800" letterSpacing="1.2" fill="#7a6a44">YETI</text>
+      </g>
+    );
+  }
+  return null;
+}
+
+/* ----------------------------------------------------------------
+   PetCompanion — Legend-tier reward. Cute sitting creatures, drawn
+   on a 0 0 100 100 grid (feet ~y=92). Brand-tuned palettes.
+---------------------------------------------------------------- */
+const PETS = [
+  { id: 'pup',    label: 'Golden Retriever' },
+  { id: 'beagle', label: 'Beagle' },
+  { id: 'yorkie', label: 'Yorkshire Terrier' },
+  { id: 'cat',    label: 'Cat' },
+  { id: 'bunny',  label: 'Bunny' },
+  { id: 'parrot', label: 'Parrot' },
+  { id: 'fox',    label: 'Fox' },
+];
+
+function petAccessoryArt(id, a) {
+  const G = '#2f8a5f', R = '#d6543f', GOLD = '#e6c265', INK = '#2a2018', WHITE = '#f3e7d2';
+  if (id === 'bandana') return (
+    <g>
+      <path d={`M${a.neck.x - 14},${a.neck.y - 4} Q${a.neck.x},${a.neck.y + 2} ${a.neck.x + 14},${a.neck.y - 4} L${a.neck.x + 9},${a.neck.y + 4} L${a.neck.x},${a.neck.y + 17} L${a.neck.x - 9},${a.neck.y + 4} Z`} fill={R} />
+      <circle cx={a.neck.x - 5} cy={a.neck.y + 4} r="1.3" fill={WHITE} />
+      <circle cx={a.neck.x + 4} cy={a.neck.y + 5} r="1.3" fill={WHITE} />
+      <circle cx={a.neck.x} cy={a.neck.y + 10} r="1.3" fill={WHITE} />
+    </g>
+  );
+  if (id === 'collar') return (
+    <g>
+      <path d={`M${a.neck.x - 13},${a.neck.y - 3} Q${a.neck.x},${a.neck.y + 5} ${a.neck.x + 13},${a.neck.y - 3}`} fill="none" stroke={G} strokeWidth="4" strokeLinecap="round" />
+      <circle cx={a.neck.x} cy={a.neck.y + 6} r="3.2" fill={GOLD} stroke="#c79b3a" strokeWidth="0.8" />
+    </g>
+  );
+  if (id === 'bow') return (
+    <g transform={`translate(${a.top.x + 11},${a.top.y + 1})`}>
+      <path d="M0,0 L-9,-5 L-9,5 Z" fill={R} />
+      <path d="M0,0 L9,-5 L9,5 Z" fill={R} />
+      <circle cx="0" cy="0" r="3" fill="#b8402f" />
+    </g>
+  );
+  if (id === 'cap') return (
+    <g>
+      <path d={`M${a.top.x - 12},${a.top.y + 3} Q${a.top.x},${a.top.y - 11} ${a.top.x + 12},${a.top.y + 3} Z`} fill={G} />
+      <ellipse cx={a.top.x - 12} cy={a.top.y + 4} rx="9" ry="3.5" fill={G} />
+      <circle cx={a.top.x} cy={a.top.y - 10} r="1.8" fill="#256e4b" />
+    </g>
+  );
+  return null;
+}
+
+function PetCompanion({ id = 'pup', size = 92, accessory = null }) {
+  const ink = '#2a2018';
+  let art = null;
+  // per-pet anchors for accessories: neck + head-top points on the 100×100 grid
+  const ANCHOR = {
+    pup:    { neck: { x: 50, y: 60 }, top: { x: 50, y: 22 } },
+    beagle: { neck: { x: 50, y: 60 }, top: { x: 50, y: 22 } },
+    yorkie: { neck: { x: 50, y: 58 }, top: { x: 50, y: 20 } },
+    cat:    { neck: { x: 52, y: 58 }, top: { x: 52, y: 21 } },
+    bunny:  { neck: { x: 50, y: 64 }, top: { x: 50, y: 31 } },
+    parrot: { neck: { x: 50, y: 50 }, top: { x: 50, y: 18 } },
+    fox:    { neck: { x: 50, y: 60 }, top: { x: 50, y: 23 } },
+  }[id] || { neck: { x: 50, y: 60 }, top: { x: 50, y: 22 } };
+
+  if (id === 'pup') {
+    const gold = '#e3ab5b', goldD = '#c98f3f', cream = '#f5e9cf';
+    art = (
+      <g>
+        <ellipse cx="50" cy="92" rx="24" ry="5" fill="#000" opacity="0.12" />
+        {/* feathered tail */}
+        <path d="M70,76 Q90,74 90,54 Q84,66 72,66 Z" fill={gold} />
+        <path d="M73,74 Q86,72 87,58 Q82,66 74,67 Z" fill={cream} opacity="0.6" />
+        {/* body */}
+        <ellipse cx="50" cy="72" rx="23" ry="20" fill={gold} />
+        <ellipse cx="50" cy="80" rx="15" ry="11" fill={cream} />
+        <ellipse cx="38" cy="86" rx="6" ry="4.5" fill={cream} /><ellipse cx="62" cy="86" rx="6" ry="4.5" fill={cream} />
+        {/* head */}
+        <circle cx="50" cy="42" r="21" fill={gold} />
+        {/* floppy hanging ears */}
+        <path d="M31,30 Q18,30 17,48 Q17,62 28,60 Q33,46 34,34 Z" fill={goldD} />
+        <path d="M69,30 Q82,30 83,48 Q83,62 72,60 Q67,46 66,34 Z" fill={goldD} />
+        {/* muzzle */}
+        <ellipse cx="50" cy="50" rx="13" ry="11" fill={cream} />
+        <circle cx="42" cy="40" r="3" fill={ink} /><circle cx="58" cy="40" r="3" fill={ink} />
+        <circle cx="43" cy="39" r="1" fill="#fff" /><circle cx="59" cy="39" r="1" fill="#fff" />
+        <ellipse cx="50" cy="48" rx="3.6" ry="2.7" fill={ink} />
+        <path d="M50,50.5 Q50,56 44,55.5 M50,50.5 Q50,56 56,55.5" fill="none" stroke={ink} strokeWidth="1.6" strokeLinecap="round" />
+        {/* lolling tongue */}
+        <path d="M50,55 Q47,61 50,62 Q53,61 50,55 Z" fill="#e8857f" />
+      </g>
+    );
+  } else if (id === 'beagle') {
+    const brown = '#a06c3d', tan = '#c2904f', white = '#f3ead7', dark = '#5c4230';
+    art = (
+      <g>
+        <ellipse cx="50" cy="92" rx="24" ry="5" fill="#000" opacity="0.12" />
+        {/* white-tipped tail */}
+        <path d="M70,75 Q86,73 86,57 Q80,68 70,66 Z" fill={brown} />
+        <path d="M81,68 Q86,64 85,57 Q82,64 78,66 Z" fill={white} />
+        {/* body white + brown saddle */}
+        <ellipse cx="50" cy="72" rx="22" ry="20" fill={white} />
+        <path d="M31,66 Q50,57 69,66 Q69,79 63,84 Q50,80 37,84 Q31,79 31,66 Z" fill={brown} />
+        <ellipse cx="50" cy="81" rx="14" ry="10" fill={white} />
+        <ellipse cx="38" cy="86" rx="6" ry="4.5" fill={white} /><ellipse cx="62" cy="86" rx="6" ry="4.5" fill={white} />
+        {/* head white */}
+        <circle cx="50" cy="42" r="21" fill={white} />
+        {/* brown eye patches, white blaze down the middle */}
+        <path d="M29,38 Q27,23 43,24 Q47,31 45,45 Q35,46 29,38 Z" fill={brown} />
+        <path d="M71,38 Q73,23 57,24 Q53,31 55,45 Q65,46 71,38 Z" fill={brown} />
+        {/* long brown floppy ears */}
+        <path d="M31,30 Q15,32 15,53 Q16,65 28,61 Q33,46 35,34 Z" fill={dark} />
+        <path d="M69,30 Q85,32 85,53 Q84,65 72,61 Q67,46 65,34 Z" fill={dark} />
+        {/* muzzle */}
+        <ellipse cx="50" cy="50" rx="12" ry="10" fill={white} />
+        <circle cx="42" cy="40" r="3" fill={ink} /><circle cx="58" cy="40" r="3" fill={ink} />
+        <circle cx="43" cy="39" r="1" fill="#fff" /><circle cx="59" cy="39" r="1" fill="#fff" />
+        <ellipse cx="50" cy="48" rx="3.6" ry="2.7" fill={ink} />
+        <path d="M50,50.5 Q50,56 44,55.5 M50,50.5 Q50,56 56,55.5" fill="none" stroke={ink} strokeWidth="1.6" strokeLinecap="round" />
+      </g>
+    );
+  } else if (id === 'yorkie') {
+    const tan = '#c1924f', tanL = '#d8ab66', steel = '#737a82', steelD = '#5c636b';
+    art = (
+      <g>
+        <ellipse cx="50" cy="92" rx="20" ry="5" fill="#000" opacity="0.12" />
+        {/* steel-gray silky body */}
+        <ellipse cx="50" cy="74" rx="19" ry="18" fill={steel} />
+        <path d="M34,70 Q31,84 36,90" stroke={steelD} strokeWidth="1.3" fill="none" strokeLinecap="round" />
+        <path d="M66,70 Q69,84 64,90" stroke={steelD} strokeWidth="1.3" fill="none" strokeLinecap="round" />
+        <path d="M50,72 Q50,86 50,91" stroke={steelD} strokeWidth="1.1" fill="none" strokeLinecap="round" opacity="0.7" />
+        {/* tan feet + chest */}
+        <ellipse cx="40" cy="88" rx="6" ry="4.5" fill={tan} /><ellipse cx="60" cy="88" rx="6" ry="4.5" fill={tan} />
+        <ellipse cx="50" cy="80" rx="11" ry="10" fill={tanL} />
+        {/* tan silky head */}
+        <circle cx="50" cy="40" r="19" fill={tan} />
+        <path d="M31,38 Q26,55 33,61 Q37,50 37,42 Z" fill={tanL} />
+        <path d="M69,38 Q74,55 67,61 Q63,50 63,42 Z" fill={tanL} />
+        {/* small perky ears */}
+        <path d="M37,26 L33,11 L47,22 Z" fill={tan} /><path d="M38,24 L36,15 L45,22 Z" fill={steelD} opacity="0.5" />
+        <path d="M63,26 L67,11 L53,22 Z" fill={tan} /><path d="M62,24 L64,15 L55,22 Z" fill={steelD} opacity="0.5" />
+        {/* topknot tuft */}
+        <ellipse cx="50" cy="23" rx="6" ry="5" fill={tanL} />
+        {/* face */}
+        <circle cx="43" cy="40" r="2.8" fill={ink} /><circle cx="57" cy="40" r="2.8" fill={ink} />
+        <circle cx="44" cy="39" r="0.9" fill="#fff" /><circle cx="58" cy="39" r="0.9" fill="#fff" />
+        <ellipse cx="50" cy="47" rx="3.4" ry="2.6" fill={ink} />
+        <path d="M50,49.5 Q50,54 46,53.5 M50,49.5 Q50,54 54,53.5" fill="none" stroke={ink} strokeWidth="1.4" strokeLinecap="round" />
+      </g>
+    );
+  } else if (id === 'cat') {
+    const gray = '#8b9298', grayD = '#6c7278', cream = '#e9ecef';
+    art = (
+      <g>
+        <ellipse cx="50" cy="92" rx="22" ry="5" fill="#000" opacity="0.12" />
+        <path d="M30,84 Q8,82 12,60 Q16,76 32,76 Z" fill={gray} />
+        <ellipse cx="52" cy="74" rx="20" ry="19" fill={gray} />
+        <ellipse cx="52" cy="80" rx="12" ry="10" fill={cream} />
+        <path d="M34,30 L30,12 L46,24 Z" fill={gray} /><path d="M35,27 L33,17 L43,24 Z" fill="#f0a9a0" />
+        <path d="M70,30 L74,12 L58,24 Z" fill={gray} /><path d="M69,27 L71,17 L61,24 Z" fill="#f0a9a0" />
+        <circle cx="52" cy="40" r="20" fill={gray} />
+        <path d="M44,40 Q47,44 44,46 M60,40 Q57,44 60,46" fill="none" stroke={ink} strokeWidth="2" strokeLinecap="round" />
+        <path d="M52,46 l-3,3 h6 Z" fill="#f0a9a0" />
+        <path d="M52,49 Q52,53 48,53 M52,49 Q52,53 56,53" fill="none" stroke={ink} strokeWidth="1.4" strokeLinecap="round" />
+        <g stroke={grayD} strokeWidth="1" strokeLinecap="round" opacity="0.7">
+          <line x1="40" y1="47" x2="26" y2="45" /><line x1="40" y1="50" x2="27" y2="51" />
+          <line x1="64" y1="47" x2="78" y2="45" /><line x1="64" y1="50" x2="77" y2="51" />
+        </g>
+      </g>
+    );
+  } else if (id === 'bunny') {
+    const white = '#f4f1ea', shade = '#ddd8cc', pink = '#f0b8bc';
+    art = (
+      <g>
+        <ellipse cx="50" cy="92" rx="22" ry="5" fill="#000" opacity="0.12" />
+        <ellipse cx="50" cy="74" rx="21" ry="19" fill={white} />
+        <ellipse cx="38" cy="88" rx="7" ry="4.5" fill={white} /><ellipse cx="62" cy="88" rx="7" ry="4.5" fill={white} />
+        <ellipse cx="40" cy="24" rx="6.5" ry="20" fill={white} transform="rotate(-12 40 24)" />
+        <ellipse cx="40" cy="26" rx="3" ry="14" fill={pink} transform="rotate(-12 40 26)" />
+        <ellipse cx="60" cy="24" rx="6.5" ry="20" fill={white} transform="rotate(12 60 24)" />
+        <ellipse cx="60" cy="26" rx="3" ry="14" fill={pink} transform="rotate(12 60 26)" />
+        <circle cx="50" cy="48" r="19" fill={white} />
+        <circle cx="43" cy="46" r="2.6" fill={ink} /><circle cx="57" cy="46" r="2.6" fill={ink} />
+        <path d="M50,52 l-2.5,2.5 h5 Z" fill={pink} />
+        <circle cx="38" cy="52" r="3.4" fill={pink} opacity="0.5" /><circle cx="62" cy="52" r="3.4" fill={pink} opacity="0.5" />
+      </g>
+    );
+  } else if (id === 'parrot') {
+    const grn = '#2f8a5f', grnD = '#1c5a3c', grnL = '#6fbf8d', gold = '#e6c265';
+    art = (
+      <g>
+        <ellipse cx="50" cy="92" rx="18" ry="4.5" fill="#000" opacity="0.12" />
+        <path d="M58,86 Q70,80 66,52 Q62,74 52,80 Z" fill={grnD} />
+        <ellipse cx="50" cy="62" rx="18" ry="24" fill={grn} />
+        <ellipse cx="44" cy="64" rx="11" ry="18" fill={grnL} />
+        <circle cx="50" cy="34" r="17" fill={grn} />
+        <path d="M40,20 Q50,10 60,20 Q54,18 50,20 Q46,18 40,20 Z" fill={grnL} />
+        <circle cx="46" cy="32" r="3" fill={ink} /><circle cx="47" cy="31" r="1" fill="#fff" />
+        <path d="M58,30 Q70,32 66,40 Q60,40 57,37 Z" fill={gold} />
+        <path d="M58,37 Q64,39 62,43 Q59,42 57,40 Z" fill="#c79b3a" />
+        <line x1="46" y1="86" x2="44" y2="92" stroke={gold} strokeWidth="2.4" strokeLinecap="round" />
+        <line x1="54" y1="86" x2="56" y2="92" stroke={gold} strokeWidth="2.4" strokeLinecap="round" />
+      </g>
+    );
+  } else if (id === 'fox') {
+    const org = '#e08a45', orgD = '#c06a2c', cream = '#f3e7d2';
+    art = (
+      <g>
+        <ellipse cx="50" cy="92" rx="23" ry="5" fill="#000" opacity="0.12" />
+        <path d="M68,80 Q90,78 86,54 Q82,64 80,52 Q78,70 64,74 Z" fill={org} />
+        <path d="M82,76 Q90,72 86,60 Q84,70 78,72 Z" fill={cream} />
+        <ellipse cx="50" cy="74" rx="21" ry="18" fill={org} />
+        <ellipse cx="50" cy="80" rx="13" ry="10" fill={cream} />
+        <path d="M30,30 L24,8 L44,24 Z" fill={org} /><path d="M31,25 L29,14 L40,23 Z" fill={ink} opacity="0.8" />
+        <path d="M70,30 L76,8 L56,24 Z" fill={org} /><path d="M69,25 L71,14 L60,23 Z" fill={ink} opacity="0.8" />
+        <circle cx="50" cy="42" r="20" fill={org} />
+        <path d="M50,38 Q34,46 40,58 Q50,52 50,52 Q50,52 60,58 Q66,46 50,38 Z" fill={cream} />
+        <circle cx="42" cy="42" r="2.8" fill={ink} /><circle cx="58" cy="42" r="2.8" fill={ink} />
+        <ellipse cx="50" cy="52" rx="3" ry="2.4" fill={ink} />
+      </g>
+    );
+  }
+
+  return (
+    <svg viewBox="0 0 100 100" width={size} height={size} style={{ display: 'block', overflow: 'visible' }}>
+      {art}
+      {accessory && petAccessoryArt(accessory, ANCHOR)}
+    </svg>
+  );
+}
+
+const PET_ACCS = [
+  { id: 'bandana', label: 'Bandana' },
+  { id: 'collar',  label: 'Collar' },
+  { id: 'bow',     label: 'Bow' },
+  { id: 'cap',     label: 'Cap' },
+];
+
+Object.assign(window, { PetCompanion, PETS, PET_ACCS });
+function RefinedHumanAvatar({ level = 0, skin = '#e0aa80', hair = '#6b4a2f', build = 1, poseOverride = null, body = 'fem', hairStyle = null, hairLen = null, outfit = 'tank', garmentColor = null, accessories = [], team = null, monogram = 'A' }) {
+  const uid = React.useId().replace(/[:]/g, '');
+  const skinShade = '#00000022';
+  const masc = body === 'masc';
+  const hLen = hairLen == null ? (masc ? 15 : 55) : hairLen;   // 0..100 continuous
+  const hs = hairStyle || (hLen > 40 ? 'long' : 'short');
+  const cfg = [
+    { sw: 25, arm: 12, leg: 17, outfit: AV.sage,   pose: 'rest',    aura: 0, gold: false, crown: false, glow: false, accent: '#86998c' },
+    { sw: 29, arm: 13, leg: 18, outfit: AV.green,  pose: 'hips',    aura: 1, gold: false, crown: false, glow: false, accent: AV.greenL },
+    { sw: 29, arm: 12, leg: 18, outfit: AV.greenD, pose: 'fitflex', aura: 2, gold: true,  crown: false, glow: true,  accent: AV.gold },
+    { sw: 31, arm: 13, leg: 19, outfit: `url(#${uid}-fit)`, pose: 'victory', aura: 3, gold: true, crown: true, glow: true, accent: AV.gold },
+  ][level];
+  const sw = (cfg.sw + (masc ? 2 : -4)) * (0.85 + build * 0.15);
+  const armW = cfg.arm + (masc ? 1.5 : 0);      // slightly thicker arms for the male build
+  const pose = poseOverride || (masc && cfg.pose === 'fitflex' ? 'flex' : cfg.pose);
+  const DENIM = '#5a7aa8';
+  const gColor = (outfit === 'denimjacket' || outfit === 'denimoveralls') ? DENIM : (garmentColor || cfg.outfit);
+
+  const cx = 100, shY = 92, faceCy = 60;
+  const hipY = masc ? 142 : 134;              // higher hip on fem ⇒ longer legs
+  const faceRx = masc ? 18 : 16.5, faceRy = 20;
+  const waistY = shY + (hipY - shY) * 0.5;
+  const waistW = sw * (masc ? 0.74 : 0.48);   // nipped waist on fem
+  const hipW = sw * (masc ? 0.70 : 0.86);     // fuller hips on fem
+  const wsw = hipW;                            // hand-on-hip reference
+  const Lx = cx - sw, Rx = cx + sw;
+
+  // arm endpoints + elbow per pose — shoulders lowered + inset so they blend with the torso (no puffy ball)
+  const aLx = cx - sw + 3, aRx = cx + sw - 3, aSY = shY + 7;
+  const arms = {
+    rest:    { l: [[aLx, aSY], [cx - sw - 8, 124], [cx - sw - 3, 144]], r: [[aRx, aSY], [cx + sw + 8, 124], [cx + sw + 3, 144]] },
+    hips:    { l: [[aLx, aSY], [cx - sw - 13, 122], [cx - wsw + 2, 132]], r: [[aRx, aSY], [cx + sw + 13, 122], [cx + wsw - 2, 132]] },
+    flex:    { l: [[aLx, aSY], [cx - sw - 15, 110], [cx - sw + 4, 82]], r: [[aRx, aSY], [cx + sw + 15, 110], [cx + sw - 4, 82]] },
+    // fit-feminine: left hand on hip, right arm in a graceful single flex
+    fitflex: { l: [[aLx, aSY], [cx - sw - 11, 120], [cx - wsw + 1, 132]], r: [[aRx, aSY], [cx + sw + 12, 108], [cx + sw - 1, 80]] },
+    victory: { l: [[aLx, aSY], [cx - sw - 10, 46]],                 r: [[aRx, aSY], [cx + sw + 10, 46]] },
+  }[pose];
+  const toPath = (pts) => 'M' + pts.map((p) => `${p[0]},${p[1]}`).join(' L');
+  const handL = arms.l[arms.l.length - 1], handR = arms.r[arms.r.length - 1];
+  const armStroke = { stroke: skin, strokeWidth: cfg.arm, strokeLinecap: 'round', strokeLinejoin: 'round', fill: 'none' };
+
+  // ── wardrobe ───────────────────────────────────────────────
+  const sleeve = { tank: 'none', crop: 'none', tee: 'short', scrub: 'short', jersey: 'short', hoodie: 'long', jacket: 'long', denimjacket: 'long', denimoveralls: 'short' }[outfit] || 'none';
+  const lerp = (a, b, t) => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t];
+  const wristW = armW * 0.58;              // wrist noticeably slimmer than upper arm
+  // tapered limb: wide at shoulder (w0) → slim at wrist (w1), rounded ends
+  const taperedLimb = (pts, w0, w1, fill, k) => {
+    const n = pts.length;
+    let tot = 0; const cum = [0];
+    for (let i = 1; i < n; i++) { tot += Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]); cum.push(tot); }
+    const rAt = (i) => (w0 + (w1 - w0) * (cum[i] / (tot || 1))) / 2;
+    const L = [], R = [];
+    for (let i = 0; i < n; i++) {
+      let dx, dy;
+      if (i === 0) { dx = pts[1][0] - pts[0][0]; dy = pts[1][1] - pts[0][1]; }
+      else if (i === n - 1) { dx = pts[i][0] - pts[i - 1][0]; dy = pts[i][1] - pts[i - 1][1]; }
+      else { dx = pts[i + 1][0] - pts[i - 1][0]; dy = pts[i + 1][1] - pts[i - 1][1]; }
+      const len = Math.hypot(dx, dy) || 1, nx = -dy / len, ny = dx / len, r = rAt(i);
+      L.push([pts[i][0] + nx * r, pts[i][1] + ny * r]);
+      R.push([pts[i][0] - nx * r, pts[i][1] - ny * r]);
+    }
+    const d = 'M' + L.map((p) => `${p[0]},${p[1]}`).join(' L') + ' L' + R.slice().reverse().map((p) => `${p[0]},${p[1]}`).join(' L') + ' Z';
+    return (
+      <g key={k}>
+        <circle cx={pts[0][0]} cy={pts[0][1]} r={w0 / 2} fill={fill} />
+        <path d={d} fill={fill} />
+        <circle cx={pts[n - 1][0]} cy={pts[n - 1][1]} r={w1 / 2} fill={fill} />
+      </g>
+    );
+  };
+  // skin arm only (tapered shoulder→wrist)
+  const armSkin = (pts, key) => taperedLimb(pts, armW, wristW, skin, key);
+  // a slim hand at the end of an arm path
+  const handAt = (pts, key) => {
+    const n = pts.length, a = pts[n - 1], b = pts[n - 2] || pts[0];
+    const dx = a[0] - b[0], dy = a[1] - b[1], len = Math.hypot(dx, dy) || 1;
+    const ux = dx / len, uy = dy / len, px = -uy, py = ux;
+    const baseC = [a[0] + ux * wristW * 0.1, a[1] + uy * wristW * 0.1];
+    const hw = wristW * 0.46, tw = wristW * 0.2, HL = wristW * 1.55;
+    const tip = [baseC[0] + ux * HL, baseC[1] + uy * HL];
+    const bL = [baseC[0] + px * hw, baseC[1] + py * hw];
+    const bR = [baseC[0] - px * hw, baseC[1] - py * hw];
+    const tL = [tip[0] + px * tw, tip[1] + py * tw];
+    const tR = [tip[0] - px * tw, tip[1] - py * tw];
+    return (
+      <g key={key}>
+        <path d={`M${bL[0]},${bL[1]} L${tL[0]},${tL[1]}
+          Q${tip[0] + ux * tw * 1.4},${tip[1] + uy * tw * 1.4} ${tR[0]},${tR[1]}
+          L${bR[0]},${bR[1]} Q${baseC[0] - ux * hw * 0.6},${baseC[1] - uy * hw * 0.6} ${bL[0]},${bL[1]} Z`} fill={skin} />
+        <ellipse cx={baseC[0] + px * hw * 0.7 + ux * wristW * 0.35} cy={baseC[1] + py * hw * 0.7 + uy * wristW * 0.35}
+          rx={wristW * 0.34} ry={wristW * 0.22} fill={skin}
+          transform={`rotate(${(Math.atan2(uy, ux) * 180) / Math.PI} ${baseC[0] + px * hw * 0.7 + ux * wristW * 0.35} ${baseC[1] + py * hw * 0.7 + uy * wristW * 0.35})`} />
+      </g>
+    );
+  };
+  // sleeve drawn OVER the garment so it grows out of the shoulder seam (no gap)
+  const renderSleeve = (pts, key) => {
+    if (sleeve === 'none') return null;
+    const sh = pts[0];
+    const anchor = [sh[0] + (cx - sh[0]) * 0.08, sh[1] - 4];   // just inboard + up to meet the torso shoulder
+    const stripe = outfit === 'jacket' ? AV.cream : (outfit === 'jersey' ? AV.goldL : null);
+    // overalls: the sleeves belong to the cream tee worn underneath
+    const sleeveColor = outfit === 'denimoveralls' ? '#dcd6c6' : gColor;
+    if (sleeve === 'short') {
+      const sh = pts[0], el = pts[1];
+      if (masc) {
+        // squared sleeve that sits ON the arm: rectangle along shoulder→cap with a flat hem
+        const dx = el[0] - sh[0], dy = el[1] - sh[1], len = Math.hypot(dx, dy) || 1;
+        const ux = dx / len, uy = dy / len, px = -uy, py = ux;
+        const half = (armW + 4) / 2;
+        const cap = lerp(sh, el, 0.46);
+        const aO = [sh[0] + px * half, sh[1] + py * half];   // shoulder outer
+        const aI = [sh[0] - px * half, sh[1] - py * half];   // shoulder inner
+        const cI = [cap[0] - px * half, cap[1] - py * half]; // hem inner
+        const cO = [cap[0] + px * half, cap[1] + py * half]; // hem outer
+        return (
+          <path key={key} d={`M${aO[0]},${aO[1]} L${cO[0]},${cO[1]} L${cI[0]},${cI[1]} L${aI[0]},${aI[1]} Z`} fill={sleeveColor} />
+        );
+      }
+      const cap = lerp(sh, el, 0.4);
+      // female: soft short cap sleeve sitting on the shoulder
+      return taperedLimb([sh, cap], armW + 3.5, armW + 1.5, sleeveColor, key + 'c');
+    }
+    // long sleeve: full arm in garment colour + cuff, with optional side stripe
+    const full = [pts[0], ...pts.slice(1)];
+    const wristEnd = pts[pts.length - 1];
+    return (
+      <g key={key}>
+        {taperedLimb(full, armW + 5, wristW + 2, gColor, key + 'l')}
+        {stripe && <path d={toPath(full)} fill="none" stroke={stripe} strokeWidth="1.6" strokeOpacity="0.8" />}
+        <circle cx={wristEnd[0]} cy={wristEnd[1]} r={wristW * 0.5 + 2} fill="none" stroke="#00000026" strokeWidth="2.6" />
+      </g>
+    );
+  };
+
+  const sidePath = (hemY) => {
+    if (hemY <= waistY + 4) {
+      const w = sw * 0.72;
+      return `M${Lx},${shY} Q${Lx - 1},${shY + 10} ${cx - sw * 0.82},${shY + 18} L${cx - w},${hemY} Q${cx},${hemY + 7} ${cx + w},${hemY} L${cx + sw * 0.82},${shY + 18} Q${Rx + 1},${shY + 10} ${Rx},${shY}`;
+    }
+    return `M${Lx},${shY}
+      Q${Lx - 1},${shY + 10} ${cx - sw * 0.82},${shY + 18}
+      Q${cx - waistW - 3},${waistY - 8} ${cx - waistW},${waistY}
+      Q${cx - hipW - 2},${waistY + 14} ${cx - hipW},${hemY}
+      Q${cx},${hemY + 9} ${cx + hipW},${hemY}
+      Q${cx + hipW + 2},${waistY + 14} ${cx + waistW},${waistY}
+      Q${cx + waistW + 3},${waistY - 8} ${cx + sw * 0.82},${shY + 18}
+      Q${Rx + 1},${shY + 10} ${Rx},${shY}`;
+  };
+  const neckScoop = ` Q${cx + 10},${shY - 8} ${cx + 6},${shY - 5} Q${cx},${shY - 1} ${cx - 6},${shY - 5} Q${cx - 10},${shY - 8} ${Lx},${shY} Z`;
+  const neckCrew = ` Q${cx + 9},${shY - 8} ${cx + 5},${shY - 5} Q${cx},${shY - 2} ${cx - 5},${shY - 5} Q${cx - 9},${shY - 8} ${Lx},${shY} Z`;
+  const neckVee = ` L${cx + 5},${shY - 6} L${cx},${shY + 10} L${cx - 5},${shY - 6} L${Lx},${shY} Z`;
+  const skinTorso = `M${cx - sw * 0.8},${shY + 4}
+    Q${cx - waistW - 2},${waistY - 6} ${cx - waistW * 0.98},${waistY}
+    Q${cx - hipW},${waistY + 14} ${cx - hipW * 0.95},${hipY + 4}
+    Q${cx},${hipY + 12} ${cx + hipW * 0.95},${hipY + 4}
+    Q${cx + hipW},${waistY + 14} ${cx + waistW * 0.98},${waistY}
+    Q${cx + waistW + 2},${waistY - 6} ${cx + sw * 0.8},${shY + 4}
+    Q${cx},${shY - 4} ${cx - sw * 0.8},${shY + 4} Z`;
+
+  const Garment = () => {
+    if (outfit === 'hoodie') {
+      const baggy = sw * 0.95;   // looser, boxier silhouette
+      return (
+        <g>
+          {/* hood behind the neck */}
+          <path d={`M${cx - 22},${shY + 6} Q${cx},${shY + 26} ${cx + 22},${shY + 6} Q${cx + 16},${shY - 15} ${cx},${shY - 17} Q${cx - 16},${shY - 15} ${cx - 22},${shY + 6} Z`} fill={gColor} />
+          <path d={`M${cx - 14},${shY + 7} Q${cx},${shY + 19} ${cx + 14},${shY + 7} Q${cx + 10},${shY - 8} ${cx},${shY - 9} Q${cx - 10},${shY - 8} ${cx - 14},${shY + 7} Z`} fill="#00000030" />
+          {/* boxy body */}
+          <path d={`M${Lx},${shY} Q${Lx - 2},${shY + 12} ${cx - baggy},${shY + 22} L${cx - baggy + 1},${hipY + 8} Q${cx},${hipY + 14} ${cx + baggy - 1},${hipY + 8} L${cx + baggy},${shY + 22} Q${Rx + 2},${shY + 12} ${Rx},${shY}${neckCrew}`} fill={gColor} />
+          {/* big kangaroo pocket */}
+          <path d={`M${cx - 20},${hipY - 18} L${cx + 20},${hipY - 18} L${cx + 16},${hipY - 1} L${cx - 16},${hipY - 1} Z`} fill="#0000001f" />
+          <line x1={cx - 13} y1={hipY - 10} x2={cx - 13} y2={hipY - 1} stroke="#00000026" strokeWidth="1.4" />
+          <line x1={cx + 13} y1={hipY - 10} x2={cx + 13} y2={hipY - 1} stroke="#00000026" strokeWidth="1.4" />
+          {/* ribbed hem */}
+          <rect x={cx - baggy + 1} y={hipY + 5} width={(baggy - 1) * 2} height="5" rx="2" fill="#00000022" />
+          {/* drawstrings */}
+          <line x1={cx - 4} y1={shY - 1} x2={cx - 4} y2={shY + 16} stroke={AV.cream} strokeWidth="2.2" strokeLinecap="round" />
+          <line x1={cx + 4} y1={shY - 1} x2={cx + 4} y2={shY + 16} stroke={AV.cream} strokeWidth="2.2" strokeLinecap="round" />
+          <circle cx={cx - 4} cy={shY + 17} r="1.8" fill={AV.cream} /><circle cx={cx + 4} cy={shY + 17} r="1.8" fill={AV.cream} />
+        </g>
+      );
+    }
+    if (outfit === 'jacket') {
+      const trim = AV.cream;   // track jacket with contrast trim + full zip
+      return (
+        <g>
+          <path d={sidePath(hipY + 6) + neckCrew} fill={gColor} />
+          {/* stand collar in contrast */}
+          <path d={`M${cx - 11},${shY - 4} Q${cx},${shY + 1} ${cx + 11},${shY - 4} L${cx + 9},${shY - 8} Q${cx},${shY - 4} ${cx - 9},${shY - 8} Z`} fill={trim} />
+          {/* full zip */}
+          <line x1={cx} y1={shY - 2} x2={cx} y2={hipY + 4} stroke={trim} strokeWidth="2.2" />
+          <rect x={cx - 1.5} y={shY + 4} width="3" height="6" rx="1" fill={AV.gold} />
+          {/* contrast side panels */}
+          <path d={`M${cx - sw * 0.74},${shY + 20} L${cx - waistW * 0.92},${hipY + 2}`} stroke={trim} strokeWidth="2.4" strokeLinecap="round" opacity="0.85" />
+          <path d={`M${cx + sw * 0.74},${shY + 20} L${cx + waistW * 0.92},${hipY + 2}`} stroke={trim} strokeWidth="2.4" strokeLinecap="round" opacity="0.85" />
+        </g>
+      );
+    }
+    if (outfit === 'denimjacket') {
+      const denD = '#3f5c84', stitch = '#e3d49a', tee = '#dcd6c6';
+      const jw = sw * 0.9;          // boxy, straight body width
+      const opening = sw * 0.24;    // gap between the open front panels
+      const hemY = hipY + 8;
+      return (
+        <g>
+          {/* base tee showing through the open front */}
+          <path d={sidePath(hipY + 4) + neckScoop} fill={tee} />
+          {/* left jacket panel — straight vertical sides (boxy) */}
+          <path d={`M${Lx},${shY} Q${Lx - 1},${shY + 11} ${cx - jw},${shY + 20} L${cx - jw},${hemY} L${cx - opening - 2},${hemY} L${cx - opening},${shY - 4} Z`} fill={gColor} />
+          {/* right jacket panel */}
+          <path d={`M${Rx},${shY} Q${Rx + 1},${shY + 11} ${cx + jw},${shY + 20} L${cx + jw},${hemY} L${cx + opening + 2},${hemY} L${cx + opening},${shY - 4} Z`} fill={gColor} />
+          {/* lapels / collar folding open */}
+          <path d={`M${cx - opening},${shY - 4} L${cx - 6},${shY - 6} L${cx - 11},${shY + 12} Z`} fill={denD} />
+          <path d={`M${cx + opening},${shY - 4} L${cx + 6},${shY - 6} L${cx + 11},${shY + 12} Z`} fill={denD} />
+          {/* boxy hem + inner-edge topstitch */}
+          <line x1={cx - jw} y1={hemY - 1} x2={cx - opening - 2} y2={hemY - 1} stroke={denD} strokeWidth="1.4" opacity="0.5" />
+          <line x1={cx + opening + 2} y1={hemY - 1} x2={cx + jw} y2={hemY - 1} stroke={denD} strokeWidth="1.4" opacity="0.5" />
+          <path d={`M${cx - opening},${shY - 2} L${cx - opening - 1},${hemY}`} fill="none" stroke={stitch} strokeWidth="0.8" opacity="0.6" />
+          <path d={`M${cx + opening},${shY - 2} L${cx + opening + 1},${hemY}`} fill="none" stroke={stitch} strokeWidth="0.8" opacity="0.6" />
+        </g>
+      );
+    }
+    if (outfit === 'denimoveralls') {
+      const denD = '#3f5c84', stitch = '#e3d49a', shirt = '#dcd6c6';
+      const bibW = masc ? sw * 0.34 : sw * 0.4;     // bib panel half-width
+      const ovW = masc ? sw * 0.74 : sw * 0.66;     // straighter, less-cinched side width
+      const bibTop = shY + 18;                       // tee shows above this between the straps
+      return (
+        <g>
+          {/* cream tee underneath — shows at the upper chest, under the straps */}
+          <path d={sidePath(hipY + 4) + neckCrew} fill={shirt} />
+          {/* denim body: straight sides from chest → hip (covers the whole midsection) */}
+          <path d={`M${cx - ovW},${shY + 14}
+            L${cx + ovW},${shY + 14}
+            L${cx + ovW},${waistY}
+            L${cx + hipW},${hipY + 4}
+            Q${cx},${hipY + 12} ${cx - hipW},${hipY + 4}
+            L${cx - ovW},${waistY} Z`} fill={gColor} />
+          {/* cream cut-out at the upper chest between the straps (tee shows through) */}
+          <path d={`M${cx - bibW},${shY + 13} L${cx + bibW},${shY + 13} L${cx + bibW},${bibTop} L${cx - bibW},${bibTop} Z`} fill={shirt} />
+          {/* straps over the shoulders, clipping to the bib top */}
+          <path d={`M${cx - bibW - 1},${shY + 16} L${cx - 12},${shY - 6} L${cx - 6},${shY - 6} L${cx - bibW + 6},${shY + 16} Z`} fill={gColor} />
+          <path d={`M${cx + bibW + 1},${shY + 16} L${cx + 12},${shY - 6} L${cx + 6},${shY - 6} L${cx + bibW - 6},${shY + 16} Z`} fill={gColor} />
+          {/* bib pocket + strap buttons + center seam */}
+          <rect x={cx - 7} y={bibTop + 3} width="14" height="11" rx="1.5" fill="none" stroke={stitch} strokeWidth="1" opacity="0.7" />
+          <circle cx={cx - bibW + 2} cy={shY + 16} r="1.8" fill={stitch} />
+          <circle cx={cx + bibW - 2} cy={shY + 16} r="1.8" fill={stitch} />
+          <line x1={cx} y1={waistY + 2} x2={cx} y2={hipY + 4} stroke="#46618c" strokeWidth="0.8" opacity="0.5" />
+        </g>
+      );
+    }
+    if (outfit === 'scrub') return (
+      <g>
+        <path d={sidePath(hipY + 8) + neckVee} fill={gColor} />
+        <path d={`M${cx + 5},${shY - 6} L${cx},${shY + 10} L${cx - 5},${shY - 6}`} fill="none" stroke="#ffffff" strokeOpacity="0.28" strokeWidth="2" />
+        <rect x={cx + 4} y={shY + 24} width="13" height="13" rx="1.5" fill="none" stroke="#00000026" strokeWidth="1.6" />
+      </g>
+    );
+    if (outfit === 'crop') {
+      const hemY = shY + 24, w = sw * 0.74;   // short + square
+      return (
+        <g>
+          <path d={`M${Lx},${shY} Q${Lx - 1},${shY + 9} ${cx - w},${shY + 16} L${cx - w},${hemY} L${cx + w},${hemY} L${cx + w},${shY + 16} Q${Rx + 1},${shY + 9} ${Rx},${shY}${neckScoop}`} fill={gColor} />
+          {/* square ribbed hem */}
+          <rect x={cx - w} y={hemY - 3} width={w * 2} height="3.5" fill="#0000001f" />
+        </g>
+      );
+    }
+    if (outfit === 'jersey') return (
+      <g>
+        <path d={sidePath(hipY + 4) + neckCrew} fill={gColor} />
+        {/* collar trim */}
+        <path d={`M${cx - 5},${shY - 5} Q${cx},${shY - 1} ${cx + 5},${shY - 5}`} fill="none" stroke={AV.goldL} strokeWidth="2.6" strokeLinecap="round" />
+        {/* diagonal shoulder stripes */}
+        <path d={`M${cx - 5},${shY - 2} L${cx - sw * 0.66},${shY + 15}`} stroke={AV.goldL} strokeWidth="3" strokeLinecap="round" />
+        <path d={`M${cx + 5},${shY - 2} L${cx + sw * 0.66},${shY + 15}`} stroke={AV.goldL} strokeWidth="3" strokeLinecap="round" />
+        {/* crest */}
+        <rect x={cx - 15} y={shY + 9} width="7" height="8" rx="1.5" fill={AV.gold} />
+        {/* squad number */}
+        <text x={cx} y={shY + 34} textAnchor="middle" fontFamily="'DM Sans', system-ui, sans-serif" fontWeight="800" fontSize="21" fill={AV.cream}>26</text>
+      </g>
+    );
+    if (outfit === 'tee') return <path d={sidePath(hipY + 4) + neckCrew} fill={gColor} />;
+    return (
+      <g>
+        <path d={sidePath(hipY + 4) + neckScoop} fill={gColor} />
+        <path d={`M${cx},${shY + 2} L${cx},${hipY}`} stroke="#ffffff" strokeOpacity="0.12" strokeWidth="3" strokeLinecap="round" />
+      </g>
+    );
+  };
+
+  return (
+    <svg viewBox="0 0 200 224" width="100%" height="100%" style={{ display: 'block' }}>
+      <defs>
+        <linearGradient id={`${uid}-fit`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor={AV.goldL} /><stop offset="60%" stopColor={AV.gold} /><stop offset="100%" stopColor={AV.greenD} />
+        </linearGradient>
+        <radialGradient id={`${uid}-haura`} cx="50%" cy="45%" r="55%">
+          <stop offset="0%" stopColor={cfg.gold ? AV.goldL : AV.greenL} stopOpacity="0.5" />
+          <stop offset="70%" stopColor={cfg.gold ? AV.gold : AV.green} stopOpacity="0.1" />
+          <stop offset="100%" stopColor={AV.green} stopOpacity="0" />
+        </radialGradient>
+        <filter id={`${uid}-hglow`} x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="5" result="b" /><feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+      </defs>
+
+      {/* aura */}
+      {cfg.aura >= 1 && <ellipse cx={cx} cy={120} rx={86} ry={100} fill={`url(#${uid}-haura)`} />}
+      {cfg.aura >= 2 && [78, 100].map((r, i) => (
+        <circle key={i} cx={cx} cy={118} r={r} fill="none" stroke={AV.gold} strokeOpacity={0.22 - i * 0.08} strokeWidth="2" />
+      ))}
+      {cfg.aura >= 3 && [...Array(12)].map((_, i) => {
+        const a = (i / 12) * Math.PI * 2;
+        return <line key={i} x1={cx + Math.cos(a) * 102} y1={118 + Math.sin(a) * 116} x2={cx + Math.cos(a) * 116} y2={118 + Math.sin(a) * 132} stroke={AV.gold} strokeOpacity="0.5" strokeWidth="2" strokeLinecap="round" />;
+      })}
+
+      {/* ground shadow */}
+      <ellipse cx={cx} cy={210} rx={sw + 16} ry="8" fill="#000" opacity="0.13" />
+
+      {/* hair behind — continuous length via hairLen (drop scales 0..100) */}
+      {hLen > 25 && (() => { const hairDrop = faceCy + 6 + (hLen / 100) * 92; return (
+        <path d={`M${cx - faceRx - 4},${faceCy - 6} Q${cx - faceRx - 10},${hairDrop - 8} ${cx - 12},${hairDrop} L${cx + 12},${hairDrop} Q${cx + faceRx + 10},${hairDrop - 8} ${cx + faceRx + 4},${faceCy - 6} Z`} fill={hair} />
+      ); })()}
+
+      <g filter={cfg.glow ? `url(#${uid}-hglow)` : undefined}>
+        {/* lower body: pants / jeans / shorts / skirt, cowboy boots (gender-layered), sneakers */}
+        {(() => {
+          const jeans = accessories.includes('bluejeans');
+          const overalls = outfit === 'denimoveralls';
+          // overalls are a full one-piece — they override shorts / skirt / jeans on the legs
+          const shorts = !overalls && accessories.includes('denimshorts');
+          const skirt = !overalls && accessories.includes('denimskirt');
+          const hasBoots = accessories.includes('cowboyboots');
+          const bare = shorts || skirt;
+          const baseLeg = cfg.gold && level === 3 ? AV.greenD : '#33453b';
+          const denim = '#42597f', denimD = '#324666', stitch = '#d8c98a';
+          const ovDenim = '#5a7aa8';
+          const legColor = bare ? skin : (overalls ? ovDenim : jeans ? denim : baseLeg);
+          const lx0 = cx - hipW * 0.45, rx0 = cx + hipW * 0.45, lxA = cx - 13, rxA = cx + 13, ankleY = 201;
+
+          const legsEl = bare ? (
+            <g>
+              {taperedLimb([[lx0, hipY], [lxA, ankleY]], cfg.leg, cfg.leg * 0.48, skin, 'll')}
+              {taperedLimb([[rx0, hipY], [rxA, ankleY]], cfg.leg, cfg.leg * 0.48, skin, 'rl')}
+            </g>
+          ) : (
+            <g>
+              <path d={`M${lx0},${hipY} L${lxA},${ankleY}`} stroke={legColor} strokeWidth={overalls ? cfg.leg + 3 : cfg.leg} strokeLinecap={overalls ? 'butt' : 'round'} fill="none" />
+              <path d={`M${rx0},${hipY} L${rxA},${ankleY}`} stroke={legColor} strokeWidth={overalls ? cfg.leg + 3 : cfg.leg} strokeLinecap={overalls ? 'butt' : 'round'} fill="none" />
+              {overalls && (
+                <g>
+                  {/* squared denim cuffs at the hem */}
+                  <rect x={lxA - (cfg.leg + 5) / 2} y={ankleY - 4} width={cfg.leg + 5} height="8" fill={ovDenim} />
+                  <rect x={rxA - (cfg.leg + 5) / 2} y={ankleY - 4} width={cfg.leg + 5} height="8" fill={ovDenim} />
+                  <line x1={lxA - (cfg.leg + 5) / 2} y1={ankleY - 4} x2={lxA + (cfg.leg + 5) / 2} y2={ankleY - 4} stroke="#46618c" strokeWidth="0.8" opacity="0.6" />
+                  <line x1={rxA - (cfg.leg + 5) / 2} y1={ankleY - 4} x2={rxA + (cfg.leg + 5) / 2} y2={ankleY - 4} stroke="#46618c" strokeWidth="0.8" opacity="0.6" />
+                </g>
+              )}
+              {(jeans || overalls) && (
+                <g stroke={overalls ? '#46618c' : stitch} strokeWidth="0.7" opacity={overalls ? 0.7 : 0.55} fill="none">
+                  <path d={`M${lx0},${hipY + 3} L${lxA},${198}`} />
+                  <path d={`M${rx0},${hipY + 3} L${rxA},${198}`} />
+                  <path d={`M${cx - 19},${196} L${cx - 8},${196}`} strokeWidth="1.2" />
+                  <path d={`M${cx + 8},${196} L${cx + 19},${196}`} strokeWidth="1.2" />
+                </g>
+              )}
+            </g>
+          );
+
+          const shL = lerp([lx0, hipY], [lxA, ankleY], 0.26), shR = lerp([rx0, hipY], [rxA, ankleY], 0.26);
+          const shortsEl = shorts ? (
+            <g>
+              <path d={`M${lx0},${hipY} L${shL[0]},${shL[1]}`} stroke={denim} strokeWidth={cfg.leg + 2} strokeLinecap="round" fill="none" />
+              <path d={`M${rx0},${hipY} L${shR[0]},${shR[1]}`} stroke={denim} strokeWidth={cfg.leg + 2} strokeLinecap="round" fill="none" />
+              <path d={`M${lx0 - cfg.leg * 0.5},${hipY - 2} Q${cx},${hipY + 8} ${rx0 + cfg.leg * 0.5},${hipY - 2} L${rx0 + cfg.leg * 0.5},${hipY + 3} Q${cx},${hipY + 13} ${lx0 - cfg.leg * 0.5},${hipY + 3} Z`} fill={denim} />
+              <line x1={cx} y1={hipY - 1} x2={cx} y2={hipY + 9} stroke={denimD} strokeWidth="1" />
+              <path d={`M${shL[0] - cfg.leg * 0.55},${shL[1]} L${shL[0] + cfg.leg * 0.55},${shL[1]}`} stroke={stitch} strokeWidth="1" opacity="0.6" />
+              <path d={`M${shR[0] - cfg.leg * 0.55},${shR[1]} L${shR[0] + cfg.leg * 0.55},${shR[1]}`} stroke={stitch} strokeWidth="1" opacity="0.6" />
+            </g>
+          ) : null;
+
+          const skirtEl = skirt ? (
+            <g>
+              <path d={`M${cx - waistW * 0.92},${hipY - 5} L${cx - hipW - 8},${hipY + 26} Q${cx},${hipY + 33} ${cx + hipW + 8},${hipY + 26} L${cx + waistW * 0.92},${hipY - 5} Q${cx},${hipY - 1} ${cx - waistW * 0.92},${hipY - 5} Z`} fill={denim} />
+              <path d={`M${cx - waistW * 0.92},${hipY - 5} Q${cx},${hipY - 1} ${cx + waistW * 0.92},${hipY - 5}`} fill="none" stroke={denimD} strokeWidth="2.5" />
+              <path d={`M${cx},${hipY - 3} L${cx},${hipY + 30}`} stroke={denimD} strokeWidth="0.8" opacity="0.4" />
+              <path d={`M${cx - hipW - 6},${hipY + 25} Q${cx},${hipY + 31} ${cx + hipW + 6},${hipY + 25}`} fill="none" stroke={stitch} strokeWidth="0.8" opacity="0.5" />
+            </g>
+          ) : null;
+
+          const T = '#9a6a38', TD = '#76512a', CR = '#e8d9b8', HEEL = '#3a2a1c';
+          const bTop = overalls ? 200 : (masc ? 188 : 175);   // very short under pants; female taller for tuck-in
+          const bw = overalls ? cfg.leg * 0.4 : (masc ? cfg.leg * 0.5 : (bare ? cfg.leg * 0.38 : cfg.leg * 0.44));
+          const frontBoot = (fx) => {
+            const w = bw;
+            return (
+              <g key={'fb' + fx}>
+                {/* straight shaft, foot bulges only slightly at the sole */}
+                <path d={`M${fx - w},${bTop} L${fx - w},${204} Q${fx - w},${210} ${fx},${210} Q${fx + w},${210} ${fx + w},${204} L${fx + w},${bTop} Z`} fill={T} />
+                <path d={`M${fx - w - 1},${209} Q${fx},${212} ${fx + w + 1},${209} L${fx + w + 1},${211} Q${fx},${213.5} ${fx - w - 1},${211} Z`} fill={TD} />
+                <rect x={fx - w} y={210} width="5.5" height="4.5" rx="1" fill={HEEL} />
+                <rect x={fx + w - 5.5} y={210} width="5.5" height="4.5" rx="1" fill={HEEL} />
+                <path d={`M${fx - w + 1},${bTop + 5} Q${fx},${bTop + 9} ${fx + w - 1},${bTop + 5}`} fill="none" stroke={CR} strokeWidth="1" opacity="0.6" />
+                <line x1={fx - 3} y1={bTop + 2} x2={fx - 3} y2={200} stroke={CR} strokeWidth="0.8" opacity="0.4" />
+                <line x1={fx + 3} y1={bTop + 2} x2={fx + 3} y2={200} stroke={CR} strokeWidth="0.8" opacity="0.4" />
+                <path d={`M${fx - w},${bTop + 2} q-2.4,-2 -0.4,-4.4`} fill="none" stroke={TD} strokeWidth="2" strokeLinecap="round" />
+                <path d={`M${fx + w},${bTop + 2} q2.4,-2 0.4,-4.4`} fill="none" stroke={TD} strokeWidth="2" strokeLinecap="round" />
+              </g>
+            );
+          };
+          const profileBoot = (fx) => {
+            const w = bw;   // same shaft width as front boot
+            return (
+            <g key={'pb' + fx}>
+              {/* straight shaft */}
+              <path d={`M${fx - w},${bTop - 2} L${fx - w},${201} L${fx + w},${201} L${fx + w},${bTop - 2} Q${fx},${bTop - 4} ${fx - w},${bTop - 2} Z`} fill={T} />
+              {/* pointed toe extends forward (right) */}
+              <path d={`M${fx - w},${200} L${fx + w},${200} Q${fx + w + 9},${201} ${fx + w + 12},${205.5} Q${fx + w + 12},${208} ${fx + w + 7},${208} L${fx - w},${208.5} Z`} fill={T} />
+              <path d={`M${fx - w},${208.5} L${fx + w + 7},${208} Q${fx + w + 11.5},${208} ${fx + w + 10},${210.5} L${fx - w},${211} Z`} fill={TD} />
+              {/* stacked heel at the back */}
+              <path d={`M${fx - w},${208.5} L${fx - w + 5},${208.5} L${fx - w + 4.5},${213.5} L${fx - w - 0.5},${213.5} Z`} fill={HEEL} />
+              <path d={`M${fx - w + 1},${193} Q${fx},${196} ${fx + w - 1},${193}`} fill="none" stroke={CR} strokeWidth="1" opacity="0.6" />
+              <path d={`M${fx + 2},${201.5} Q${fx + w + 3},${203} ${fx + w + 7},${205.5}`} fill="none" stroke={CR} strokeWidth="0.9" opacity="0.5" />
+              <path d={`M${fx + w},${bTop - 1} q2.4,-2 0.4,-4.4`} fill="none" stroke={TD} strokeWidth="2" strokeLinecap="round" />
+            </g>
+            );
+          };
+          const bootsEl = hasBoots ? (
+            overalls ? (
+              // under pants: narrow front boots tucked directly beneath each leg (no sideways toe)
+              <g>{frontBoot(cx - 13)}{frontBoot(cx + 13)}</g>
+            ) : (
+              <g>
+                <g transform={`translate(${(cx - 13) * 2}, 0) scale(-1, 1)`}>{profileBoot(cx - 13)}</g>
+                {profileBoot(cx + 13)}
+              </g>
+            )
+          ) : null;
+
+          // front-facing sneaker with laces
+          const frontSneaker = (fx, key) => (
+            <g key={key}>
+              <path d={`M${fx - 10},${208} Q${fx},${211.5} ${fx + 10},${208} L${fx + 10},${210.5} Q${fx},${213.5} ${fx - 10},${210.5} Z`} fill="#d8d2c4" />
+              <path d={`M${fx - 10},${208} Q${fx - 10},${200} ${fx - 4},${199} Q${fx + 4},${199} ${fx + 7},${203} Q${fx + 9},${204} ${fx + 10},${208} Q${fx},${210.5} ${fx - 10},${208} Z`} fill={AV.cream} />
+              <path d={`M${fx + 7},${203} Q${fx + 9},${204} ${fx + 10},${208} Q${fx + 5},${209} ${fx + 4},${206} Z`} fill="#e7e1d2" />
+              {/* tongue + laces */}
+              <path d={`M${fx - 4},${200} L${fx + 3},${201} L${fx + 1},${207} L${fx - 5},${206} Z`} fill="#eceadf" />
+              {[0, 1, 2].map((i) => <line key={i} x1={fx - 5} y1={202 + i * 1.8} x2={fx + 2} y2={203 + i * 1.8} stroke={AV.green} strokeWidth="1.3" strokeLinecap="round" />)}
+              <path d={`M${fx - 8},${207.5} Q${fx - 1},${204} ${fx + 6},${205} `} fill="none" stroke={AV.green} strokeWidth="2.2" strokeLinecap="round" />
+            </g>
+          );
+          // side-profile sneaker (toe to the right) with laces
+          const profileSneaker = (fx, key) => (
+            <g key={key}>
+              <path d={`M${fx - 7},${209} Q${fx},${211.5} ${fx + 15},${210.5} L${fx + 16},${212.5} Q${fx},${214} ${fx - 8},${212} Z`} fill="#d8d2c4" />
+              <path d={`M${fx - 7},${209} Q${fx - 7},${201} ${fx - 1},${200} L${fx + 6},${200.5} Q${fx + 14},${202} ${fx + 16},${208} Q${fx + 16},${210} ${fx + 14},${210.5} Q${fx},${211.5} ${fx - 7},${209} Z`} fill={AV.cream} />
+              <path d={`M${fx + 8},${201.5} Q${fx + 14},${203} ${fx + 16},${208} Q${fx + 11},${208.5} ${fx + 9},${205} Z`} fill="#e7e1d2" />
+              {/* laces + swoosh */}
+              {[0, 1, 2].map((i) => <line key={i} x1={fx - 3 + i * 3} y1={201} x2={fx - 4 + i * 3} y2={205} stroke={AV.green} strokeWidth="1.2" strokeLinecap="round" />)}
+              <path d={`M${fx - 5},${208} Q${fx + 3},${204.5} ${fx + 11},${206}`} fill="none" stroke={AV.green} strokeWidth="2.2" strokeLinecap="round" />
+            </g>
+          );
+          const sneakersEl = !hasBoots ? <g>{frontSneaker(cx - 13, 'snl')}{profileSneaker(cx + 13, 'snr')}</g> : null;
+
+          return (
+            <g>
+              {(masc || overalls) && bootsEl}
+              {legsEl}
+              {shortsEl}
+              {skirtEl}
+              {sneakersEl}
+              {!masc && !overalls && bootsEl}
+            </g>
+          );
+        })()}
+
+        {/* arms (skin only — sleeves drawn over the garment below) */}
+        {armSkin(arms.l, 'als')}
+        {armSkin(arms.r, 'ars')}
+
+        {/* skin body base + garment */}
+        {/* neck + shoulders: narrow neck column (≈ eye width) flaring to shoulders only at the base */}
+        <path d={`M${cx - 5.5},${faceCy + faceRy - 8} L${cx + 5.5},${faceCy + faceRy - 8} L${cx + 6},${shY - 5} L${cx + sw * 0.85},${shY + 8} Q${cx},${shY + 12} ${cx - sw * 0.85},${shY + 8} L${cx - 6},${shY - 5} Z`} fill={skin} />
+        <path d={skinTorso} fill={skin} />
+        {Garment()}
+
+        {/* sleeves over the garment (connected at the shoulder seam), then hands on top */}
+        {renderSleeve(arms.l, 'sll')}
+        {renderSleeve(arms.r, 'slr')}
+        {handAt(arms.l, 'hl')}
+        {handAt(arms.r, 'hr')}
+
+        {/* gold accents: wristbands + waistband */}
+        {cfg.gold && <g>
+          <circle cx={handL[0]} cy={handL[1]} r={wristW * 0.5 + 2} fill="none" stroke={AV.gold} strokeWidth="3.5" />
+          <circle cx={handR[0]} cy={handR[1]} r={wristW * 0.5 + 2} fill="none" stroke={AV.gold} strokeWidth="3.5" />
+        </g>}
+
+        {/* neck — slim + short */}
+        <rect x={cx - 4.5} y={faceCy + faceRy - 6} width="9" height="8" rx="4" fill={skin} />
+        <rect x={cx - 4.5} y={faceCy + faceRy - 6} width="9" height="4" rx="2" fill={skinShade} />
+
+        {/* head */}
+        <ellipse cx={cx} cy={faceCy} rx={faceRx} ry={faceRy} fill={skin} />
+        <circle cx={cx - faceRx} cy={faceCy + 2} r="3.5" fill={skin} />
+        <circle cx={cx + faceRx} cy={faceCy + 2} r="3.5" fill={skin} />
+
+        {/* hair front */}
+        {hs === 'long' ? (
+          <path d={`M${cx - faceRx - 3},${faceCy - 2} Q${cx - faceRx - 4},${faceCy - faceRy - 8} ${cx},${faceCy - faceRy - 7}
+            Q${cx + faceRx + 4},${faceCy - faceRy - 8} ${cx + faceRx + 3},${faceCy - 2}
+            Q${cx + faceRx - 3},${faceCy - 12} ${cx + 5},${faceCy - 11}
+            Q${cx},${faceCy - 6} ${cx - 5},${faceCy - 11}
+            Q${cx - faceRx + 3},${faceCy - 12} ${cx - faceRx - 3},${faceCy - 2} Z`} fill={hair} />
+        ) : (
+          <path d={`M${cx - faceRx - 2},${faceCy + 1}
+            Q${cx - faceRx - 2},${faceCy - faceRy - 8} ${cx},${faceCy - faceRy - 7}
+            Q${cx + faceRx + 2},${faceCy - faceRy - 8} ${cx + faceRx + 2},${faceCy + 1}
+            Q${cx + faceRx},${faceCy - 7} ${cx + faceRx - 4},${faceCy - 8}
+            Q${cx + 7},${faceCy - 12} ${cx},${faceCy - 9}
+            Q${cx - 7},${faceCy - 12} ${cx - faceRx + 4},${faceCy - 8}
+            Q${cx - faceRx},${faceCy - 7} ${cx - faceRx - 2},${faceCy + 1} Z`} fill={hair} />
+        )}
+
+        {/* face */}
+        <circle cx={cx - 6} cy={faceCy + 1} r="2" fill={AV.ink} />
+        <circle cx={cx + 6} cy={faceCy + 1} r="2" fill={AV.ink} />
+        <path d={`M${cx - 9},${faceCy - (masc ? 4 : 5)} Q${cx - 6},${faceCy - (masc ? 5.5 : 7)} ${cx - 3},${faceCy - (masc ? 4 : 5)}`} stroke={hair} strokeWidth={masc ? 2.4 : 1.6} fill="none" strokeLinecap="round" />
+        <path d={`M${cx + 3},${faceCy - (masc ? 4 : 5)} Q${cx + 6},${faceCy - (masc ? 5.5 : 7)} ${cx + 9},${faceCy - (masc ? 4 : 5)}`} stroke={hair} strokeWidth={masc ? 2.4 : 1.6} fill="none" strokeLinecap="round" />
+        {masc
+          ? <path d={`M${cx - 4},${faceCy + 9} Q${cx},${faceCy + 12} ${cx + 4},${faceCy + 9}`} stroke={AV.ink} strokeWidth="1.8" fill="none" strokeLinecap="round" />
+          : <g>
+              {/* soft rose lips: cupid's-bow upper + fuller lower */}
+              <path d={`M${cx - 4.4},${faceCy + 9}
+                Q${cx - 2.2},${faceCy + 7.7} ${cx},${faceCy + 8.7}
+                Q${cx + 2.2},${faceCy + 7.7} ${cx + 4.4},${faceCy + 9}
+                Q${cx + 2.4},${faceCy + 11.6} ${cx},${faceCy + 11.4}
+                Q${cx - 2.4},${faceCy + 11.6} ${cx - 4.4},${faceCy + 9} Z`} fill="#cd817a" />
+              <path d={`M${cx - 4},${faceCy + 9} Q${cx},${faceCy + 9.4} ${cx + 4},${faceCy + 9}`} fill="none" stroke="#b06a64" strokeWidth="0.7" strokeLinecap="round" />
+            </g>}
+        {!masc && <g>
+          <circle cx={cx - 10} cy={faceCy + 6} r="2.4" fill="#f0a9a0" opacity="0.5" />
+          <circle cx={cx + 10} cy={faceCy + 6} r="2.4" fill="#f0a9a0" opacity="0.5" />
+        </g>}
+        {/* headband for gold tiers */}
+        {cfg.gold && <path d={`M${cx - faceRx - 2},${faceCy - 10} Q${cx},${faceCy - 17} ${cx + faceRx + 2},${faceCy - 10}`} stroke={AV.gold} strokeWidth="5" fill="none" strokeLinecap="round" />}
+      </g>
+
+      {/* accessories */}
+      {accessories.map((ac) => <Accessory key={ac} id={ac} cx={cx} faceCy={faceCy} faceRx={faceRx} faceRy={faceRy} handL={handL} handR={handR} armL={arms.l} armR={arms.r} hipY={hipY} sw={sw} shY={shY} skin={skin} team={team} monogram={monogram} />)}
+
+      {/* sparkles */}
+      {cfg.aura >= 2 && [[44, 78], [156, 92], [50, 150], [150, 150]].slice(0, cfg.aura >= 3 ? 4 : 2).map((p, i) => (
+        <path key={i} d={`M${p[0]},${p[1] - 5} L${p[0] + 1.6},${p[1]} L${p[0] + 6},${p[1] + 1} L${p[0] + 1.6},${p[1] + 2} L${p[0]},${p[1] + 6} L${p[0] - 1.6},${p[1] + 2} L${p[0] - 6},${p[1] + 1} L${p[0] - 1.6},${p[1]} Z`} fill={AV.goldL} opacity="0.85" />
+      ))}
+    </svg>
+  );
+}
+
+Object.assign(window, { CapsuleAvatar, PixelAvatar, SproutAvatar, RefinedHumanAvatar, AvatarCard, AV_LEVELS });
+
+if(window.__avReady)window.__avReady();
 </script>
 </body>
 </html>
